@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
@@ -16,6 +17,17 @@ export default function RootLayout(props: Props) {
     <html lang="en">
       <body>
         {/* <NavbarForm /> */}
+        <nav>
+          <div>
+            <Link href="/">Home</Link>
+            <Link href="/about">About</Link>
+          </div>
+
+          <div>
+            <Link href="/register">Register</Link>
+            <Link href="/login">Login</Link>
+          </div>
+        </nav>
         <main>{props.children}</main>
         {/* <FooterForm /> */}
       </body>

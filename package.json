@@ -6,21 +6,25 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate": "ley --require tsm"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.16",
-    "daisyui": "^3.9.3",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
+    "ley": "^0.8.1",
     "next": "13.5.6",
-    "postcss": "^8.4.31",
+    "postgres": "^3.4.0",
     "react": "^18",
     "react-dom": "^18",
     "sass": "^1.69.4",
     "server-only": "^0.0.1",
     "sharp": "^0.32.6",
-    "tailwindcss": "^3.3.3"
+    "tsm": "^2.3.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
