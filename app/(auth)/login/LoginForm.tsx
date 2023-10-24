@@ -2,9 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { getSafeReturnToPath } from '../../../util/validation';
 import { LoginResponseBodyPost } from '../../api/(auth)/login/route';
 
-export default function LoginForm() {
+type Props = { returnTo?: string | string[] };
+
+export default function LoginForm(props: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ message: string }[]>([]);
@@ -27,8 +30,13 @@ export default function LoginForm() {
       setErrors(data.errors);
       return;
     }
-    router.push('/');
+
+    router.push(
+      getSafeReturnToPath(props.returnTo) ||
+        `/profile/${data.user.firstName}${data.user.lastName}`,
+    );
   }
+
   return (
     <div>
       <form onSubmit={async (event) => await handleRegister(event)}>

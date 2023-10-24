@@ -49,6 +49,9 @@ export async function POST(
       { status: 403 },
     );
   }
+
+  // 3.5 confirm email & password validation pass here!
+
   // 4. Hash the plain password
   const passwordHash = await bcrypt.hash(result.data.password, 12);
 

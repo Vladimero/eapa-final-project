@@ -1,9 +1,11 @@
 import LoginForm from './LoginForm';
 
-export default function LoginPage() {
+type Props = { searchParams: { returnTo?: string | string[] } };
+
+export default function LoginPage({ searchParams }: Props) {
   return (
     <div>
-      <LoginForm />
+      <LoginForm returnTo={searchParams.returnTo} />
     </div>
   );
 }

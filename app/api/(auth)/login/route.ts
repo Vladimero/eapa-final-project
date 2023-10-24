@@ -10,7 +10,7 @@ const loginSchema = z.object({
 
 export type LoginResponseBodyPost =
   | {
-      user: { email: string };
+      user: { firstName: string; lastName: string };
     }
   | {
       errors: { message: string }[];
@@ -60,11 +60,12 @@ export async function POST(
     );
   }
 
-  // 5. Return the logged in user
+  // 5. Return the logged-in user
 
   return NextResponse.json({
     user: {
-      email: userWithPasswordHash.email,
+      firstName: userWithPasswordHash.firstName,
+      lastName: userWithPasswordHash.lastName,
     },
   });
 }

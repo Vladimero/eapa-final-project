@@ -40,6 +40,9 @@ export default function RegisterForm() {
       return;
     }
     router.push('/');
+
+    // for direct redirection to users profile
+    // router.push(`/profile/${data.user.email}`);
   }
   return (
     <div>
