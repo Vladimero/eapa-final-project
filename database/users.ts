@@ -7,6 +7,9 @@ export type UserWithPasswordHash = Users & {
   passwordHash: string;
 };
 
+// function to insert data into the database, (if data is predefined in database this step is done through migrations!)
+// to send user-generated data into the database this function is used in the POST request of the API
+
 export const createUser = cache(
   async (
     firstName: string,
@@ -35,10 +38,19 @@ export const getUserByEmail = cache(async (email: string) => {
   const [user] = await sql<Users[]>`
       SELECT
         id,
-        first_name,
-        last_name,
-        email,
-        is_admin
+        email
+      FROM
+        users
+      WHERE
+        email = ${email}
+  `;
+  return user;
+});
+
+export const getUserWithPasswordHashByEmail = cache(async (email: string) => {
+  const [user] = await sql<UserWithPasswordHash[]>`
+      SELECT
+        *
       FROM
         users
       WHERE

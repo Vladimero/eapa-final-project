@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RegisterResponseBodyPost } from '../../api/(auth)/register/route';
 
 export default function RegisterForm() {
@@ -10,12 +10,18 @@ export default function RegisterForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [selectedRole, setSelectedRole] = useState('Citizen');
+  const [isAdmin, setIsAdmin] = useState(false);
   const [errors, setErrors] = useState<{ message: string }[]>([]);
   const router = useRouter();
 
+  useEffect(() => {
+    if (selectedRole !== 'Citizen') {
+      setIsAdmin(true);
+    }
+  }, [selectedRole]);
+
   async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const isAdmin = selectedRole === 'Government';
     const response = await fetch('/api/register', {
       method: 'POST',
       body: JSON.stringify({
@@ -41,40 +47,31 @@ export default function RegisterForm() {
         <label>
           First Name:
           <input
-            value={firstName}
             onChange={(event) => setFirstName(event.currentTarget.value)}
           />
         </label>
         <label>
           Last Name:
-          <input
-            value={lastName}
-            onChange={(event) => setLastName(event.currentTarget.value)}
-          />
+          <input onChange={(event) => setLastName(event.currentTarget.value)} />
         </label>
         <label>
           Email:
-          <input
-            value={email}
-            onChange={(event) => setEmail(event.currentTarget.value)}
-          />
+          <input onChange={(event) => setEmail(event.currentTarget.value)} />
         </label>
         <label>
           Password:
           <input
             type="password"
-            value={password}
             onChange={(event) => setPassword(event.currentTarget.value)}
           />
         </label>
         <label>
           Role:
           <select
-            value={selectedRole}
             onChange={(event) => setSelectedRole(event.currentTarget.value)}
           >
-            <option value="user">Citizen</option>
-            <option value="admin">Government</option>
+            <option value="false">Citizen</option>
+            <option value="true">Government</option>
           </select>
         </label>
         <button>Register</button>

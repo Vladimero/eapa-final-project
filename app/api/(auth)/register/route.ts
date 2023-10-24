@@ -54,10 +54,10 @@ export async function POST(
 
   // 5. Save the user with hashed password into database
   const newUser = await createUser(
-    result.data.email,
-    passwordHash,
     result.data.firstName,
     result.data.lastName,
+    result.data.email,
+    passwordHash,
     result.data.isAdmin,
   );
 
