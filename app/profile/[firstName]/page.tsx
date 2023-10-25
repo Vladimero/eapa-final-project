@@ -1,14 +1,15 @@
 // dynamic route for users profile pages
 
 type Props = {
-  params: { firstName: string; lastName: string };
+  params: { firstName: string };
 };
+
 export default function UserProfilePage({ params }: Props) {
   return (
     <div>
-      <h2>
-        This is the profile of {params.firstName} {params.lastName}
-      </h2>
+      <div>
+        <h1>{params.firstName.toUpperCase()}'s Profile</h1>
+      </div>
     </div>
   );
 }

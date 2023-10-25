@@ -32,8 +32,7 @@ export default function LoginForm(props: Props) {
     }
 
     router.push(
-      getSafeReturnToPath(props.returnTo) ||
-        `/profile/${data.user.firstName}${data.user.lastName}`,
+      getSafeReturnToPath(props.returnTo) || `/profile/${data.user.firstName}`,
     );
   }
 

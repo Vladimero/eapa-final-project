@@ -1,8 +1,12 @@
+import crypto from 'node:crypto';
 import bcrypt from 'bcrypt';
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+import { createSession } from '../../../../database/sessions';
 import { createUser, getUserByEmail } from '../../../../database/users';
 import { Users } from '../../../../migrations/00006-createUsers';
+import { secureCookieOptions } from '../../../../util/cookies';
 
 const registerSchema = z.object({
   firstName: z.string().min(3),
@@ -72,7 +76,30 @@ export async function POST(
     );
   }
 
-  // 6. Return the new user without password hash
+  // 6. Create a token
+  const token = crypto.randomBytes(100).toString('base64');
+
+  // 7. Create the sessions record
+  const session = await createSession(newUser.id, token);
+
+  if (!session) {
+    return NextResponse.json(
+      { errors: [{ message: 'Error creating the new session' }] },
+      {
+        status: 401,
+      },
+    );
+  }
+
+  // 8. Send the token (inside a cookie) into the browser (header)
+
+  cookies().set({
+    name: 'sessionToken',
+    value: session.token,
+    ...secureCookieOptions,
+  });
+
+  // 9. Return the new user without password hash
 
   return NextResponse.json({
     user: newUser,

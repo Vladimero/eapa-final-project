@@ -54,7 +54,7 @@ export const getUserWithPasswordHashByEmail = cache(async (email: string) => {
       FROM
         users
       WHERE
-        email = ${email}
+        email = ${email.toLocaleLowerCase()}
   `;
   return user;
 });
