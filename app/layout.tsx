@@ -22,7 +22,7 @@ export default async function RootLayout(props: Props) {
 
   const sessionToken = cookieFromBrowser.get('sessionToken');
 
-  // 2. Get the current logged-in user from the database using sessions taken value
+  // 2. Get the current logged-in user from the database using sessions token value
   const user =
     sessionToken && (await getUserBySessionToken(sessionToken.value));
 

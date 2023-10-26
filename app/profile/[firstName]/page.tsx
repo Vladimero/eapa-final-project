@@ -1,4 +1,4 @@
-// dynamic route for users profile pages
+// Dynamic route for users profile pages
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';

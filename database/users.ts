@@ -1,3 +1,5 @@
+// Database query functions: effect only the database
+
 import 'server-only';
 import { cache } from 'react';
 import { sql } from '../database/connect';
@@ -61,7 +63,7 @@ export const getUserByFirstName = cache(async (firstName: string) => {
   return user;
 });
 
-// For choose user by his role in order to display the section for his role
+// For role concerned displaying information to the user
 export const getUserByRole = cache(async (isAdmin: boolean) => {
   const [user] = await sql<Users[]>`
       SELECT
@@ -75,6 +77,7 @@ export const getUserByRole = cache(async (isAdmin: boolean) => {
   return user;
 });
 
+// For login page: ensure that only registered users can log in
 export const getUserWithPasswordHashByEmail = cache(async (email: string) => {
   const [user] = await sql<UserWithPasswordHash[]>`
       SELECT

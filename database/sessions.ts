@@ -6,7 +6,6 @@ import { sql } from '../database/connect';
 import { Sessions } from '../migrations/00007-createSessions';
 
 // function to delete ALL sessions after expiration date --> call the function inside the createSession function
-
 export const deleteExpiredSessions = cache(async () => {
   await sql`
       DELETE FROM
@@ -33,6 +32,7 @@ export const createSession = cache(async (userId: number, token: string) => {
   return session;
 });
 
+// Deletes the session token after user logs out
 export const deleteSessionByToken = cache(async (token: string) => {
   const [session] = await sql<{ id: number; token: string }[]>`
     DELETE FROM
@@ -46,6 +46,7 @@ export const deleteSessionByToken = cache(async (token: string) => {
   return session;
 });
 
+// Ensure that only a logged-in user can access a page
 export const getValidSessionByToken = cache(async (token: string) => {
   const [session] = await sql<{ id: number; token: string }[]>`
     SELECT

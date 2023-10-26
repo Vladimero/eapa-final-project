@@ -1,3 +1,5 @@
+// Database query functions: effect only the database
+
 import 'server-only';
 import { cache } from 'react';
 import { sql } from '../database/connect';
