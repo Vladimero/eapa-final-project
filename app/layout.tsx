@@ -1,7 +1,10 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
+import { getUserBySessionToken } from '../database/users';
 import LogoutButton from './(auth)/logout/LogoutButton';
 
 export const metadata: Metadata = {
@@ -13,7 +16,16 @@ type Props = {
   children: ReactNode;
 };
 
-export default function RootLayout(props: Props) {
+export default async function RootLayout(props: Props) {
+  // 1. Check if a session token from the cookie of the browser exists
+  const cookieFromBrowser = cookies();
+
+  const sessionToken = cookieFromBrowser.get('sessionToken');
+
+  // 2. Get the current logged-in user from the database using sessions taken value
+  const user =
+    sessionToken && (await getUserBySessionToken(sessionToken.value));
+
   return (
     <html lang="en">
       <body>
@@ -22,12 +34,21 @@ export default function RootLayout(props: Props) {
           <div>
             <Link href="/">Home</Link>
             <Link href="/about">About</Link>
+            <Link href="/dashboard">Dashboard</Link>
           </div>
 
           <div>
-            <Link href="/register">Register</Link>
-            <Link href="/login">Login</Link>
-            <LogoutButton />
+            {user ? (
+              <>
+                {/* <div>Welcome {user.firstName}</div> */}
+                <LogoutButton />
+              </>
+            ) : (
+              <>
+                <Link href="/register">Register</Link>
+                <Link href="/login">Login</Link>
+              </>
+            )}
           </div>
         </nav>
         <main>{props.children}</main>

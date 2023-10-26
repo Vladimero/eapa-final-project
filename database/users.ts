@@ -47,6 +47,34 @@ export const getUserByEmail = cache(async (email: string) => {
   return user;
 });
 
+// For displaying his first name anywhere
+export const getUserByFirstName = cache(async (firstName: string) => {
+  const [user] = await sql<Users[]>`
+      SELECT
+        id,
+        first_name
+      FROM
+        users
+      WHERE
+        first_name = ${firstName}
+  `;
+  return user;
+});
+
+// For choose user by his role in order to display the section for his role
+export const getUserByRole = cache(async (isAdmin: boolean) => {
+  const [user] = await sql<Users[]>`
+      SELECT
+        id,
+        is_admin
+      FROM
+        users
+      WHERE
+        is_admin = ${isAdmin}
+  `;
+  return user;
+});
+
 export const getUserWithPasswordHashByEmail = cache(async (email: string) => {
   const [user] = await sql<UserWithPasswordHash[]>`
       SELECT
@@ -55,6 +83,24 @@ export const getUserWithPasswordHashByEmail = cache(async (email: string) => {
         users
       WHERE
         email = ${email.toLocaleLowerCase()}
+  `;
+  return user;
+});
+
+// Inner join compares the tables parallel
+export const getUserBySessionToken = cache(async (token: string) => {
+  const [user] = await sql<Users[]>`
+      SELECT
+        users.id,
+        users.email
+      FROM
+        users
+      INNER JOIN
+        sessions ON (
+          sessions.token = ${token} AND
+          sessions.user_id = users.id AND
+          sessions.expiry_timestamp > now()
+        )
   `;
   return user;
 });
