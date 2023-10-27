@@ -2,7 +2,6 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 import { getUserBySessionToken } from '../database/users';
 import LogoutButton from './(auth)/logout/LogoutButton';

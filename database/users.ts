@@ -9,6 +9,16 @@ export type UserWithPasswordHash = Users & {
   passwordHash: string;
 };
 
+export type UserEvent = {
+  eventId: number;
+  pollutionId: number;
+  regionId: number;
+  report: string;
+  date: string;
+  adminComment: string;
+  email: string;
+};
+
 // function to insert data into the database, (if data is predefined in database this step is done through migrations!)
 // to send user-generated data into the database this function is used in the POST request of the API
 
@@ -106,4 +116,33 @@ export const getUserBySessionToken = cache(async (token: string) => {
         )
   `;
   return user;
+});
+
+// Display only the events from the logged-in user
+export const getUserEventBySessionToken = cache(async (token: string) => {
+  const [events] = await sql<UserEvent[]>`
+      SELECT
+        events.id AS event_id,
+        events.pollution_id AS pollution_id,
+        events.region_id AS region_id,
+        events.report AS report,
+        events.date AS date,
+        events.admin_comment AS admin_comment,
+        users.first_name AS first_name
+      FROM
+        events
+      INNER JOIN
+        pollution ON events.pollution_id = pollution.id
+      INNER JOIN
+        region ON events.region_id = region.id
+      INNER JOIN
+        users ON events.user_id = users.id
+      INNER JOIN
+        sessions ON (
+          sessions.token = ${token} AND
+          sessions.user_id = users.id AND
+          sessions.expiry_timestamp > now()
+        )
+  `;
+  return events;
 });
