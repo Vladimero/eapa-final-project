@@ -2,21 +2,11 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { getValidSessionByToken } from '../../database/sessions';
-import { getUserEventBySessionToken } from '../../database/users';
+import {
+  getUserBySessionToken,
+  getUserEventBySessionToken,
+} from '../../database/users';
 import EventsForm from './EventsForm';
-
-/*
-type UserEventDisplay = [
-  { eventId: number;},
-  { report: string },
-  { report: string },
-  { date: string },
-  { adminComment: string },
-  { pollutionId: number },
-  { regionId: number },
-];
-*/
 
 export default async function DashboardPage() {
   // 1. Check if the cookie with session token exists
@@ -25,7 +15,7 @@ export default async function DashboardPage() {
   // 2. Check if the session token is valid
   const user =
     sessionTokenCookie &&
-    (await getValidSessionByToken(sessionTokenCookie.value));
+    (await getUserBySessionToken(sessionTokenCookie.value));
 
   // 2.5 Check here if the valid session token belongs to an admin --> query database for it (getAdminUserBySessionToken)
 
@@ -45,15 +35,14 @@ export default async function DashboardPage() {
       {/* <div>
         {userEvent.length > 0 ? (
           <>
-            <h2>Events For {user.id}</h2>
+            <h2>Events For {user.firstName}</h2>
             <ul>
               {userEvent.map((event) => (
                 <ul>
                   <li key={`event-${event.eventId}`}>{event.report}</li>
+                  <li>{event.damageEstimation}</li>
                   <li>{event.date}</li>
                   <li>{event.adminComment}</li>
-                  <li>{event.pollutionId}</li>
-                  <li>{event.regionId}</li>
                 </ul>
               ))}
             </ul>
@@ -61,7 +50,7 @@ export default async function DashboardPage() {
         ) : (
           <h2> No events yet</h2>
         )}
-        </div> */}
+      </div> */}
     </>
   );
 }

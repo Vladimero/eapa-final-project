@@ -2,34 +2,27 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
-export default function EventsForm({
-  userId,
-  pollutionId,
-  regionId,
-}: {
-  userId: number;
-  pollutionId: number;
-  regionId: number;
-}) {
+export default function EventsForm({ userId }: { userId: number }) {
   const [report, setReport] = useState('');
-  const [adminComment, setAdminComment] = useState('');
+  const [damageEstimation, setDamageEstimation] = useState('');
   const [date, setDate] = useState('');
+  const [adminComment, setAdminComment] = useState('');
   const router = useRouter();
 
   async function handleEventCreation() {
-    await fetch('/api/events', {
+    await fetch('/api/dashboard', {
       method: 'POST',
       body: JSON.stringify({
         userId,
-        pollutionId,
-        regionId,
         report,
+        damageEstimation,
         date,
         adminComment,
       }),
     });
     router.refresh();
     setReport('');
+    setDamageEstimation('');
     setDate('');
     setAdminComment('');
   }
@@ -46,6 +39,13 @@ export default function EventsForm({
         <input
           value={report}
           onChange={(event) => setReport(event.currentTarget.value)}
+        />
+      </label>
+      <label>
+        Damage Estimation:
+        <input
+          value={damageEstimation}
+          onChange={(event) => setDamageEstimation(event.currentTarget.value)}
         />
       </label>
       <label>
