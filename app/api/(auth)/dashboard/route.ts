@@ -6,8 +6,6 @@ import { getValidSessionByToken } from '../../../../database/sessions';
 
 const eventSchema = z.object({
   userId: z.number(),
-  // pollutionId: z.number(),
-  // regionId: z.number(),
   report: z.string().min(3),
   damageEstimation: z.string().min(3),
   date: z.string().min(3),
@@ -17,6 +15,7 @@ const eventSchema = z.object({
 export type CreateEventResponseBodyPost =
   | {
       event: {
+        userId: number;
         report: string;
         damageEstimation: string;
         date: string;
@@ -65,8 +64,6 @@ export async function POST(
   // 3. Create the event
   const newEvent = await createEvent(
     result.data.userId,
-    // result.data.pollutionId,
-    // result.data.regionId,
     result.data.report,
     result.data.damageEstimation,
     result.data.date,
@@ -87,9 +84,7 @@ export async function POST(
   // 6. Return the event
   return NextResponse.json({
     event: {
-      // userId: newEvent.userId,
-      // pollutionId: newEvent.pollutionId,
-      // regionId: newEvent.regionId,
+      userId: newEvent.userId,
       report: newEvent.report,
       damageEstimation: newEvent.damageEstimation,
       date: newEvent.date,

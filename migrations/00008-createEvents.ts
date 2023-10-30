@@ -3,8 +3,6 @@ import { Sql } from 'postgres';
 export type Events = {
   id: number;
   userId: number;
-  // pollutionId: number;
-  // regionId: number;
   report: string;
   damageEstimation: string;
   date: string;

@@ -12,6 +12,7 @@ export const getPollution = cache(async () => {
   return selectedPollution;
 });
 
+// For dynamic rendering
 export const getPollutionById = cache(async (id: number) => {
   const [pollution] = await sql<Pollution[]>`
     SELECT

@@ -5,8 +5,6 @@ import { sql } from './connect';
 export const createEvent = cache(
   async (
     userId: number,
-    // pollutionId: number,
-    // regionId: number,
     report: string,
     damageEstimation: string,
     date: string,

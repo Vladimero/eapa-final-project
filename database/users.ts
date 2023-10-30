@@ -1,6 +1,5 @@
 // Database query functions: effect only the database
 
-import 'server-only';
 import { cache } from 'react';
 import { sql } from '../database/connect';
 import { Users } from '../migrations/00006-createUsers';
@@ -142,6 +141,3 @@ export const getUserEventBySessionToken = cache(async (token: string) => {
   `;
   return events;
 });
-
-// events.pollution_id AS pollution_id,
-// events.region_id AS region_id,

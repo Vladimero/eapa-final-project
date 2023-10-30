@@ -2,12 +2,56 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
-export default function EventsForm({ userId }: { userId: number }) {
+export default function EventsForm({
+  userId,
+}: // selectedPollution,
+// selectedRegion,
+// onFormSubmit,
+{
+  userId: number;
+  // selectedPollution: number;
+  // selectedRegion: number;
+  /*
+    onFormSubmit: (formData: {
+    userId: number;
+    pollutionId: number;
+    regionId: number;
+    report: string;
+    damageEstimation: string;
+    date: string;
+    adminComment: string;
+  }) => void;
+    */
+}) {
   const [report, setReport] = useState('');
   const [damageEstimation, setDamageEstimation] = useState('');
   const [date, setDate] = useState('');
   const [adminComment, setAdminComment] = useState('');
   const router = useRouter();
+
+  /*
+  const handleEventCreation = async () => {
+    const formData = {
+      userId,
+      pollutionId: selectedPollution,
+      regionId: selectedRegion,
+      report,
+      damageEstimation,
+      date,
+      adminComment,
+    };
+
+    if (onFormSubmit) {
+      onFormSubmit(formData);
+    }
+
+    router.refresh();
+    setReport('');
+    setDamageEstimation('');
+    setDate('');
+    setAdminComment('');
+  };
+  */
 
   async function handleEventCreation() {
     await fetch('/api/dashboard', {
