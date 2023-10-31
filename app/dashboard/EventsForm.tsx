@@ -72,11 +72,9 @@ export default function EventsForm({
     }
   }
 
-  // Upload image to cloudinary
+  // Upload image to cloudinary API
 
   async function handleImageUpload(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
     const form = event.currentTarget.closest('form') as HTMLFormElement | null;
 
     if (form) {
@@ -100,7 +98,7 @@ export default function EventsForm({
             method: 'POST',
             body: formData,
           },
-        ).then((r) => r.json());
+        ).then((response) => response.json());
 
         setImageSrc(data.secure_url);
         setUploadImage(data);
@@ -122,6 +120,7 @@ export default function EventsForm({
           <select
             value={region}
             onChange={(event) => setRegion(event.currentTarget.value)}
+            required
           >
             {regionId.map((region) => (
               <option key={`regionId-${region.id}`} value={region.id}>
@@ -138,6 +137,7 @@ export default function EventsForm({
           <select
             value={pollution}
             onChange={(event) => setPollution(event.currentTarget.value)}
+            required
           >
             {pollutionId.map((pollution) => (
               <option key={`pollutionId-${pollution.id}`} value={pollution.id}>
@@ -150,9 +150,11 @@ export default function EventsForm({
 
       <label>
         Report:
-        <input
+        <textarea
+          maxLength={250}
           value={report}
           onChange={(event) => setReport(event.currentTarget.value)}
+          required
         />
       </label>
       <label>
@@ -160,6 +162,7 @@ export default function EventsForm({
         <input
           value={damageEstimation}
           onChange={(event) => setDamageEstimation(event.currentTarget.value)}
+          required
         />
       </label>
       <label>
@@ -167,18 +170,21 @@ export default function EventsForm({
         <input
           value={date}
           onChange={(event) => setDate(event.currentTarget.value)}
+          required
         />
       </label>
       <label>
         Admin Comment:
-        <input
+        <textarea
+          maxLength={250}
           value={adminComment}
           onChange={(event) => setAdminComment(event.currentTarget.value)}
+          required
         />
       </label>
       <br />
 
-      <p>Upload your image!</p>
+      <p>Upload images!</p>
       <div>
         <p>
           <input
@@ -186,6 +192,7 @@ export default function EventsForm({
             name="file"
             accept=".jpg, .png, .jpeg"
             onChange={handleImagePreview}
+            required
           />
         </p>
         <img src={imageSrc} alt="Your image" width={400} height={350} />
