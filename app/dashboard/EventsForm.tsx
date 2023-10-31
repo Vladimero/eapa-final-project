@@ -1,63 +1,36 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { Pollution } from '../../migrations/00000-createPollution';
+import { Region } from '../../migrations/00002-createRegion';
 
+// parse the props of pollution and region inside the parameters
 export default function EventsForm({
   userId,
-}: // selectedPollution,
-// selectedRegion,
-// onFormSubmit,
-{
+  pollutionId,
+  regionId,
+}: {
   userId: number;
-  // selectedPollution: number;
-  // selectedRegion: number;
-  /*
-    onFormSubmit: (formData: {
-    userId: number;
-    pollutionId: number;
-    regionId: number;
-    report: string;
-    damageEstimation: string;
-    date: string;
-    adminComment: string;
-  }) => void;
-    */
+  pollutionId: Pollution[];
+  regionId: Region[];
 }) {
   const [report, setReport] = useState('');
   const [damageEstimation, setDamageEstimation] = useState('');
   const [date, setDate] = useState('');
   const [adminComment, setAdminComment] = useState('');
+  const [pollution, setPollution] = useState('');
+  const [region, setRegion] = useState('');
   const router = useRouter();
 
-  /*
-  const handleEventCreation = async () => {
-    const formData = {
-      userId,
-      pollutionId: selectedPollution,
-      regionId: selectedRegion,
-      report,
-      damageEstimation,
-      date,
-      adminComment,
-    };
-
-    if (onFormSubmit) {
-      onFormSubmit(formData);
-    }
-
-    router.refresh();
-    setReport('');
-    setDamageEstimation('');
-    setDate('');
-    setAdminComment('');
-  };
-  */
+  console.log(pollutionId, regionId);
 
   async function handleEventCreation() {
     await fetch('/api/dashboard', {
       method: 'POST',
       body: JSON.stringify({
         userId,
+        pollutionId: parseInt(pollution, 10),
+        regionId: parseInt(region, 10),
         report,
         damageEstimation,
         date,
@@ -69,6 +42,8 @@ export default function EventsForm({
     setDamageEstimation('');
     setDate('');
     setAdminComment('');
+    setRegion('');
+    setPollution('');
   }
 
   return (
@@ -78,6 +53,38 @@ export default function EventsForm({
         await handleEventCreation();
       }}
     >
+      <div>
+        <label>
+          Region:
+          <select
+            value={region}
+            onChange={(event) => setRegion(event.currentTarget.value)}
+          >
+            {regionId.map((region) => (
+              <option key={`regionId-${region.id}`} value={region.id}>
+                {region.stateOfAustria}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Pollution:
+          <select
+            value={pollution}
+            onChange={(event) => setPollution(event.currentTarget.value)}
+          >
+            {pollutionId.map((pollution) => (
+              <option key={`pollutionId-${pollution.id}`} value={pollution.id}>
+                {pollution.kind}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
       <label>
         Report:
         <input

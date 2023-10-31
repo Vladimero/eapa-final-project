@@ -10,8 +10,8 @@ export type UserWithPasswordHash = Users & {
 
 export type UserEvent = {
   eventId: number;
-  // pollutionId: number;
-  // regionId: number;
+  pollutionId: number;
+  regionId: number;
   report: string;
   damageEstimation: string;
   date: string;
@@ -123,6 +123,8 @@ export const getUserEventBySessionToken = cache(async (token: string) => {
   const [events] = await sql<UserEvent[]>`
       SELECT
         events.id AS event_id,
+        events.pollution_id AS pollution_id,
+        events.region_id AS region_id,
         events.report AS report,
         events.damage_estimation AS damage_estimation,
         events.date AS date,
@@ -132,6 +134,10 @@ export const getUserEventBySessionToken = cache(async (token: string) => {
         events
       INNER JOIN
         users ON events.user_id = users.id
+      INNER JOIN
+        pollution ON events.pollution_id = pollution.id
+      INNER JOIN
+        region ON events.region_id = region.id
       INNER JOIN
         sessions ON (
           sessions.token = ${token} AND
