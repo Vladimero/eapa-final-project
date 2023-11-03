@@ -113,6 +113,7 @@ export default function EventsForm({
             onChange={(event) => setRegion(event.currentTarget.value)}
             required
           >
+            <option value="">Select a region</option>
             {regionId.map((region) => (
               <option key={`regionId-${region.id}`} value={region.id}>
                 {region.stateOfAustria}
@@ -130,6 +131,7 @@ export default function EventsForm({
             onChange={(event) => setPollution(event.currentTarget.value)}
             required
           >
+            <option value="">Select a pollution</option>
             {pollutionId.map((pollution) => (
               <option key={`pollutionId-${pollution.id}`} value={pollution.id}>
                 {pollution.kind}
