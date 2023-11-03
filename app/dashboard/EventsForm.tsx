@@ -94,6 +94,7 @@ export default function EventsForm({
       setRegion('');
       setPollution('');
       setImageSrc('');
+      setUploadImage(null);
     });
   };
 

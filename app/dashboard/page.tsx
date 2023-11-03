@@ -2,13 +2,13 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { getPollution } from '../../database/pollution';
-import { getRegion } from '../../database/region';
 import {
   getAllEventsFromUserBySessionToken,
-  getUserBySessionToken,
   UserEvent,
-} from '../../database/users';
+} from '../../database/events';
+import { getPollution } from '../../database/pollution';
+import { getRegion } from '../../database/region';
+import { getUserBySessionToken } from '../../database/users';
 import EventsForm from './EventsForm';
 
 export default async function DashboardPage() {
