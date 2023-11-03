@@ -11,6 +11,7 @@ const eventSchema = z.object({
   report: z.string().min(3),
   damageEstimation: z.string().min(3),
   date: z.string().min(3),
+  secureUrl: z.string().min(3),
   adminComment: z.string().min(3),
 });
 
@@ -23,6 +24,7 @@ export type CreateEventResponseBodyPost =
         report: string;
         damageEstimation: string;
         date: string;
+        secureUrl: string;
         adminComment: string;
       };
     }
@@ -73,6 +75,7 @@ export async function POST(
     result.data.report,
     result.data.damageEstimation,
     result.data.date,
+    result.data.secureUrl,
     result.data.adminComment,
   );
 
@@ -96,6 +99,7 @@ export async function POST(
       report: newEvent.report,
       damageEstimation: newEvent.damageEstimation,
       date: newEvent.date,
+      secureUrl: newEvent.secureUrl,
       adminComment: newEvent.adminComment,
     },
   });

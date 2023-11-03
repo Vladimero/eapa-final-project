@@ -128,6 +128,7 @@ export const getUserEventBySessionToken = cache(async (token: string) => {
         events.report AS report,
         events.damage_estimation AS damage_estimation,
         events.date AS date,
+        events.secure_url AS secure_url,
         events.admin_comment AS admin_comment,
         users.first_name AS first_name
       FROM

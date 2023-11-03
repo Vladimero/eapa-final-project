@@ -10,13 +10,14 @@ export const createEvent = cache(
     report: string,
     damageEstimation: string,
     date: string,
+    secureUrl: string,
     adminComment: string,
   ) => {
     const [event] = await sql<Events[]>`
       INSERT INTO events
-        (user_id, pollution_id, region_id, report, damage_estimation, date, admin_comment)
+        (user_id, pollution_id, region_id, report, damage_estimation, date, secure_url, admin_comment)
       VALUES
-        (${userId},${pollutionId},${regionId},${report},${damageEstimation},${date},${adminComment})
+        (${userId},${pollutionId},${regionId},${report},${damageEstimation},${date},${secureUrl},${adminComment})
       RETURNING *
     `;
 

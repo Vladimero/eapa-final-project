@@ -8,6 +8,7 @@ export type Events = {
   report: string;
   damageEstimation: string;
   date: string;
+  secureUrl: string;
   adminComment: string;
 };
 
@@ -21,6 +22,7 @@ export async function up(sql: Sql) {
       report text NOT NULL,
       damage_estimation varchar(20) NOT NULL,
       date varchar(20) NOT NULL,
+      secure_url varchar(250) NOT NULL,
       admin_comment text NOT NULL
     );
   `;

@@ -24,3 +24,16 @@ export const getPollutionById = cache(async (id: number) => {
   `;
   return pollution;
 });
+
+// For displaying the kind of pollution --> History of events
+export const getPollutionByKind = cache(async (kind: string) => {
+  const [pollutionKind] = await sql<Pollution[]>`
+    SELECT
+      *
+    FROM
+      pollution
+    WHERE
+      kind = ${kind}
+  `;
+  return pollutionKind;
+});

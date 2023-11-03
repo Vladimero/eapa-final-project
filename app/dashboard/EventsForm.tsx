@@ -1,12 +1,11 @@
 'use client';
-import { CldImage, CldUploadButton } from 'next-cloudinary';
-import Image from 'next/image';
+
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, useState } from 'react';
 import { Pollution } from '../../migrations/00000-createPollution';
 import { Region } from '../../migrations/00002-createRegion';
 
-// parse the props of pollution and region inside the parameters
+// Parse the props of pollution and region inside the parameters
 export default function EventsForm({
   userId,
   pollutionId,
@@ -22,14 +21,60 @@ export default function EventsForm({
   const [adminComment, setAdminComment] = useState('');
   const [pollution, setPollution] = useState('');
   const [region, setRegion] = useState('');
-  const [uploadImage, setUploadImage] = useState<FileList | undefined>(
-    undefined,
-  );
+  const [uploadImage, setUploadImage] = useState<File | null>(null);
   const [imageSrc, setImageSrc] = useState('');
   const router = useRouter();
 
-  async function handleEventCreation() {
-    await fetch('/api/dashboard', {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+
+  // Preview the uploaded image on page
+
+  const handleImagePreview = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+    setUploadImage(file);
+  };
+
+  // Upload image to Cloudinary API
+
+  const handleImageUpload = () => {
+    if (uploadImage) {
+      const formData = new FormData();
+      formData.append('file', uploadImage);
+      formData.append('upload_preset', `${uploadPreset}`);
+
+      fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.secure_url) {
+            const url = data.secure_url;
+            setImageSrc(url);
+            console.log('Secure URL: ', url);
+
+            // After getting the secure URL, call handleEventCreation without await. The ".then" executes it in a similar way
+            handleEventCreation(url);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      console.error('No file selected for upload');
+    }
+  };
+
+  const handleEventCreation = (url?: string) => {
+    const secureUrl = url || imageSrc;
+
+    if (!secureUrl) {
+      console.error('No secure URL available');
+      return;
+    }
+
+    fetch('/api/dashboard', {
       method: 'POST',
       body: JSON.stringify({
         userId,
@@ -38,80 +83,26 @@ export default function EventsForm({
         report,
         damageEstimation,
         date,
+        secureUrl,
         adminComment,
       }),
+    }).then(() => {
+      router.refresh();
+      setReport('');
+      setDamageEstimation('');
+      setDate('');
+      setAdminComment('');
+      setRegion('');
+      setPollution('');
+      setImageSrc('');
     });
-    router.refresh();
-    setReport('');
-    setDamageEstimation('');
-    setDate('');
-    setAdminComment('');
-    setRegion('');
-    setPollution('');
-  }
-
-  // Preview the uploaded image on page
-
-  function handleImagePreview(event: ChangeEvent<HTMLInputElement>) {
-    const files = event.target.files;
-
-    if (files && files.length > 0) {
-      const reader = new FileReader();
-
-      reader.onload = function (onLoadEvent) {
-        if (onLoadEvent.target) {
-          const result = onLoadEvent.target.result;
-          if (typeof result === 'string') {
-            setImageSrc(result);
-          }
-        }
-        setUploadImage(undefined);
-      };
-
-      reader.readAsDataURL(files[0] as Blob);
-    }
-  }
-
-  // Upload image to cloudinary API
-
-  async function handleImageUpload(event: React.FormEvent<HTMLFormElement>) {
-    const form = event.currentTarget.closest('form') as HTMLFormElement | null;
-
-    if (form) {
-      const fileInput = Array.from(form.elements).find(
-        (element) =>
-          element instanceof HTMLInputElement && element.name === 'file',
-      ) as HTMLInputElement | undefined;
-
-      if (fileInput && fileInput.files) {
-        const formData = new FormData();
-
-        for (const file of fileInput.files) {
-          formData.append('file', file);
-        }
-
-        formData.append('upload_preset', 'my_uploads');
-
-        const data = await fetch(
-          'https://api.cloudinary.com/v1_1/djtcj6spv/image/upload',
-          {
-            method: 'POST',
-            body: formData,
-          },
-        ).then((response) => response.json());
-
-        setImageSrc(data.secure_url);
-        setUploadImage(data);
-      }
-    }
-  }
+  };
 
   return (
     <form
-      onSubmit={async (event) => {
+      onSubmit={(event) => {
         event.preventDefault();
-        handleImageUpload(event);
-        await handleEventCreation();
+        handleImageUpload();
       }}
     >
       <div>
@@ -195,17 +186,17 @@ export default function EventsForm({
             required
           />
         </p>
-        <img src={imageSrc} alt="Your image" width={400} height={350} />
+        <img
+          src={uploadImage ? URL.createObjectURL(uploadImage) : ''}
+          alt="Your uploaded image"
+          width={400}
+          height={350}
+        />
 
-        {imageSrc && !uploadImage && (
+        {uploadImage && (
           <p>
             <button>Add event!</button>
           </p>
-        )}
-        {uploadImage && (
-          <code>
-            <pre>{JSON.stringify(uploadImage, null, 2)}</pre>
-          </code>
         )}
       </div>
       <br />

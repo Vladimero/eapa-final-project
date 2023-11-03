@@ -12,6 +12,7 @@ export const getRegion = cache(async () => {
   return selectedRegion;
 });
 
+// For dynamic rendering
 export const getRegionById = cache(async (id: number) => {
   const [region] = await sql<Region[]>`
     SELECT
@@ -22,4 +23,17 @@ export const getRegionById = cache(async (id: number) => {
       id = ${id}
   `;
   return region;
+});
+
+// For displaying the states of region --> History of events
+export const getRegionByState = cache(async (stateOfAustria: string) => {
+  const [regionState] = await sql<Region[]>`
+    SELECT
+      *
+    FROM
+      region
+    WHERE
+      stateOfAustria = ${stateOfAustria}
+  `;
+  return regionState;
 });
