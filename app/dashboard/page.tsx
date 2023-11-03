@@ -5,8 +5,9 @@ import { redirect } from 'next/navigation';
 import { getPollution } from '../../database/pollution';
 import { getRegion } from '../../database/region';
 import {
+  getAllEventsFromUserBySessionToken,
   getUserBySessionToken,
-  getUserEventBySessionToken,
+  UserEvent,
 } from '../../database/users';
 import EventsForm from './EventsForm';
 
@@ -26,7 +27,13 @@ export default async function DashboardPage() {
   if (!user) redirect('/login?returnTo=/dashboard');
 
   // Display the events for the current logged-in user
-  const userEvent = await getUserEventBySessionToken(sessionTokenCookie.value);
+  const userEvent: UserEvent[] = await getAllEventsFromUserBySessionToken(
+    sessionTokenCookie.value,
+  );
+
+  if (userEvent) {
+    console.log('Checking: ', userEvent);
+  }
 
   // Display the pollution and region calling the function of database query
   const pollutionId = await getPollution();
@@ -45,25 +52,53 @@ export default async function DashboardPage() {
         />
       </div>
 
-      {/* <div>
-        {userEvent.length > 0 ? (
-          <>
-            <h2>Events For {user.firstName}</h2>
-            <ul>
-              {userEvent.map((event) => (
-                <ul>
-                  <li key={`event-${event.eventId}`}>{event.report}</li>
-                  <li>{event.damageEstimation}</li>
-                  <li>{event.date}</li>
-                  <li>{event.adminComment}</li>
-                </ul>
-              ))}
-            </ul>
-          </>
-        ) : (
-          <h2> No events yet</h2>
-        )}
-      </div> */}
+      {userEvent.length > 0 ? (
+        <div>
+          {userEvent.map((event: UserEvent) => (
+            <div key={`event-${event.eventId}`}>
+              <h1>Events from {event.firstName}</h1>
+              <ul>
+                <li>
+                  Report: <p>{event.report}</p>
+                </li>
+                <li>
+                  Damage Estimation: <p>{event.damageEstimation}</p>
+                </li>
+                <li>
+                  Date: <p>{event.date}</p>
+                </li>
+                <li>
+                  Image:
+                  <img
+                    src={event.secureUrl}
+                    alt="no image yet"
+                    width={400}
+                    height={350}
+                  />
+                </li>
+              </ul>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <h2> No events yet</h2>
+      )}
+
+      {/*  <div>
+        <ul>
+          <h2> Events for {userEvent.firstName}</h2>
+          <li>{userEvent?.pollutionId}</li>
+          <li>{userEvent?.regionId}</li>
+          <li>{userEvent?.report}</li>
+          <li>{userEvent?.damageEstimation}</li>
+          <li>{userEvent?.date}</li>
+          <li>{userEvent?.adminComment}</li>
+          <li>
+            Image:
+            <img src={userEvent?.secureUrl} alt="no image yet" />
+          </li>
+        </ul>
+        </div> */}
     </>
   );
 }

@@ -16,6 +16,7 @@ export type UserEvent = {
   damageEstimation: string;
   date: string;
   adminComment: string;
+  secureUrl: string;
   firstName: string;
 };
 
@@ -119,8 +120,9 @@ export const getUserBySessionToken = cache(async (token: string) => {
 });
 
 // Display only the events from the logged-in user
-export const getUserEventBySessionToken = cache(async (token: string) => {
-  const [events] = await sql<UserEvent[]>`
+export const getAllEventsFromUserBySessionToken = cache(
+  async (token: string) => {
+    const events = await sql<UserEvent[]>`
       SELECT
         events.id AS event_id,
         events.pollution_id AS pollution_id,
@@ -146,5 +148,6 @@ export const getUserEventBySessionToken = cache(async (token: string) => {
           sessions.expiry_timestamp > now()
         )
   `;
-  return events;
-});
+    return events;
+  },
+);

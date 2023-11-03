@@ -54,7 +54,6 @@ export default function EventsForm({
             setImageSrc(url);
             console.log('Secure URL: ', url);
 
-            // After getting the secure URL, call handleEventCreation without await. The ".then" executes it in a similar way
             handleEventCreation(url);
           }
         })
