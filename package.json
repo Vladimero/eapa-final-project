@@ -10,6 +10,7 @@
     "migrate": "ley --require tsm"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.19.2",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "ley": "^0.8.1",

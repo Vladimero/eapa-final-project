@@ -9,6 +9,7 @@ import {
 import { getPollution } from '../../database/pollution';
 import { getRegion } from '../../database/region';
 import { getUserBySessionToken } from '../../database/users';
+import GoogleMapView from '../components/GoogleMapView';
 import EventsForm from './EventsForm';
 
 export default async function DashboardPage() {
@@ -46,9 +47,9 @@ export default async function DashboardPage() {
 
       <div>
         <EventsForm
-          userId={user.id} // call the props inside the form
-          pollutionId={pollutionId} // call the props inside the form
-          regionId={regionId} // call the props inside the form
+          userId={user.id}
+          pollutionId={pollutionId}
+          regionId={regionId}
         />
       </div>
 
@@ -83,22 +84,7 @@ export default async function DashboardPage() {
       ) : (
         <h2> No events yet</h2>
       )}
-
-      {/*  <div>
-        <ul>
-          <h2> Events for {userEvent.firstName}</h2>
-          <li>{userEvent?.pollutionId}</li>
-          <li>{userEvent?.regionId}</li>
-          <li>{userEvent?.report}</li>
-          <li>{userEvent?.damageEstimation}</li>
-          <li>{userEvent?.date}</li>
-          <li>{userEvent?.adminComment}</li>
-          <li>
-            Image:
-            <img src={userEvent?.secureUrl} alt="no image yet" />
-          </li>
-        </ul>
-        </div> */}
+      <GoogleMapView />
     </>
   );
 }
