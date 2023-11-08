@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, useState } from 'react';
 import { Pollution } from '../../migrations/00000-createPollution';
 import { Region } from '../../migrations/00002-createRegion';
+import GoogleMapView from '../components/GoogleMapView';
 
 // Parse the props of pollution and region inside the parameters
 export default function EventsForm({
@@ -202,6 +203,7 @@ export default function EventsForm({
         )}
       </div>
       <br />
+      <GoogleMapView />
     </form>
   );
 }

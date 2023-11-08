@@ -9,7 +9,6 @@ import {
 import { getPollution } from '../../database/pollution';
 import { getRegion } from '../../database/region';
 import { getUserBySessionToken } from '../../database/users';
-import GoogleMapView from '../components/GoogleMapView';
 import EventsForm from './EventsForm';
 
 export default async function DashboardPage() {
@@ -84,7 +83,6 @@ export default async function DashboardPage() {
       ) : (
         <h2> No events yet</h2>
       )}
-      <GoogleMapView />
     </>
   );
 }

@@ -39,7 +39,7 @@ export default async function RootLayout(props: Props) {
           <div>
             {user ? (
               <>
-                {/* <div>Welcome {user.firstName}</div> */}
+                <div>Welcome {user.firstName}</div>
                 <LogoutButton />
               </>
             ) : (
