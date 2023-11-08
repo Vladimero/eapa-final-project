@@ -7,7 +7,6 @@ import {
   useLoadScript,
 } from '@react-google-maps/api';
 import React, { useRef, useState } from 'react';
-import GetLocationButton from './GetLocationButton';
 
 type LatLng = {
   lat: number;
@@ -81,7 +80,7 @@ export default function GoogleMapView() {
         >
           <input type="text" placeholder="Search for a location" />
         </Autocomplete>
-        <GetLocationButton onClick={handleGetLocationClick} />
+        <button onClick={handleGetLocationClick}>Get location</button>
       </div>
       <div>
         <GoogleMap
