@@ -13,6 +13,8 @@ const eventSchema = z.object({
   date: z.string().min(3),
   secureUrl: z.string().min(3),
   adminComment: z.string().min(3),
+  latitude: z.number(),
+  longitude: z.number(),
 });
 
 export type CreateEventResponseBodyPost =
@@ -26,6 +28,8 @@ export type CreateEventResponseBodyPost =
         date: string;
         secureUrl: string;
         adminComment: string;
+        latitude: number;
+        longitude: number;
       };
     }
   | {
@@ -77,6 +81,8 @@ export async function POST(
     result.data.date,
     result.data.secureUrl,
     result.data.adminComment,
+    result.data.latitude,
+    result.data.longitude,
   );
 
   // 4. If the event creation fails, return an error
@@ -101,6 +107,8 @@ export async function POST(
       date: newEvent.date,
       secureUrl: newEvent.secureUrl,
       adminComment: newEvent.adminComment,
+      latitude: newEvent.latitude,
+      longitude: newEvent.longitude,
     },
   });
 }

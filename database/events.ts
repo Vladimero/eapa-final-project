@@ -9,8 +9,10 @@ export type UserEvent = {
   report: string;
   damageEstimation: string;
   date: string;
-  adminComment: string;
   secureUrl: string;
+  adminComment: string;
+  latitude: number;
+  longitude: number;
   firstName: string;
 };
 
@@ -24,12 +26,14 @@ export const createEvent = cache(
     date: string,
     secureUrl: string,
     adminComment: string,
+    latitude: number,
+    longitude: number,
   ) => {
     const [event] = await sql<Events[]>`
       INSERT INTO events
-        (user_id, pollution_id, region_id, report, damage_estimation, date, secure_url, admin_comment)
+        (user_id, pollution_id, region_id, report, damage_estimation, date, secure_url, admin_comment, latitude, longitude)
       VALUES
-        (${userId},${pollutionId},${regionId},${report},${damageEstimation},${date},${secureUrl},${adminComment})
+        (${userId},${pollutionId},${regionId},${report},${damageEstimation},${date},${secureUrl},${adminComment},${latitude},${longitude})
       RETURNING *
     `;
 
@@ -50,6 +54,8 @@ export const getAllEventsFromUserBySessionToken = cache(
         events.date AS date,
         events.secure_url AS secure_url,
         events.admin_comment AS admin_comment,
+        events.latitude AS latitude,
+        events.longitude AS longitude,
         users.first_name AS first_name
       FROM
         events
@@ -90,6 +96,8 @@ export const getAllEventsFromOneUserForAdmin = cache(async () => {
       events.date AS date,
       events.secure_url AS secure_url,
       events.admin_comment AS admin_comment,
+      events.latitude AS latitude,
+      events.longitude AS longitude,
       users.first_name AS first_name
     FROM
       events
@@ -115,6 +123,8 @@ export const getEventFromOneUserById = cache(async (id: number) => {
       events.date AS date,
       events.secure_url AS secure_url,
       events.admin_comment AS admin_comment,
+      events.latitude AS latitude,
+      events.longitude AS longitude,
       users.first_name AS first_name
     FROM
       events

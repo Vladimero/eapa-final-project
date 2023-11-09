@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, useState } from 'react';
 import { Pollution } from '../../migrations/00000-createPollution';
 import { Region } from '../../migrations/00002-createRegion';
-import AutocompleteAndMapView from '../components/AutocompleteAndMapView';
+import AutocompleteAndMapView from './AutocompleteAndMapView';
 
 // Parse the props of pollution and region inside the parameters
 export default function EventsForm({
@@ -33,8 +33,6 @@ export default function EventsForm({
     lat: null,
     lng: null,
   });
-
-  console.log(selectedLocation);
 
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
@@ -121,7 +119,14 @@ export default function EventsForm({
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        handleImageUpload();
+
+        if (selectedLocation.lat !== null && selectedLocation.lng !== null) {
+          // Valid address selected, proceed with image upload and event creation
+          handleImageUpload();
+        } else {
+          // Display an error message or take any other action for invalid address
+          console.error('Please select a valid address.');
+        }
       }}
     >
       <div>
@@ -214,11 +219,13 @@ export default function EventsForm({
           height={350}
         />
 
-        {uploadImage && (
-          <p>
-            <button>Add event!</button>
-          </p>
-        )}
+        {uploadImage &&
+          selectedLocation.lat !== null &&
+          selectedLocation.lng !== null && (
+            <p>
+              <button>Add event!</button>
+            </p>
+          )}
       </div>
       <br />
       <AutocompleteAndMapView

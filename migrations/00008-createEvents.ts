@@ -10,6 +10,8 @@ export type Events = {
   date: string;
   secureUrl: string;
   adminComment: string;
+  latitude: number;
+  longitude: number;
 };
 
 export async function up(sql: Sql) {
@@ -23,7 +25,9 @@ export async function up(sql: Sql) {
       damage_estimation varchar(20) NOT NULL,
       date varchar(20) NOT NULL,
       secure_url varchar(250) NOT NULL,
-      admin_comment text NOT NULL
+      admin_comment text NOT NULL,
+      latitude numeric NOT NULL,
+      longitude numeric NOT NULL
     );
   `;
 }

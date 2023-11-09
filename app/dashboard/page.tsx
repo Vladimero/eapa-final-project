@@ -76,6 +76,12 @@ export default async function DashboardPage() {
                     height={350}
                   />
                 </li>
+                <li>
+                  Latidude: <p>{event.latitude}</p>
+                </li>
+                <li>
+                  Longitude: <p>{event.longitude}</p>
+                </li>
               </ul>
             </div>
           ))}
