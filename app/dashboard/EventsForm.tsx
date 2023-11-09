@@ -38,14 +38,12 @@ export default function EventsForm({
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
   // Preview the uploaded image on page
-
   const handleImagePreview = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
     setUploadImage(file);
   };
 
   // Upload image to Cloudinary API
-
   const handleImageUpload = () => {
     if (uploadImage) {
       const formData = new FormData();
@@ -109,23 +107,14 @@ export default function EventsForm({
     });
   };
 
-  const handleSelect = (latLng: { lat: number; lng: number }) => {
-    // Access lat and lng values in the parent component
-    console.log('Selected Lat:', latLng.lat);
-    console.log('Selected Lng:', latLng.lng);
-  };
-
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-
         if (selectedLocation.lat !== null && selectedLocation.lng !== null) {
-          // Valid address selected, proceed with image upload and event creation
           handleImageUpload();
         } else {
-          // Display an error message or take any other action for invalid address
-          console.error('Please select a valid address.');
+          alert('Please select an existing address.');
         }
       }}
     >
@@ -230,8 +219,8 @@ export default function EventsForm({
       <br />
       <AutocompleteAndMapView
         onLocationChange={setSelectedLocation}
+        // Access lat and lng values in the parent component
         onSelect={(latLng) => {
-          // Access lat and lng values in the parent component
           console.log('Selected Lat:', latLng.lat);
           console.log('Selected Lng:', latLng.lng);
         }}
