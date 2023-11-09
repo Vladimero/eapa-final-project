@@ -1,34 +1,21 @@
 'use client';
 
-import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, useState } from 'react';
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from 'react-places-autocomplete';
 import { Pollution } from '../../migrations/00000-createPollution';
 import { Region } from '../../migrations/00002-createRegion';
-import GetLocationButton from '../components/GetLocationButton';
-
-type LatLng = {
-  lat: number;
-  lng: number;
-};
+import AutocompleteAndMapView from '../components/AutocompleteAndMapView';
 
 // Parse the props of pollution and region inside the parameters
-export default function EventsForm(
-  props: { lat: number; lng: number },
-  {
-    userId,
-    pollutionId,
-    regionId,
-  }: {
-    userId: number;
-    pollutionId: Pollution[];
-    regionId: Region[];
-  },
-) {
+export default function EventsForm({
+  userId,
+  pollutionId,
+  regionId,
+}: {
+  userId: number;
+  pollutionId: Pollution[];
+  regionId: Region[];
+}) {
   const [report, setReport] = useState('');
   const [damageEstimation, setDamageEstimation] = useState('');
   const [date, setDate] = useState('');
@@ -39,64 +26,18 @@ export default function EventsForm(
   const [imageSrc, setImageSrc] = useState('');
   const router = useRouter();
 
-  const [selectedPlace, setSelectedPlace] = useState<string>('');
-  const [currentLocation, setCurrentLocation] = useState<LatLng>({
-    lat: 0,
-    lng: 0,
+  const [selectedLocation, setSelectedLocation] = useState<{
+    lat: number | null;
+    lng: number | null;
+  }>({
+    lat: null,
+    lng: null,
   });
-  const [lat, setLat] = useState(0);
-  const [lng, setLng] = useState(0);
+
+  console.log(selectedLocation);
 
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
-
-  // Load script for google map
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
-    libraries: ['places'],
-    language: 'en',
-  });
-
-  if (!isLoaded) return <div>Loading....</div>;
-
-  // Default center for the map
-  const center: LatLng = { lat: props.lat, lng: props.lng };
-
-  // Handle change in PlaceAutocomplete input
-  const handleChange = (value: string) => {
-    setSelectedPlace(value);
-  };
-
-  // Handle selection of an address
-  const handleSelect = async (value: string) => {
-    const results = await geocodeByAddress(value);
-    if (results && results[0]) {
-      const latLng = await getLatLng(results[0]);
-      setSelectedPlace(value);
-      setCurrentLocation({
-        lat: latLng.lat,
-        lng: latLng.lng,
-      });
-    }
-  };
-
-  // Handle getting the user's current location
-  const handleGetLocationClick = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setSelectedPlace('');
-          setCurrentLocation({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.log(error);
-        },
-      );
-    } else {
-      console.log('Geolocation is not supported by this browser.');
-    }
-  };
 
   // Preview the uploaded image on page
 
@@ -154,6 +95,8 @@ export default function EventsForm(
         date,
         secureUrl,
         adminComment,
+        latitude: selectedLocation.lat,
+        longitude: selectedLocation.lng,
       }),
     }).then(() => {
       router.refresh();
@@ -166,6 +109,12 @@ export default function EventsForm(
       setImageSrc('');
       setUploadImage(null);
     });
+  };
+
+  const handleSelect = (latLng: { lat: number; lng: number }) => {
+    // Access lat and lng values in the parent component
+    console.log('Selected Lat:', latLng.lat);
+    console.log('Selected Lng:', latLng.lng);
   };
 
   return (
@@ -272,70 +221,14 @@ export default function EventsForm(
         )}
       </div>
       <br />
-      <div>
-        <div>
-          <PlacesAutocomplete
-            value={selectedPlace}
-            onChange={handleChange}
-            onSelect={handleSelect}
-          >
-            {({
-              getInputProps,
-              suggestions,
-              getSuggestionItemProps,
-              loading,
-            }) => (
-              <div>
-                <input
-                  {...getInputProps({
-                    placeholder: 'Search Places ...',
-                  })}
-                />
-                <div>
-                  {loading && <div>Loading...</div>}
-                  {suggestions.map((suggestion) => {
-                    const style = suggestion.active
-                      ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                      : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                    return (
-                      <div
-                        {...getSuggestionItemProps(suggestion, {
-                          style,
-                        })}
-                      >
-                        <span>{suggestion.description}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </PlacesAutocomplete>
-
-          <GetLocationButton onClick={handleGetLocationClick} />
-        </div>
-        <div>
-          <GoogleMap
-            zoom={currentLocation.lat || selectedPlace ? 18 : 12}
-            center={currentLocation || center}
-            mapContainerStyle={{
-              width: '80%',
-              height: '600px',
-              margin: 'auto',
-            }}
-          >
-            {selectedPlace && (
-              <Marker
-                position={{
-                  lat: Number(props.lat),
-                  lng: Number(props.lng),
-                }}
-              />
-            )}
-            {currentLocation.lat && <Marker position={currentLocation} />}
-          </GoogleMap>
-        </div>
-      </div>
+      <AutocompleteAndMapView
+        onLocationChange={setSelectedLocation}
+        onSelect={(latLng) => {
+          // Access lat and lng values in the parent component
+          console.log('Selected Lat:', latLng.lat);
+          console.log('Selected Lng:', latLng.lng);
+        }}
+      />
     </form>
   );
 }
