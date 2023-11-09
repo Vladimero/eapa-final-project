@@ -1,6 +1,7 @@
 'use server';
 
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { deleteSessionByToken } from '../../../database/sessions';
 
 export async function logout() {
@@ -18,4 +19,7 @@ export async function logout() {
   cookieFromBrowser.set('sessionToken', '', {
     maxAge: -1, // Date before "now" --> means expired date
   });
+
+  // 4. Redirect to the login page
+  redirect('/');
 }

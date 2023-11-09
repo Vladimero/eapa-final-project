@@ -63,7 +63,7 @@ export const getUserByFirstName = cache(async (firstName: string) => {
 });
 
 // For role concerned displaying information to the user
-export const getUserByRole = cache(async (isAdmin: boolean) => {
+export const getAdminByBoolean = cache(async (isAdmin: boolean) => {
   const [user] = await sql<Users[]>`
       SELECT
         id,
@@ -71,7 +71,7 @@ export const getUserByRole = cache(async (isAdmin: boolean) => {
       FROM
         users
       WHERE
-        is_admin = ${isAdmin}
+        is_admin = ${isAdmin === true}
   `;
   return user;
 });
@@ -89,7 +89,7 @@ export const getUserWithPasswordHashByEmail = cache(async (email: string) => {
   return user;
 });
 
-// Inner join compares the tables parallel
+// Inner join compares the tables parallel and checks if a user is logged-in
 export const getUserBySessionToken = cache(async (token: string) => {
   const [user] = await sql<Users[]>`
       SELECT
@@ -106,3 +106,27 @@ export const getUserBySessionToken = cache(async (token: string) => {
   `;
   return user;
 });
+
+// Inner join in order to check if the current session token belongs to an admin
+
+export const getAdminByBooleanAndSessionToken = cache(
+  async (isAdmin: boolean, token: string) => {
+    const [user] = await sql<Users[]>`
+    SELECT
+      users.id,
+      users.email,
+      users.is_admin AS isAdmin
+    FROM
+      users
+    INNER JOIN
+      sessions ON (
+        sessions.token = ${token} AND
+        sessions.user_id = users.id AND
+        sessions.expiry_timestamp > now()
+      )
+    WHERE
+      users.is_admin = ${isAdmin}
+  `;
+    return user;
+  },
+);

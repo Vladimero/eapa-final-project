@@ -8,10 +8,13 @@ import {
 } from '../../database/events';
 import { getPollution } from '../../database/pollution';
 import { getRegion } from '../../database/region';
-import { getUserBySessionToken } from '../../database/users';
+import {
+  getAdminByBooleanAndSessionToken,
+  getUserBySessionToken,
+} from '../../database/users';
 import EventsForm from './EventsForm';
 
-export default async function DashboardPage() {
+export default async function DashboardUserPage() {
   // 1. Check if the cookie with session token exists
   const sessionTokenCookie = cookies().get('sessionToken');
 
@@ -20,7 +23,13 @@ export default async function DashboardPage() {
     sessionTokenCookie &&
     (await getUserBySessionToken(sessionTokenCookie.value));
 
-  // 2.5 Check here if the valid session token belongs to an admin --> query database for it (getAdminUserBySessionToken)
+  // 2.5 Check here if the valid session token belongs to an admin
+  const admin =
+    sessionTokenCookie &&
+    (await getAdminByBooleanAndSessionToken(true, sessionTokenCookie.value));
+
+  // 2.6 If the user is an admin, redirect to the admin dashboard
+  if (admin) redirect('/admin-dashboard');
 
   // 3. If session token is invalid redirect to login with returnTo
   // when there is no sessionToken redirect to login page. After login returnTo dashboard page
@@ -41,7 +50,7 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <h1>Dashboard</h1>
+      <h1>User Dashboard</h1>
       <br />
 
       <div>

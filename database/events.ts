@@ -77,7 +77,7 @@ export const getAllEventsFromUserBySessionToken = cache(
 );
 
 // Admin sees all created events from all users
-export const getAllEventsForAdminUser = cache(async () => {
+export const getAllEventsForAdmin = cache(async () => {
   const eventsForAdmin = await sql<Events[]>`
     SELECT * FROM events
   `;
