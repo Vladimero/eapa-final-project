@@ -60,12 +60,14 @@ export default async function DashboardUserPage() {
           regionId={regionId}
         />
       </div>
+      <h2>{user.firstName}`s Events:</h2>
+      <br />
 
       {userEvent.length > 0 ? (
         <div>
           {userEvent.map((event: UserEvent) => (
             <div key={`event-${event.eventId}`}>
-              <h2>Events from The {event.date}</h2>
+              <h3>Event from the: {event.date}</h3>
               <ul>
                 <li>
                   Report: <p>{event.report}</p>

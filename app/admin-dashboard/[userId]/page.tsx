@@ -18,22 +18,16 @@ export default async function EventsFromOneUserPage(props: Props) {
   return (
     <>
       <div>
-        <div>
-          {allEventsFromOneUser.map(
-            (event: AdminEventViewOnAllEventsFromOneUser) => (
-              <div key={`event-${event.eventId}`}>
-                <h1>See all events from {event.firstName}</h1>
-              </div>
-            ),
-          )}
-        </div>
         {allEventsFromOneUser.length > 0 ? (
           <div>
             {allEventsFromOneUser.map(
               (event: AdminEventViewOnAllEventsFromOneUser) => (
                 <div key={`event-${event.eventId}`}>
-                  {/* <h2>See all events from {event.firstName} </h2> */}
+                  <h2>See all events from {event.firstName} </h2>
                   <ul>
+                    <li>
+                      Report: <p>{event.report}</p>
+                    </li>
                     <li>
                       Report: <p>{event.report}</p>
                     </li>

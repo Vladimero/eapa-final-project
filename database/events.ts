@@ -15,6 +15,22 @@ export type UserEvent = {
   longitude: number;
   firstName: string;
 };
+/*
+export type AllEventsWithName = {
+  id: number;
+  userId: number;
+  pollutionId: number;
+  regionId: number;
+  report: string;
+  damageEstimation: string;
+  date: string;
+  secureUrl: string;
+  adminComment: string | null;
+  latitude: number;
+  longitude: number;
+  firstName: string;
+};
+*/
 
 export type AdminEventViewOnAllEventsFromOneUser = {
   eventId: number;
@@ -123,7 +139,9 @@ export const updateAdminComment = cache(
 // Admin sees all events from only one user
 export const getAllEventsFromOneUserForAdminByUserId = cache(
   async (userId: number) => {
-    const allEventsForAdminFromOneUser = await sql<AdminEventViewOnAllEventsFromOneUser[]>`
+    const allEventsForAdminFromOneUser = await sql<
+      AdminEventViewOnAllEventsFromOneUser[]
+    >`
   SELECT
     events.id AS event_id,
     events.user_id AS userId,

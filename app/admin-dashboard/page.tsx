@@ -40,6 +40,9 @@ export default async function DashboardAdminPage() {
                   <li>
                     Longitude: <p>{event.longitude}</p>
                   </li>
+                  <li>
+                    Comment: <p>{event.adminComment}</p>
+                  </li>
                 </ul>
               </div>
             ))}

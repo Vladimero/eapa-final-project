@@ -59,20 +59,6 @@ export const getUserByFirstName = cache(async (firstName: string) => {
   return user;
 });
 
-// For role concerned displaying information to the user
-export const getAdminByBoolean = cache(async (isAdmin: boolean) => {
-  const [user] = await sql<Users[]>`
-      SELECT
-        id,
-        is_admin
-      FROM
-        users
-      WHERE
-        is_admin = ${isAdmin === true}
-  `;
-  return user;
-});
-
 // For login page: ensure that only registered users can log in
 export const getUserWithPasswordHashByEmail = cache(async (email: string) => {
   const [user] = await sql<UserWithPasswordHash[]>`
