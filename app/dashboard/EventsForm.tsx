@@ -99,7 +99,6 @@ export default function UserEventsForm({
       setReport('');
       setDamageEstimation('');
       setDate('');
-      // setAdminComment('');
       setRegion('');
       setPollution('');
       setImageSrc('');

@@ -2,6 +2,7 @@ import {
   AdminEventViewOnAllEventsFromOneUser,
   getAllEventsFromOneUserForAdminByUserId,
 } from '../../../database/events';
+import AdminEventsForm from './AdminEventsForm';
 
 type Props = {
   params: {
@@ -56,6 +57,9 @@ export default async function EventsFromOneUserPage(props: Props) {
                     </li>
                     <li>
                       Longitude: <p>{event.longitude}</p>
+                    </li>
+                    <li>
+                      <AdminEventsForm eventId={event.eventId} />
                     </li>
                   </ul>
                 </div>

@@ -54,10 +54,10 @@ export async function POST(
     );
   }
 
-  // 1. get the token from the cookie
+  // 3. get the token from the cookie
   const sessionTokenCookie = cookies().get('sessionToken');
 
-  // 2. check if the token has a valid session
+  // 4. check if the token has a valid session
   const session =
     sessionTokenCookie &&
     (await getValidSessionByToken(sessionTokenCookie.value));
@@ -71,7 +71,7 @@ export async function POST(
     );
   }
 
-  // 3. Create the event
+  // 5. Create the event
   const newEvent = await createEvent(
     result.data.userId,
     result.data.pollutionId,
@@ -85,7 +85,7 @@ export async function POST(
     result.data.longitude,
   );
 
-  // 4. If the event creation fails, return an error
+  // 6. If the event creation fails, return an error
 
   if (!newEvent) {
     return NextResponse.json(
@@ -96,7 +96,7 @@ export async function POST(
     );
   }
 
-  // 6. Return the event
+  // 7. Return the event
   return NextResponse.json({
     event: {
       userId: newEvent.userId,

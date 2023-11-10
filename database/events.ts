@@ -31,6 +31,11 @@ export type AdminEventViewOnAllEventsFromOneUser = {
   firstName: string;
 };
 
+export type UpdateAdminComment = {
+  eventId: number;
+  adminComment: string;
+};
+
 export const createEvent = cache(
   async (
     userId: number,
@@ -99,12 +104,26 @@ export const getAllEventsForAdmin = cache(async () => {
   return allEventsForAdmin;
 });
 
+// Update admin comment
+export const updateAdminComment = cache(
+  async (eventId: number, adminComment: string) => {
+    const [updatedEvent] = await sql<UpdateAdminComment[]>`
+    UPDATE
+      events
+    SET
+      admin_comment = ${adminComment}
+    WHERE
+      id = ${eventId}
+    RETURNING *
+  `;
+    return updatedEvent;
+  },
+);
+
 // Admin sees all events from only one user
 export const getAllEventsFromOneUserForAdminByUserId = cache(
   async (userId: number) => {
-    const allEventsForAdminFromOneUser = await sql<
-      AdminEventViewOnAllEventsFromOneUser[]
-    >`
+    const allEventsForAdminFromOneUser = await sql<AdminEventViewOnAllEventsFromOneUser[]>`
   SELECT
     events.id AS event_id,
     events.user_id AS userId,
