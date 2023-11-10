@@ -10,7 +10,22 @@ export type UserEvent = {
   damageEstimation: string;
   date: string;
   secureUrl: string;
-  adminComment: string;
+  adminComment: string | null;
+  latitude: number;
+  longitude: number;
+  firstName: string;
+};
+
+export type AdminEventViewOnAllEventsFromOneUser = {
+  eventId: number;
+  userId: number;
+  pollutionId: number;
+  regionId: number;
+  report: string;
+  damageEstimation: string;
+  date: string;
+  secureUrl: string;
+  adminComment: string | null;
   latitude: number;
   longitude: number;
   firstName: string;
@@ -25,7 +40,7 @@ export const createEvent = cache(
     damageEstimation: string,
     date: string,
     secureUrl: string,
-    adminComment: string,
+    adminComment: string | null,
     latitude: number,
     longitude: number,
   ) => {
@@ -41,7 +56,7 @@ export const createEvent = cache(
   },
 );
 
-// Display only the events from the logged-in user
+// Current logged-in user sees all his events
 export const getAllEventsFromUserBySessionToken = cache(
   async (token: string) => {
     const events = await sql<UserEvent[]>`
@@ -78,60 +93,42 @@ export const getAllEventsFromUserBySessionToken = cache(
 
 // Admin sees all created events from all users
 export const getAllEventsForAdmin = cache(async () => {
-  const eventsForAdmin = await sql<Events[]>`
+  const allEventsForAdmin = await sql<Events[]>`
     SELECT * FROM events
   `;
-  return eventsForAdmin;
+  return allEventsForAdmin;
 });
 
-// Admin should see all events from only one user after selection
-export const getAllEventsFromOneUserForAdmin = cache(async () => {
-  const [events] = await sql<UserEvent[]>`
-    SELECT
-      events.id AS event_id,
-      events.pollution_id AS pollution_id,
-      events.region_id AS region_id,
-      events.report AS report,
-      events.damage_estimation AS damage_estimation,
-      events.date AS date,
-      events.secure_url AS secure_url,
-      events.admin_comment AS admin_comment,
-      events.latitude AS latitude,
-      events.longitude AS longitude,
-      users.first_name AS first_name
-    FROM
-      events
-    INNER JOIN
-      users ON events.user_id = users.id
-    INNER JOIN
-      pollution ON events.pollution_id = pollution.id
-    INNER JOIN
-      region ON events.region_id = region.id
+// Admin sees all events from only one user
+export const getAllEventsFromOneUserForAdminByUserId = cache(
+  async (userId: number) => {
+    const allEventsForAdminFromOneUser = await sql<
+      AdminEventViewOnAllEventsFromOneUser[]
+    >`
+  SELECT
+    events.id AS event_id,
+    events.user_id AS userId,
+    events.pollution_id AS pollution_id,
+    events.region_id AS region_id,
+    events.report AS report,
+    events.damage_estimation AS damage_estimation,
+    events.date AS date,
+    events.secure_url AS secure_url,
+    events.admin_comment AS admin_comment,
+    events.latitude AS latitude,
+    events.longitude AS longitude,
+    users.first_name AS first_name
+  FROM
+    events
+  INNER JOIN
+    users ON events.user_id = users.id
+  INNER JOIN
+    pollution ON events.pollution_id = pollution.id
+  INNER JOIN
+    region ON events.region_id = region.id
+  WHERE
+    events.user_id = ${userId}
   `;
-  return events;
-});
-
-// For dynamic rendering, after clicking on one event (dynamic page)
-export const getEventFromOneUserById = cache(async (id: number) => {
-  const [events] = await sql<UserEvent[]>`
-    SELECT
-      events.id AS event_id,
-      events.pollution_id AS pollution_id,
-      events.region_id AS region_id,
-      events.report AS report,
-      events.damage_estimation AS damage_estimation,
-      events.date AS date,
-      events.secure_url AS secure_url,
-      events.admin_comment AS admin_comment,
-      events.latitude AS latitude,
-      events.longitude AS longitude,
-      users.first_name AS first_name
-    FROM
-      events
-    INNER JOIN
-      users ON posts.user_id = users.id
-    WHERE
-      events.id = ${id}
-  `;
-  return events;
-});
+    return allEventsForAdminFromOneUser;
+  },
+);

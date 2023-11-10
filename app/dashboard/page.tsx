@@ -12,7 +12,7 @@ import {
   getAdminByBooleanAndSessionToken,
   getUserBySessionToken,
 } from '../../database/users';
-import EventsForm from './EventsForm';
+import UserEventsForm from './EventsForm';
 
 export default async function DashboardUserPage() {
   // 1. Check if the cookie with session token exists
@@ -54,7 +54,7 @@ export default async function DashboardUserPage() {
       <br />
 
       <div>
-        <EventsForm
+        <UserEventsForm
           userId={user.id}
           pollutionId={pollutionId}
           regionId={regionId}
@@ -65,16 +65,13 @@ export default async function DashboardUserPage() {
         <div>
           {userEvent.map((event: UserEvent) => (
             <div key={`event-${event.eventId}`}>
-              <h1>Events from {event.firstName}</h1>
+              <h2>Events from The {event.date}</h2>
               <ul>
                 <li>
                   Report: <p>{event.report}</p>
                 </li>
                 <li>
                   Damage Estimation: <p>{event.damageEstimation}</p>
-                </li>
-                <li>
-                  Date: <p>{event.date}</p>
                 </li>
                 <li>
                   Image:

@@ -7,7 +7,7 @@ import { Region } from '../../migrations/00002-createRegion';
 import AutocompleteAndMapView from './AutocompleteAndMapView';
 
 // Parse the props of pollution and region inside the parameters
-export default function EventsForm({
+export default function UserEventsForm({
   userId,
   pollutionId,
   regionId,
@@ -99,7 +99,7 @@ export default function EventsForm({
       setReport('');
       setDamageEstimation('');
       setDate('');
-      setAdminComment('');
+      // setAdminComment('');
       setRegion('');
       setPollution('');
       setImageSrc('');
@@ -176,15 +176,6 @@ export default function EventsForm({
         <input
           value={date}
           onChange={(event) => setDate(event.currentTarget.value)}
-          required
-        />
-      </label>
-      <label>
-        Admin Comment:
-        <textarea
-          maxLength={250}
-          value={adminComment}
-          onChange={(event) => setAdminComment(event.currentTarget.value)}
           required
         />
       </label>

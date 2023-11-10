@@ -12,7 +12,7 @@ const eventSchema = z.object({
   damageEstimation: z.string().min(3),
   date: z.string().min(3),
   secureUrl: z.string().min(3),
-  adminComment: z.string().min(3),
+  adminComment: z.string().min(0).nullable(),
   latitude: z.number(),
   longitude: z.number(),
 });
@@ -27,7 +27,7 @@ export type CreateEventResponseBodyPost =
         damageEstimation: string;
         date: string;
         secureUrl: string;
-        adminComment: string;
+        adminComment: string | null;
         latitude: number;
         longitude: number;
       };
@@ -80,7 +80,7 @@ export async function POST(
     result.data.damageEstimation,
     result.data.date,
     result.data.secureUrl,
-    result.data.adminComment,
+    result.data.adminComment ?? null, // Pass null explicitly if adminComment is not provided
     result.data.latitude,
     result.data.longitude,
   );

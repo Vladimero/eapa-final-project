@@ -11,15 +11,13 @@ export async function logout() {
   const token = cookieFromBrowser.get('sessionToken');
 
   // 2. Delete the session from database
-
   if (token) await deleteSessionByToken(token.value);
 
   // 3. Delete the session from browser
-
   cookieFromBrowser.set('sessionToken', '', {
     maxAge: -1, // Date before "now" --> means expired date
   });
 
-  // 4. Redirect to the login page
+  // 4. Redirect to the home page
   redirect('/');
 }
