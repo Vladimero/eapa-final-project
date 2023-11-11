@@ -1,9 +1,8 @@
 import Link from 'next/link';
-import { getAllEventsForAdmin } from '../../database/events';
-import { Events } from '../../migrations/00008-createEvents';
+import { EventsForAdmin, getAllEventsForAdmin } from '../../database/events';
 
 export default async function DashboardAdminPage() {
-  const allEvents: Events[] = await getAllEventsForAdmin();
+  const allEvents: EventsForAdmin[] = await getAllEventsForAdmin();
 
   return (
     <>
@@ -11,10 +10,12 @@ export default async function DashboardAdminPage() {
       <div>
         {allEvents.length > 0 ? (
           <div>
-            {allEvents.map((event: Events) => (
+            {allEvents.map((event: EventsForAdmin) => (
               <div key={`event-${event.userId}`}>
                 <Link href={`/admin-dashboard/${event.userId}`}>
-                  <h2>Event from the {event.date}</h2>
+                  <h2>
+                    {event.firstName}`s event from: {event.date}
+                  </h2>
                 </Link>
                 <ul>
                   <li>
@@ -40,9 +41,11 @@ export default async function DashboardAdminPage() {
                   <li>
                     Longitude: <p>{event.longitude}</p>
                   </li>
-                  <li>
-                    Comment: <p>{event.adminComment}</p>
-                  </li>
+                  {event.adminComment ? (
+                    <li>
+                      Comment: <p>{event.adminComment}</p>
+                    </li>
+                  ) : null}
                 </ul>
               </div>
             ))}

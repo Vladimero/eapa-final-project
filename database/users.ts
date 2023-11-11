@@ -92,7 +92,6 @@ export const getUserBySessionToken = cache(async (token: string) => {
 });
 
 // Inner join in order to check if the current session token belongs to an admin
-
 export const getAdminByBooleanAndSessionToken = cache(
   async (isAdmin: boolean, token: string) => {
     const [user] = await sql<Users[]>`

@@ -90,6 +90,11 @@ export default async function DashboardUserPage() {
                 <li>
                   Longitude: <p>{event.longitude}</p>
                 </li>
+                {event.adminComment ? (
+                  <li>
+                    Comment: <p>{event.adminComment}</p>
+                  </li>
+                ) : null}
               </ul>
             </div>
           ))}

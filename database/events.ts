@@ -15,8 +15,8 @@ export type UserEvent = {
   longitude: number;
   firstName: string;
 };
-/*
-export type AllEventsWithName = {
+
+export type EventsForAdmin = {
   id: number;
   userId: number;
   pollutionId: number;
@@ -30,9 +30,8 @@ export type AllEventsWithName = {
   longitude: number;
   firstName: string;
 };
-*/
 
-export type AdminEventViewOnAllEventsFromOneUser = {
+export type ViewAllEventsFromOneUser = {
   eventId: number;
   userId: number;
   pollutionId: number;
@@ -112,10 +111,16 @@ export const getAllEventsFromUserBySessionToken = cache(
   },
 );
 
-// Admin sees all created events from all users
+// Admin sees all created events from all users, joined with firstName of users table
 export const getAllEventsForAdmin = cache(async () => {
-  const allEventsForAdmin = await sql<Events[]>`
-    SELECT * FROM events
+  const allEventsForAdmin = await sql<EventsForAdmin[]>`
+    SELECT
+      events.*,
+      users.first_name
+    FROM
+      events
+    INNER JOIN
+      users ON events.user_id = users.id
   `;
   return allEventsForAdmin;
 });
@@ -139,9 +144,7 @@ export const updateAdminComment = cache(
 // Admin sees all events from only one user
 export const getAllEventsFromOneUserForAdminByUserId = cache(
   async (userId: number) => {
-    const allEventsForAdminFromOneUser = await sql<
-      AdminEventViewOnAllEventsFromOneUser[]
-    >`
+    const allEventsForAdminFromOneUser = await sql<ViewAllEventsFromOneUser[]>`
   SELECT
     events.id AS event_id,
     events.user_id AS userId,

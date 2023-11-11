@@ -26,7 +26,7 @@ export default function AdminEventsForm({ eventId }: { eventId: number }) {
         if (adminComment !== '') {
           handleEventUpdate();
         } else {
-          alert('Please leave a valid comment!');
+          alert('Please enter a valid comment!');
         }
       }}
     >

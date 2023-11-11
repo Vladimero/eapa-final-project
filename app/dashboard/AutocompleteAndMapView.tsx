@@ -53,7 +53,7 @@ export default function AutocompleteAndMapView({
         lng: latLng.lng,
       });
       onLocationChange({ lat: latLng.lat, lng: latLng.lng });
-      onSelect(latLng); // Call onSelect prop to inform parent component about the selected latLng
+      onSelect(latLng); // Call onSelect props to inform parent component about the selected latLng
     }
   };
 
