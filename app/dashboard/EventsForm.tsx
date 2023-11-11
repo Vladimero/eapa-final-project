@@ -9,12 +9,12 @@ import AutocompleteAndMapView from './AutocompleteAndMapView';
 // Parse the props of pollution and region inside the parameters
 export default function UserEventsForm({
   userId,
-  pollutionId,
-  regionId,
+  pollutionKind, // new
+  regionState, // new
 }: {
   userId: number;
-  pollutionId: Pollution[];
-  regionId: Region[];
+  pollutionKind: Pollution[]; // new
+  regionState: Region[]; // new
 }) {
   const [report, setReport] = useState('');
   const [damageEstimation, setDamageEstimation] = useState('');
@@ -84,8 +84,10 @@ export default function UserEventsForm({
       method: 'POST',
       body: JSON.stringify({
         userId,
-        pollutionId: parseInt(pollution, 10),
-        regionId: parseInt(region, 10),
+        pollutionKind: pollution,
+        regionState: region,
+        // pollutionId: parseInt(pollution, 10),
+        // regionId: parseInt(region, 10),
         report,
         damageEstimation,
         date,
@@ -126,8 +128,11 @@ export default function UserEventsForm({
             required
           >
             <option value="">Select a region</option>
-            {regionId.map((region) => (
-              <option key={`regionId-${region.id}`} value={region.id}>
+            {regionState.map((region) => (
+              <option
+                key={`regionId-${region.stateOfAustria}`}
+                value={region.stateOfAustria}
+              >
                 {region.stateOfAustria}
               </option>
             ))}
@@ -144,8 +149,11 @@ export default function UserEventsForm({
             required
           >
             <option value="">Select a pollution</option>
-            {pollutionId.map((pollution) => (
-              <option key={`pollutionId-${pollution.id}`} value={pollution.id}>
+            {pollutionKind.map((pollution) => (
+              <option
+                key={`pollutionId-${pollution.kind}`}
+                value={pollution.kind}
+              >
                 {pollution.kind}
               </option>
             ))}

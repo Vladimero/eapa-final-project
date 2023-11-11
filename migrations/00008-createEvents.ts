@@ -3,8 +3,8 @@ import { Sql } from 'postgres';
 export type Events = {
   id: number;
   userId: number;
-  pollutionId: number;
-  regionId: number;
+  pollutionKind: string;
+  regionState: string;
   report: string;
   damageEstimation: string;
   date: string;
@@ -19,8 +19,8 @@ export async function up(sql: Sql) {
     CREATE TABLE events (
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       user_id integer REFERENCES users (id) ON DELETE CASCADE,
-      pollution_id integer REFERENCES pollution (id) ON DELETE CASCADE,
-      region_id integer REFERENCES region (id) ON DELETE CASCADE,
+      pollution_kind varchar(40) REFERENCES pollution (kind) ON DELETE CASCADE,
+      region_state varchar(40) REFERENCES region (state_of_austria) ON DELETE CASCADE,
       report text NOT NULL,
       damage_estimation varchar(20) NOT NULL,
       date varchar(20) NOT NULL,

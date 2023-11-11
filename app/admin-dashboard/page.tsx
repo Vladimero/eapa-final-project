@@ -19,6 +19,12 @@ export default async function DashboardAdminPage() {
                 </Link>
                 <ul>
                   <li>
+                    Kind of the pollution: <p>{event.pollutionKind}</p>
+                  </li>
+                  <li>
+                    Region: <p>{event.regionState}</p>
+                  </li>
+                  <li>
                     Report: <p>{event.report}</p>
                   </li>
                   <li>

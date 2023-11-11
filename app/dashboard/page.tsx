@@ -45,8 +45,8 @@ export default async function DashboardUserPage() {
   }
 
   // Display the pollution and region calling the function of database query
-  const pollutionId = await getPollution();
-  const regionId = await getRegion();
+  const pollutionKind = await getPollution();
+  const regionState = await getRegion();
 
   return (
     <>
@@ -56,8 +56,8 @@ export default async function DashboardUserPage() {
       <div>
         <UserEventsForm
           userId={user.id}
-          pollutionId={pollutionId}
-          regionId={regionId}
+          pollutionKind={pollutionKind}
+          regionState={regionState}
         />
       </div>
       <h2>{user.firstName}`s Events:</h2>
@@ -69,6 +69,12 @@ export default async function DashboardUserPage() {
             <div key={`event-${event.eventId}`}>
               <h3>Event from the: {event.date}</h3>
               <ul>
+                <li>
+                  Kind of the pollution: <p>{event.pollutionKind}</p>
+                </li>
+                <li>
+                  Region: <p>{event.regionState}</p>
+                </li>
                 <li>
                   Report: <p>{event.report}</p>
                 </li>

@@ -4,8 +4,8 @@ import { sql } from './connect';
 
 export type UserEvent = {
   eventId: number;
-  pollutionId: number;
-  regionId: number;
+  pollutionKind: string;
+  regionState: string;
   report: string;
   damageEstimation: string;
   date: string;
@@ -19,8 +19,8 @@ export type UserEvent = {
 export type EventsForAdmin = {
   id: number;
   userId: number;
-  pollutionId: number;
-  regionId: number;
+  pollutionKind: string;
+  regionState: string;
   report: string;
   damageEstimation: string;
   date: string;
@@ -34,8 +34,8 @@ export type EventsForAdmin = {
 export type ViewAllEventsFromOneUser = {
   eventId: number;
   userId: number;
-  pollutionId: number;
-  regionId: number;
+  pollutionKind: string;
+  regionState: string;
   report: string;
   damageEstimation: string;
   date: string;
@@ -54,8 +54,8 @@ export type UpdateAdminComment = {
 export const createEvent = cache(
   async (
     userId: number,
-    pollutionId: number,
-    regionId: number,
+    pollutionKind: string,
+    regionState: string,
     report: string,
     damageEstimation: string,
     date: string,
@@ -66,9 +66,9 @@ export const createEvent = cache(
   ) => {
     const [event] = await sql<Events[]>`
       INSERT INTO events
-        (user_id, pollution_id, region_id, report, damage_estimation, date, secure_url, admin_comment, latitude, longitude)
+        (user_id, pollution_kind, region_state, report, damage_estimation, date, secure_url, admin_comment, latitude, longitude)
       VALUES
-        (${userId},${pollutionId},${regionId},${report},${damageEstimation},${date},${secureUrl},${adminComment},${latitude},${longitude})
+        (${userId},${pollutionKind},${regionState},${report},${damageEstimation},${date},${secureUrl},${adminComment},${latitude},${longitude})
       RETURNING *
     `;
 
@@ -82,8 +82,8 @@ export const getAllEventsFromUserBySessionToken = cache(
     const events = await sql<UserEvent[]>`
       SELECT
         events.id AS event_id,
-        events.pollution_id AS pollution_id,
-        events.region_id AS region_id,
+        pollution.kind AS pollution_kind, -- new
+        region.state_of_austria AS region_state, --new
         events.report AS report,
         events.damage_estimation AS damage_estimation,
         events.date AS date,
@@ -97,9 +97,9 @@ export const getAllEventsFromUserBySessionToken = cache(
       INNER JOIN
         users ON events.user_id = users.id
       INNER JOIN
-        pollution ON events.pollution_id = pollution.id
+        pollution ON events.pollution_kind = pollution.kind -- new
       INNER JOIN
-        region ON events.region_id = region.id
+        region ON events.region_state = region.state_of_austria -- new
       INNER JOIN
         sessions ON (
           sessions.token = ${token} AND
@@ -147,9 +147,8 @@ export const getAllEventsFromOneUserForAdminByUserId = cache(
     const allEventsForAdminFromOneUser = await sql<ViewAllEventsFromOneUser[]>`
   SELECT
     events.id AS event_id,
-    events.user_id AS userId,
-    events.pollution_id AS pollution_id,
-    events.region_id AS region_id,
+    pollution.kind AS pollution_kind, -- new
+    region.state_of_austria AS region_state, --new
     events.report AS report,
     events.damage_estimation AS damage_estimation,
     events.date AS date,
@@ -163,9 +162,9 @@ export const getAllEventsFromOneUserForAdminByUserId = cache(
   INNER JOIN
     users ON events.user_id = users.id
   INNER JOIN
-    pollution ON events.pollution_id = pollution.id
+    pollution ON events.pollution_kind = pollution.kind -- new
   INNER JOIN
-    region ON events.region_id = region.id
+    region ON events.region_state = region.state_of_austria -- new
   WHERE
     events.user_id = ${userId}
   `;

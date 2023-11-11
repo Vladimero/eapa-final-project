@@ -26,7 +26,10 @@ export default async function EventsFromOneUserPage(props: Props) {
               <div key={`event-${event.eventId}`}>
                 <ul>
                   <li>
-                    Report: <p>{event.report}</p>
+                    Kind of the pollution: <p>{event.pollutionKind}</p>
+                  </li>
+                  <li>
+                    Region: <p>{event.regionState}</p>
                   </li>
                   <li>
                     Report: <p>{event.report}</p>
