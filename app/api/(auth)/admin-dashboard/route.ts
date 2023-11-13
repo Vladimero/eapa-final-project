@@ -1,12 +1,13 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { updateAdminComment } from '../../../../database/events';
+import { updateAdminCommentAndOffering } from '../../../../database/events';
 import { getValidSessionByToken } from '../../../../database/sessions';
 
 const adminCommentSchema = z.object({
   eventId: z.number(),
   adminComment: z.string().min(3),
+  offer: z.string().min(3),
 });
 
 export type CreateEventResponseBodyPost =
@@ -14,6 +15,7 @@ export type CreateEventResponseBodyPost =
       event: {
         eventId: number;
         adminComment: string;
+        offer: string;
       };
     }
   | {
@@ -56,9 +58,10 @@ export async function POST(
   }
 
   // 5. Create the event
-  const updatedEvent = await updateAdminComment(
+  const updatedEvent = await updateAdminCommentAndOffering(
     result.data.eventId,
     result.data.adminComment,
+    result.data.offer,
   );
 
   // 6. If the event creation fails, return an error
@@ -76,6 +79,7 @@ export async function POST(
     event: {
       eventId: updatedEvent.eventId,
       adminComment: updatedEvent.adminComment,
+      offer: updatedEvent.offer,
     },
   });
 }

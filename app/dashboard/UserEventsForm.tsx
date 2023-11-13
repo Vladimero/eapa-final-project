@@ -9,17 +9,18 @@ import AutocompleteAndMapView from './AutocompleteAndMapView';
 // Parse the props of pollution and region inside the parameters
 export default function UserEventsForm({
   userId,
-  pollutionKind, // new
-  regionState, // new
+  pollutionKind,
+  regionState,
 }: {
   userId: number;
-  pollutionKind: Pollution[]; // new
-  regionState: Region[]; // new
+  pollutionKind: Pollution[];
+  regionState: Region[];
 }) {
   const [report, setReport] = useState('');
   const [damageEstimation, setDamageEstimation] = useState('');
   const [date, setDate] = useState('');
   const [adminComment, setAdminComment] = useState('');
+  const [offer, setOffer] = useState(''); // new
   const [pollution, setPollution] = useState('');
   const [region, setRegion] = useState('');
   const [uploadImage, setUploadImage] = useState<File | null>(null);
@@ -86,13 +87,12 @@ export default function UserEventsForm({
         userId,
         pollutionKind: pollution,
         regionState: region,
-        // pollutionId: parseInt(pollution, 10),
-        // regionId: parseInt(region, 10),
         report,
         damageEstimation,
         date,
         secureUrl,
         adminComment,
+        offer,
         latitude: selectedLocation.lat,
         longitude: selectedLocation.lng,
       }),

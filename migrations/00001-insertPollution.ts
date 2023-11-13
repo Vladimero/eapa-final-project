@@ -10,6 +10,7 @@ const pollution = [
   'pluvial',
   'thermal',
   'biological',
+  'other',
 ];
 
 export async function up(sql: Sql) {

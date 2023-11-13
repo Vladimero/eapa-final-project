@@ -12,7 +12,7 @@ import {
   getAdminByBooleanAndSessionToken,
   getUserBySessionToken,
 } from '../../database/users';
-import UserEventsForm from './EventsForm';
+import UserEventsForm from './UserEventsForm';
 
 export default async function DashboardUserPage() {
   // 1. Check if the cookie with session token exists
@@ -99,6 +99,11 @@ export default async function DashboardUserPage() {
                 {event.adminComment ? (
                   <li>
                     Comment: <p>{event.adminComment}</p>
+                  </li>
+                ) : null}
+                {event.offer ? (
+                  <li>
+                    Comment: <p>{event.offer}</p>
                   </li>
                 ) : null}
               </ul>

@@ -60,6 +60,11 @@ export default async function EventsFromOneUserPage(props: Props) {
                       Comment: <p>{event.adminComment}</p>
                     </li>
                   ) : null}
+                  {event.offer ? (
+                    <li>
+                      Comment: <p>{event.offer}</p>
+                    </li>
+                  ) : null}
                   <li>
                     <AdminEventsForm eventId={event.eventId} />
                   </li>

@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 
 export default function AdminEventsForm({ eventId }: { eventId: number }) {
   const [adminComment, setAdminComment] = useState('');
+  const [offer, setOffer] = useState(''); // new
+  const [otherOffer, setOtherOffer] = useState(''); // new
   const router = useRouter();
 
   async function handleEventUpdate() {
@@ -13,10 +15,13 @@ export default function AdminEventsForm({ eventId }: { eventId: number }) {
       body: JSON.stringify({
         eventId,
         adminComment,
+        offer: offer === 'Other' ? otherOffer : offer,
       }),
     });
     router.refresh();
     setAdminComment('');
+    setOffer(''); // new
+    setOtherOffer(''); // new
   }
 
   return (
@@ -30,20 +35,52 @@ export default function AdminEventsForm({ eventId }: { eventId: number }) {
         }
       }}
     >
-      <label>
-        Admin Comment:
-        <textarea
-          maxLength={250}
-          value={adminComment}
-          onChange={(event) => setAdminComment(event.currentTarget.value)}
-          required
-        />
-      </label>
-      {adminComment && (
-        <p>
-          <button>Add event!</button>
-        </p>
-      )}
+      <div>
+        <label>Select an offering</label>
+        {offer === 'Other' ? (
+          <input
+            type="text"
+            placeholder="Enter your offering"
+            value={otherOffer}
+            onChange={(event) =>
+              setOtherOffer(event.currentTarget.value.slice(0, 40))
+            }
+            maxLength={40}
+            required
+          />
+        ) : (
+          <select
+            value={offer}
+            onChange={(event) => setOffer(event.currentTarget.value)}
+            required
+          >
+            <option value="">Select an offering</option>
+            <option>Appointment</option>
+            <option>Investigation</option>
+            <option>Improvement</option>
+            <option>Cleaning</option>
+            <option>Mending</option>
+            <option>Repair</option>
+            <option>Other</option>
+          </select>
+        )}
+      </div>
+      <div>
+        <label>
+          Admin Comment:
+          <textarea
+            maxLength={250}
+            value={adminComment}
+            onChange={(event) => setAdminComment(event.currentTarget.value)}
+            required
+          />
+        </label>
+        {adminComment && (
+          <p>
+            <button>Add event!</button>
+          </p>
+        )}
+      </div>
     </form>
   );
 }

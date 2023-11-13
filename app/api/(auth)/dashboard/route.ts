@@ -13,6 +13,7 @@ const eventSchema = z.object({
   date: z.string().min(3),
   secureUrl: z.string().min(3),
   adminComment: z.string().min(0).nullable(),
+  offer: z.string().min(0).nullable(), // new
   latitude: z.number(),
   longitude: z.number(),
 });
@@ -28,6 +29,7 @@ export type CreateEventResponseBodyPost =
         date: string;
         secureUrl: string;
         adminComment: string | null;
+        offer: string | null; // new
         latitude: number;
         longitude: number;
       };
@@ -81,6 +83,7 @@ export async function POST(
     result.data.date,
     result.data.secureUrl,
     result.data.adminComment ?? null,
+    result.data.offer ?? null, // new
     result.data.latitude,
     result.data.longitude,
   );
@@ -107,6 +110,7 @@ export async function POST(
       date: newEvent.date,
       secureUrl: newEvent.secureUrl,
       adminComment: newEvent.adminComment,
+      offer: newEvent.offer, // new
       latitude: newEvent.latitude,
       longitude: newEvent.longitude,
     },

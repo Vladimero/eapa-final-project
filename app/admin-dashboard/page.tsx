@@ -52,6 +52,11 @@ export default async function DashboardAdminPage() {
                       Comment: <p>{event.adminComment}</p>
                     </li>
                   ) : null}
+                  {event.offer ? (
+                    <li>
+                      Comment: <p>{event.offer}</p>
+                    </li>
+                  ) : null}
                 </ul>
               </div>
             ))}

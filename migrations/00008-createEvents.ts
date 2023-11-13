@@ -10,6 +10,7 @@ export type Events = {
   date: string;
   secureUrl: string;
   adminComment: string | null;
+  offer: string | null; // new
   latitude: number;
   longitude: number;
 };
@@ -26,6 +27,7 @@ export async function up(sql: Sql) {
       date varchar(20) NOT NULL,
       secure_url varchar(250) NOT NULL,
       admin_comment text NULL,
+      offer varchar(40) Null, -- new
       latitude numeric NOT NULL,
       longitude numeric NOT NULL
     );
