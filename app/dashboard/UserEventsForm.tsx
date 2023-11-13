@@ -217,7 +217,6 @@ export default function UserEventsForm({
       <br />
       <AutocompleteAndMapView
         onLocationChange={setSelectedLocation}
-        // Access lat and lng values in the parent component
         onSelect={(latLng) => {
           console.log('Selected Lat:', latLng.lat);
           console.log('Selected Lng:', latLng.lng);

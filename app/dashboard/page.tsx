@@ -1,5 +1,3 @@
-// This is the main "platform" or "Community" page, where the user takes actions after he registered and signed in --> Only logged-in user is allowed to access this page
-
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import {
@@ -12,9 +10,12 @@ import {
   getAdminByBooleanAndSessionToken,
   getUserBySessionToken,
 } from '../../database/users';
+import MapForAllEvents from './MapForAllEvents';
 import UserEventsForm from './UserEventsForm';
 
-export default async function DashboardUserPage() {
+type Props = {};
+
+export default async function DashboardUserPage({}: Props) {
   // 1. Check if the cookie with session token exists
   const sessionTokenCookie = cookies().get('sessionToken');
 
@@ -36,13 +37,24 @@ export default async function DashboardUserPage() {
   if (!user) redirect('/login?returnTo=/dashboard');
 
   // Display the events for the current logged-in user
-  const userEvent: UserEvent[] = await getAllEventsFromUserBySessionToken(
+  const userEvents: UserEvent[] = await getAllEventsFromUserBySessionToken(
     sessionTokenCookie.value,
   );
 
-  if (userEvent) {
-    console.log('Checking: ', userEvent);
+  if (userEvents) {
+    console.log('Checking: ', userEvents);
   }
+
+  const positions = userEvents.map((coordinates) => ({
+    lat: coordinates.latitude,
+    lng: coordinates.longitude,
+  }));
+  console.log(positions);
+
+  const eventId = userEvents.map((id) => {
+    return id.eventId;
+  });
+  console.log(eventId);
 
   // Display the pollution and region calling the function of database query
   const pollutionKind = await getPollution();
@@ -63,9 +75,16 @@ export default async function DashboardUserPage() {
       <h2>{user.firstName}`s Events:</h2>
       <br />
 
-      {userEvent.length > 0 ? (
+      {/* Display markers for each event*/}
+      <MapForAllEvents
+        userEvents={userEvents}
+        // positions={positions}
+        // eventId={eventId}
+      />
+
+      {userEvents.length > 0 ? (
         <div>
-          {userEvent.map((event: UserEvent) => (
+          {userEvents.map((event: UserEvent) => (
             <div key={`event-${event.eventId}`}>
               <h3>Event from the: {event.date}</h3>
               <ul>

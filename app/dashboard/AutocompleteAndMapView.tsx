@@ -115,8 +115,9 @@ export default function AutocompleteAndMapView({
               ? { lat: selectedLocation.lat, lng: selectedLocation.lng }
               : { lat: 47.5162, lng: 14.5501 }
           }
-          mapContainerStyle={{ width: '80%', height: '600px', margin: 'auto' }}
+          mapContainerStyle={{ width: '100%', height: '600px', margin: 'auto' }}
         >
+          {/* Selected location marker */}
           {selectedLocation.lat !== null && selectedLocation.lng !== null && (
             <Marker
               position={{
