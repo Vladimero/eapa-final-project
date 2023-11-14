@@ -1,21 +1,25 @@
 'use client';
 
-import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
-import React, { useState } from 'react';
+import { MarkerClusterer } from '@googlemaps/markerclusterer';
+import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
+import React, { useEffect, useState } from 'react';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
+import { UserEvent } from '../../database/events';
 
 export default function AutocompleteAndMapView({
   onLocationChange,
   onSelect,
+  userEvents, // props from parent component
 }: {
   onLocationChange: (location: {
     lat: number | null;
     lng: number | null;
   }) => void;
   onSelect: (latLng: { lat: number; lng: number }) => void;
+  userEvents: UserEvent[]; // type from parent component
 }) {
   const [address, setAddress] = useState('');
   const [lat, setLat] = useState<number | null>(null);
@@ -119,13 +123,22 @@ export default function AutocompleteAndMapView({
         >
           {/* Selected location marker */}
           {selectedLocation.lat !== null && selectedLocation.lng !== null && (
-            <Marker
+            <MarkerF
               position={{
                 lat: selectedLocation.lat,
                 lng: selectedLocation.lng,
               }}
             />
           )}
+          {userEvents.map((event) => (
+            <MarkerF
+              key={`marker-${event.eventId}`}
+              position={{
+                lat: Number(event.latitude),
+                lng: Number(event.longitude),
+              }}
+            />
+          ))}
         </GoogleMap>
       </div>
     </>

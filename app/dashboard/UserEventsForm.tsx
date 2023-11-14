@@ -2,25 +2,27 @@
 
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, useState } from 'react';
+import { UserEvent } from '../../database/events';
 import { Pollution } from '../../migrations/00000-createPollution';
 import { Region } from '../../migrations/00002-createRegion';
 import AutocompleteAndMapView from './AutocompleteAndMapView';
 
-// Parse the props of pollution and region inside the parameters
 export default function UserEventsForm({
   userId,
   pollutionKind,
   regionState,
+  userEvents, // props the Auto AutocompleteAndMapView
 }: {
   userId: number;
   pollutionKind: Pollution[];
   regionState: Region[];
+  userEvents: UserEvent[]; // type for AutocompleteAndMapView
 }) {
   const [report, setReport] = useState('');
   const [damageEstimation, setDamageEstimation] = useState('');
   const [date, setDate] = useState('');
   const [adminComment, setAdminComment] = useState('');
-  const [offer, setOffer] = useState(''); // new
+  const [offer, setOffer] = useState('');
   const [pollution, setPollution] = useState('');
   const [region, setRegion] = useState('');
   const [uploadImage, setUploadImage] = useState<File | null>(null);
@@ -101,6 +103,8 @@ export default function UserEventsForm({
       setReport('');
       setDamageEstimation('');
       setDate('');
+      setAdminComment('');
+      setOffer('');
       setRegion('');
       setPollution('');
       setImageSrc('');
@@ -221,6 +225,7 @@ export default function UserEventsForm({
           console.log('Selected Lat:', latLng.lat);
           console.log('Selected Lng:', latLng.lng);
         }}
+        userEvents={userEvents} // pass the props down into child components
       />
     </form>
   );

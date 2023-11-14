@@ -10,12 +10,9 @@ import {
   getAdminByBooleanAndSessionToken,
   getUserBySessionToken,
 } from '../../database/users';
-import MapForAllEvents from './MapForAllEvents';
 import UserEventsForm from './UserEventsForm';
 
-type Props = {};
-
-export default async function DashboardUserPage({}: Props) {
+export default async function DashboardUserPage() {
   // 1. Check if the cookie with session token exists
   const sessionTokenCookie = cookies().get('sessionToken');
 
@@ -44,19 +41,14 @@ export default async function DashboardUserPage({}: Props) {
   if (userEvents) {
     console.log('Checking: ', userEvents);
   }
-
+  /*
   const positions = userEvents.map((coordinates) => ({
     lat: coordinates.latitude,
     lng: coordinates.longitude,
   }));
   console.log(positions);
+*/
 
-  const eventId = userEvents.map((id) => {
-    return id.eventId;
-  });
-  console.log(eventId);
-
-  // Display the pollution and region calling the function of database query
   const pollutionKind = await getPollution();
   const regionState = await getRegion();
 
@@ -64,24 +56,16 @@ export default async function DashboardUserPage({}: Props) {
     <>
       <h1>User Dashboard</h1>
       <br />
-
       <div>
         <UserEventsForm
           userId={user.id}
           pollutionKind={pollutionKind}
           regionState={regionState}
+          userEvents={userEvents} // props for AutocompleteAndMapView
         />
       </div>
       <h2>{user.firstName}`s Events:</h2>
       <br />
-
-      {/* Display markers for each event*/}
-      <MapForAllEvents
-        userEvents={userEvents}
-        // positions={positions}
-        // eventId={eventId}
-      />
-
       {userEvents.length > 0 ? (
         <div>
           {userEvents.map((event: UserEvent) => (

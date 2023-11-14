@@ -1,18 +1,19 @@
 'use client';
 
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
-import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
+import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
 import React from 'react';
 import { UserEvent } from '../../database/events';
 
 type Props = {
   userEvents: UserEvent[];
   // positions: { lat: number; lng: number }[];
-  // eventId: number[];
+  eventId: number[];
 };
 
 export default function MapForAllEvents(props: Props) {
   const center = { lat: 47.5162, lng: 14.5501 };
+  console.log('sfdg:', props);
 
   // Load script for google map
   const { isLoaded, loadError } = useLoadScript({
@@ -36,11 +37,11 @@ export default function MapForAllEvents(props: Props) {
       mapContainerStyle={{ width: '100%', height: '500px' }}
     >
       {props.userEvents.map((event) => (
-        <Marker
+        <MarkerF
           key={`marker-${event.eventId}`}
           position={{
-            lat: event.latitude,
-            lng: event.longitude,
+            lat: Number(event.latitude),
+            lng: Number(event.longitude),
           }}
         />
       ))}
