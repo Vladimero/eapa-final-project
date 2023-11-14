@@ -1,8 +1,10 @@
+import { LatLngExpression } from 'leaflet';
 import {
   getAllEventsFromOneUserForAdminByUserId,
   ViewAllEventsFromOneUser,
 } from '../../../database/events';
 import AdminEventsForm from './AdminEventsForm';
+import MapViewSingleUser from './MapViewSingleUser';
 
 type Props = {
   params: {
@@ -11,13 +13,32 @@ type Props = {
 };
 
 export default async function EventsFromOneUserPage(props: Props) {
-  const userId = Number(props.params.userId);
+  let mapCoords: LatLngExpression = [47.5162, 14.5501];
+
+  const id = Number(props.params.userId);
 
   const allEventsFromOneUser: ViewAllEventsFromOneUser[] =
-    await getAllEventsFromOneUserForAdminByUserId(userId);
+    await getAllEventsFromOneUserForAdminByUserId(id);
+
+  const positions = allEventsFromOneUser.map((coordinates) => ({
+    lat: coordinates.latitude,
+    lng: coordinates.longitude,
+  }));
+  console.log(positions);
+
+  const userId = allEventsFromOneUser.map((user) => {
+    return user.userId;
+  });
+  console.log(userId);
 
   return (
     <>
+      <MapViewSingleUser
+        positions={positions}
+        userId={userId}
+        mapCoords={mapCoords}
+        allEventsFromOneUser={allEventsFromOneUser}
+      />
       <div>
         {allEventsFromOneUser.length > 0 ? (
           <div>
@@ -66,7 +87,13 @@ export default async function EventsFromOneUserPage(props: Props) {
                     </li>
                   ) : null}
                   <li>
-                    <AdminEventsForm eventId={event.eventId} />
+                    <AdminEventsForm
+                      eventId={event.eventId}
+                      positions={positions}
+                      userId={userId}
+                      mapCoords={mapCoords}
+                      allEventsFromOneUser={allEventsFromOneUser}
+                    />
                   </li>
                 </ul>
               </div>

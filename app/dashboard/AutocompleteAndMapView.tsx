@@ -1,8 +1,14 @@
 'use client';
 
-import { MarkerClusterer } from '@googlemaps/markerclusterer';
-import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
-import React, { useEffect, useState } from 'react';
+import {
+  GoogleMap,
+  InfoWindow,
+  Marker,
+  MarkerClusterer,
+  MarkerF,
+  useLoadScript,
+} from '@react-google-maps/api';
+import React, { useState } from 'react';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
@@ -31,6 +37,7 @@ export default function AutocompleteAndMapView({
     lat: null,
     lng: null,
   });
+  const [selectedMarker, setSelectedMarker] = useState<UserEvent | null>(null);
 
   // Load script for google map
   const { isLoaded } = useLoadScript({
@@ -130,15 +137,34 @@ export default function AutocompleteAndMapView({
               }}
             />
           )}
-          {userEvents.map((event) => (
-            <MarkerF
-              key={`marker-${event.eventId}`}
+          <MarkerClusterer>
+            {(clusterer) => (
+              <div>
+                {userEvents.map((event) => (
+                  <Marker
+                    key={`marker-${event.eventId}`}
+                    position={{
+                      lat: Number(event.latitude),
+                      lng: Number(event.longitude),
+                    }}
+                    onClick={() => setSelectedMarker(event)}
+                  />
+                ))}
+              </div>
+            )}
+          </MarkerClusterer>
+          {/* InfoWindow to display additional marker information */}
+          {selectedMarker && (
+            <InfoWindow
               position={{
-                lat: Number(event.latitude),
-                lng: Number(event.longitude),
+                lat: Number(selectedMarker.latitude),
+                lng: Number(selectedMarker.longitude),
               }}
-            />
-          ))}
+              onCloseClick={() => setSelectedMarker(null)}
+            >
+              <div></div>
+            </InfoWindow>
+          )}
         </GoogleMap>
       </div>
     </>
