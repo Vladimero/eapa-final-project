@@ -46,10 +46,16 @@ export default function MapView(props: Props) {
                 <Popup>
                   <div>
                     <h2>{eventData.firstName}`s event:</h2>
-                    <p>{eventData.pollutionKind}</p>
-                    <p>{eventData.regionState}</p>
-                    <p>{eventData.damageEstimation}</p>
-                    <p>{eventData.date}</p>
+                    <p>Pollution: {eventData.pollutionKind}</p>
+                    <p>Region: {eventData.regionState}</p>
+                    <p>Damage Estimation: {eventData.damageEstimation}</p>
+                    <p>Noticed on: {eventData.date}</p>
+                    <img
+                      src={eventData.secureUrl}
+                      alt="no image uploaded yet"
+                      width={80}
+                      height={50}
+                    />
                   </div>
                 </Popup>
               )}
