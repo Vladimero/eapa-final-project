@@ -18,10 +18,10 @@ type Props = {
   allEventData: EventsForAdmin[];
 };
 
-// create custom icon
+// Create custom icon
 const customIcon = new Icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
-  iconSize: [38, 38], // size of the icon
+  iconSize: [38, 38],
 });
 
 export default function MapView(props: Props) {

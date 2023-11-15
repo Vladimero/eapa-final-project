@@ -34,10 +34,7 @@ export default async function DashboardUserPage() {
   // when there is no sessionToken redirect to login page. After login returnTo dashboard page
   if (!user) redirect('/login?returnTo=/dashboard');
 
-  // new
-  let mapCoords: LatLngExpression = [47.5162, 14.5501];
-
-  // Display the events for the current logged-in user
+  // Query and display all events for the current logged-in user
   const userEvents: UserEvent[] = await getAllEventsFromUserBySessionToken(
     sessionTokenCookie.value,
   );
@@ -46,19 +43,23 @@ export default async function DashboardUserPage() {
     console.log('Checking: ', userEvents);
   }
 
-  // new
+  // Map over the array of objects all userEvents in order to display the lat & lng
   const positions = userEvents.map((coordinates) => ({
     lat: coordinates.latitude,
     lng: coordinates.longitude,
   }));
   console.log(positions);
 
-  // new
+  // Map over the array of objects "all" userEvents in order to receive single eventId
   const eventId = userEvents.map((user) => {
     return user.eventId;
   });
   console.log(eventId);
 
+  // Set the default lat & lng to center of Austria
+  let mapCoords: LatLngExpression = [47.5162, 14.5501];
+
+  // Query the data of Pollution & Region tables
   const pollutionKind = await getPollution();
   const regionState = await getRegion();
 
@@ -71,10 +72,10 @@ export default async function DashboardUserPage() {
           userId={user.id}
           pollutionKind={pollutionKind}
           regionState={regionState}
-          positions={positions} // new
-          eventId={eventId} // new
-          mapCoords={mapCoords} // new
-          userEvents={userEvents} // props for AutocompleteAndMapView
+          positions={positions}
+          eventId={eventId}
+          mapCoords={mapCoords}
+          userEvents={userEvents}
         />
       </div>
       <h2>{user.firstName}`s Events:</h2>

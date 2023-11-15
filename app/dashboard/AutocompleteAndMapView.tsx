@@ -13,18 +13,17 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import { UserEvent } from '../../database/events';
 
-// new
-type Position = {
+export type Position = {
   lat: number;
   lng: number;
 };
 
 export default function AutocompleteAndMapView({
-  onLocationChange,
-  onSelect,
-  positions, // new
-  eventId, // new
-  mapCoords, // new
+  onLocationChange, // Lifting states up into parent comp
+  onSelect, // Lifting states up into parent comp
+  positions, // props from parent component
+  eventId, // props from parent component
+  mapCoords, // props from parent component
   userEvents, // props from parent component
 }: {
   onLocationChange: (location: {
@@ -32,10 +31,10 @@ export default function AutocompleteAndMapView({
     lng: number | null;
   }) => void;
   onSelect: (latLng: { lat: number; lng: number }) => void;
-  positions: Position[]; // new
-  eventId: number[]; // new
-  mapCoords: LatLngExpression; // new
-  userEvents: UserEvent[]; // type from parent component
+  positions: Position[];
+  eventId: number[];
+  mapCoords: LatLngExpression;
+  userEvents: UserEvent[];
 }) {
   const [address, setAddress] = useState('');
   const [lat, setLat] = useState<number | null>(null);
@@ -48,7 +47,7 @@ export default function AutocompleteAndMapView({
     lng: null,
   });
 
-  // Load script for google map
+  // Load script for react place autocomplete
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
     libraries: ['places'],
@@ -73,14 +72,14 @@ export default function AutocompleteAndMapView({
         lng: latLng.lng,
       });
       onLocationChange({ lat: latLng.lat, lng: latLng.lng });
-      onSelect(latLng); // Call onSelect props to inform parent component about the selected latLng
+      onSelect(latLng); // Lift onSelect props up to inform parent component about the selected latLng
     }
   };
 
-  // create custom icon
+  // Create custom icon
   const customIcon = new Icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
-    iconSize: [38, 38], // size of the icon
+    iconSize: [38, 38],
   });
 
   return (
@@ -147,7 +146,7 @@ export default function AutocompleteAndMapView({
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {/* Selected location marker */}
+          {/* Place autocomplete marker */}
           {selectedLocation.lat !== null && selectedLocation.lng !== null && (
             <Marker
               position={{

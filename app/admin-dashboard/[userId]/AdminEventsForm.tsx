@@ -4,7 +4,6 @@ import { LatLngExpression } from 'leaflet';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { ViewAllEventsFromOneUser } from '../../../database/events';
-import MapViewSingleUser from './MapViewSingleUser';
 
 type Position = {
   lat: number;
@@ -25,8 +24,8 @@ export default function AdminEventsForm({
   allEventsFromOneUser: ViewAllEventsFromOneUser[];
 }) {
   const [adminComment, setAdminComment] = useState('');
-  const [offer, setOffer] = useState(''); // new
-  const [otherOffer, setOtherOffer] = useState(''); // new
+  const [offer, setOffer] = useState('');
+  const [otherOffer, setOtherOffer] = useState('');
   const router = useRouter();
 
   async function handleEventUpdate() {
@@ -40,8 +39,8 @@ export default function AdminEventsForm({
     });
     router.refresh();
     setAdminComment('');
-    setOffer(''); // new
-    setOtherOffer(''); // new
+    setOffer('');
+    setOtherOffer('');
   }
 
   return (
@@ -49,10 +48,10 @@ export default function AdminEventsForm({
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          if (adminComment !== '') {
+          if (adminComment !== '' && offer !== '') {
             handleEventUpdate();
           } else {
-            alert('Please enter a valid comment!');
+            alert('Please enter a valid comment or an offer!');
           }
         }}
       >

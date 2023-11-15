@@ -6,30 +6,24 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { UserEvent } from '../../database/events';
 import { Pollution } from '../../migrations/00000-createPollution';
 import { Region } from '../../migrations/00002-createRegion';
-import AutocompleteAndMapView from './AutocompleteAndMapView';
-
-// new
-type Position = {
-  lat: number;
-  lng: number;
-};
+import AutocompleteAndMapView, { Position } from './AutocompleteAndMapView';
 
 export default function UserEventsForm({
   userId,
   pollutionKind,
   regionState,
-  positions, // new
-  eventId, // new
-  mapCoords, // new
-  userEvents, // props the Auto AutocompleteAndMapView
+  positions, // props for AutocompleteAndMapView
+  eventId, // props for AutocompleteAndMapView
+  mapCoords, // props for AutocompleteAndMapView
+  userEvents, // props for AutocompleteAndMapView
 }: {
   userId: number;
   pollutionKind: Pollution[];
   regionState: Region[];
-  positions: Position[]; // new
-  eventId: number[]; // new
-  mapCoords: LatLngExpression; // new
-  userEvents: UserEvent[]; // type for AutocompleteAndMapView
+  positions: Position[];
+  eventId: number[];
+  mapCoords: LatLngExpression;
+  userEvents: UserEvent[];
 }) {
   const [report, setReport] = useState('');
   const [damageEstimation, setDamageEstimation] = useState('');
@@ -87,6 +81,7 @@ export default function UserEventsForm({
     }
   };
 
+  // Create an event and send data to events table
   const handleEventCreation = (url?: string) => {
     const secureUrl = url || imageSrc;
 
@@ -237,10 +232,10 @@ export default function UserEventsForm({
           console.log('Selected Lat:', latLng.lat);
           console.log('Selected Lng:', latLng.lng);
         }}
-        positions={positions} // new
-        eventId={eventId} // new
-        mapCoords={mapCoords} // new
-        userEvents={userEvents} // pass the props down into child components
+        positions={positions} // pass props down for child comp AutocompleteAndMapView
+        eventId={eventId} // pass props down for child comp AutocompleteAndMapView
+        mapCoords={mapCoords} // pass props down for child comp AutocompleteAndMapView
+        userEvents={userEvents} // pass props down for child comp AutocompleteAndMapView
       />
     </form>
   );
