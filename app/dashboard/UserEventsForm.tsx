@@ -1,21 +1,34 @@
 'use client';
 
+import { LatLngExpression } from 'leaflet';
 import { useRouter } from 'next/navigation';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { UserEvent } from '../../database/events';
 import { Pollution } from '../../migrations/00000-createPollution';
 import { Region } from '../../migrations/00002-createRegion';
 import AutocompleteAndMapView from './AutocompleteAndMapView';
 
+// new
+type Position = {
+  lat: number;
+  lng: number;
+};
+
 export default function UserEventsForm({
   userId,
   pollutionKind,
   regionState,
+  positions, // new
+  eventId, // new
+  mapCoords, // new
   userEvents, // props the Auto AutocompleteAndMapView
 }: {
   userId: number;
   pollutionKind: Pollution[];
   regionState: Region[];
+  positions: Position[]; // new
+  eventId: number[]; // new
+  mapCoords: LatLngExpression; // new
   userEvents: UserEvent[]; // type for AutocompleteAndMapView
 }) {
   const [report, setReport] = useState('');
@@ -28,7 +41,6 @@ export default function UserEventsForm({
   const [uploadImage, setUploadImage] = useState<File | null>(null);
   const [imageSrc, setImageSrc] = useState('');
   const router = useRouter();
-
   const [selectedLocation, setSelectedLocation] = useState<{
     lat: number | null;
     lng: number | null;
@@ -225,6 +237,9 @@ export default function UserEventsForm({
           console.log('Selected Lat:', latLng.lat);
           console.log('Selected Lng:', latLng.lng);
         }}
+        positions={positions} // new
+        eventId={eventId} // new
+        mapCoords={mapCoords} // new
         userEvents={userEvents} // pass the props down into child components
       />
     </form>

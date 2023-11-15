@@ -1,30 +1,23 @@
 'use client';
 
-import './styles.css';
-import 'leaflet/dist/leaflet.css';
-import { useLoadScript } from '@react-google-maps/api';
-import { Icon, LatLngExpression } from 'leaflet';
+import {
+  GoogleMap,
+  InfoWindow,
+  Marker,
+  MarkerClusterer,
+  MarkerF,
+  useLoadScript,
+} from '@react-google-maps/api';
 import React, { useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-cluster';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
 import { UserEvent } from '../../database/events';
 
-// new
-type Position = {
-  lat: number;
-  lng: number;
-};
-
 export default function AutocompleteAndMapView({
   onLocationChange,
   onSelect,
-  positions, // new
-  eventId, // new
-  mapCoords, // new
   userEvents, // props from parent component
 }: {
   onLocationChange: (location: {
@@ -32,9 +25,6 @@ export default function AutocompleteAndMapView({
     lng: number | null;
   }) => void;
   onSelect: (latLng: { lat: number; lng: number }) => void;
-  positions: Position[]; // new
-  eventId: number[]; // new
-  mapCoords: LatLngExpression; // new
   userEvents: UserEvent[]; // type from parent component
 }) {
   const [address, setAddress] = useState('');
@@ -47,6 +37,7 @@ export default function AutocompleteAndMapView({
     lat: null,
     lng: null,
   });
+  const [selectedMarker, setSelectedMarker] = useState<UserEvent | null>(null);
 
   // Load script for google map
   const { isLoaded } = useLoadScript({
@@ -76,12 +67,6 @@ export default function AutocompleteAndMapView({
       onSelect(latLng); // Call onSelect props to inform parent component about the selected latLng
     }
   };
-
-  // create custom icon
-  const customIcon = new Icon({
-    iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
-    iconSize: [38, 38], // size of the icon
-  });
 
   return (
     <>
@@ -130,65 +115,57 @@ export default function AutocompleteAndMapView({
         </PlacesAutocomplete>
       </div>
       <div>
-        <MapContainer
-          center={
-            selectedLocation.lat !== null && selectedLocation.lng !== null
-              ? { lat: selectedLocation.lat, lng: selectedLocation.lng }
-              : { lat: 47.5162, lng: 14.5501 }
-          }
+        <GoogleMap
           zoom={
             selectedLocation.lat !== null && selectedLocation.lng !== null
               ? 18
               : 6
           }
+          center={
+            selectedLocation.lat !== null && selectedLocation.lng !== null
+              ? { lat: selectedLocation.lat, lng: selectedLocation.lng }
+              : { lat: 47.5162, lng: 14.5501 }
+          }
+          mapContainerStyle={{ width: '100%', height: '600px', margin: 'auto' }}
         >
-          OPEN STREET MAPS TILES
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
           {/* Selected location marker */}
           {selectedLocation.lat !== null && selectedLocation.lng !== null && (
-            <Marker
+            <MarkerF
               position={{
                 lat: selectedLocation.lat,
                 lng: selectedLocation.lng,
               }}
-              icon={customIcon}
             />
           )}
-          <MarkerClusterGroup chunkedLoading>
-            {positions.map((position, index) => {
-              const eventData = userEvents && userEvents[index]; // Access specific event data
-
-              return (
-                <Marker
-                  key={`key-div-${index}`}
-                  position={position}
-                  icon={customIcon}
-                >
-                  {eventData && (
-                    <Popup>
-                      <div>
-                        <h2>{eventData.firstName}`s event:</h2>
-                        <p>Pollution: {eventData.pollutionKind}</p>
-                        <p>Region: {eventData.regionState}</p>
-                        <p>Damage Estimation: {eventData.damageEstimation}</p>
-                        <p>Noticed on: {eventData.date}</p>
-                        <img
-                          src={eventData.secureUrl}
-                          alt="no image uploaded yet"
-                          width={80}
-                          height={50}
-                        />
-                      </div>
-                    </Popup>
-                  )}
-                </Marker>
-              );
-            })}
-          </MarkerClusterGroup>
-        </MapContainer>
+          <MarkerClusterer>
+            {(clusterer) => (
+              <div>
+                {userEvents.map((event) => (
+                  <Marker
+                    key={`marker-${event.eventId}`}
+                    position={{
+                      lat: Number(event.latitude),
+                      lng: Number(event.longitude),
+                    }}
+                    onClick={() => setSelectedMarker(event)}
+                  />
+                ))}
+              </div>
+            )}
+          </MarkerClusterer>
+          {/* InfoWindow to display additional marker information */}
+          {selectedMarker && (
+            <InfoWindow
+              position={{
+                lat: Number(selectedMarker.latitude),
+                lng: Number(selectedMarker.longitude),
+              }}
+              onCloseClick={() => setSelectedMarker(null)}
+            >
+              <div></div>
+            </InfoWindow>
+          )}
+        </GoogleMap>
       </div>
     </>
   );
