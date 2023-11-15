@@ -29,7 +29,6 @@ export default async function EventsFromOneUserPage(props: Props) {
   const userId = allEventsFromOneUser.map((user) => {
     return user.userId;
   });
-  console.log(userId);
 
   return (
     <>

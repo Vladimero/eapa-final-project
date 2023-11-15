@@ -54,7 +54,6 @@ export default async function DashboardUserPage() {
   const eventId = userEvents.map((user) => {
     return user.eventId;
   });
-  console.log(eventId);
 
   // Set the default lat & lng to center of Austria
   let mapCoords: LatLngExpression = [47.5162, 14.5501];
