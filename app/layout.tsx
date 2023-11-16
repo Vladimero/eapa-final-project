@@ -2,7 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 import FooterForm from './components/FooterForm';
-import NavbarForm from './components/NavBarForm';
+import NavBar2 from './components/NavbarForm';
 
 export const metadata: Metadata = {
   title: 'EAPA',
@@ -15,9 +15,9 @@ type Props = {
 
 export default async function RootLayout(props: Props) {
   return (
-    <html lang="en" data-theme="lemonade">
+    <html lang="en" data-theme="light">
       <body>
-        <NavbarForm />
+        <NavBar2 />
         <div className="mt-36 mb-24">{props.children}</div>
         <FooterForm />
       </body>

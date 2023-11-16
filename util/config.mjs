@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import dotenv from 'dotenv';
 
 export function setEnvironmentVariables() {
-  /* FOR DEPLOYMENT:
+  //  FOR DEPLOYMENT:
   if (process.env.NODE_ENV === 'production' || process.env.CI) {
     // Set standard environment variables for Postgres.js from Vercel environment variables
     if (process.env.POSTGRES_URL) {
@@ -13,7 +13,6 @@ export function setEnvironmentVariables() {
     }
     return;
   }
-  */
 
   // Replacement for unmaintained dotenv-safe package
   // https://github.com/rolodato/dotenv-safe/issues/128#issuecomment-1383176751
