@@ -12,16 +12,14 @@ type Position = {
 
 export default function AdminEventsForm({
   eventId,
-  positions,
-  userId,
-  mapCoords,
-  allEventsFromOneUser,
-}: {
+}: // positions,
+// mapCoords,
+// allEventsFromOneUser,
+{
   eventId: number;
-  positions: Position[];
-  userId: number[];
-  mapCoords: LatLngExpression;
-  allEventsFromOneUser: ViewAllEventsFromOneUser[];
+  // positions: Position[];
+  // mapCoords: LatLngExpression;
+  // allEventsFromOneUser: ViewAllEventsFromOneUser[];
 }) {
   const [adminComment, setAdminComment] = useState('');
   const [offer, setOffer] = useState('');
@@ -56,7 +54,6 @@ export default function AdminEventsForm({
         }}
       >
         <div>
-          <label>Select an offering</label>
           {offer === 'Other' ? (
             <input
               type="text"

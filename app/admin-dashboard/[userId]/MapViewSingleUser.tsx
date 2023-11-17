@@ -13,7 +13,6 @@ type Position = {
 
 type Props = {
   positions: Position[];
-  userId: number[];
   mapCoords: LatLngExpression;
   allEventsFromOneUser: ViewAllEventsFromOneUser[];
 };

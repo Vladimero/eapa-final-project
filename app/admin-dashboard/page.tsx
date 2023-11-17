@@ -1,6 +1,7 @@
 import { LatLngExpression } from 'leaflet';
 import Link from 'next/link';
 import { EventsForAdmin, getAllEventsForAdmin } from '../../database/events';
+import ListForAllEvents from './ListForAllEvents';
 import MapView from './MapView';
 
 export default async function DashboardAdminPage() {
@@ -23,69 +24,21 @@ export default async function DashboardAdminPage() {
     <>
       <h1>Admin Dashboard</h1>
       <div>
-        <MapView
-          positions={positions}
-          userId={userId}
-          mapCoords={mapCoords}
-          allEventData={allEvents}
-        />
-
-        {allEvents.length > 0 ? (
+        <div>
+          <MapView
+            positions={positions}
+            userId={userId}
+            mapCoords={mapCoords}
+            allEventData={allEvents}
+          />
           <div>
-            {allEvents.map((event: EventsForAdmin) => (
-              <div key={`event-${event.userId}`}>
-                <Link href={`/admin-dashboard/${event.userId}`}>
-                  <h2>
-                    {event.firstName}`s event from: {event.date}
-                  </h2>
-                </Link>
-                <ul>
-                  <li>
-                    Kind of the pollution: <p>{event.pollutionKind}</p>
-                  </li>
-                  <li>
-                    Region: <p>{event.regionState}</p>
-                  </li>
-                  <li>
-                    Report: <p>{event.report}</p>
-                  </li>
-                  <li>
-                    Damage Estimation: <p>{event.damageEstimation}</p>
-                  </li>
-                  <Link href={`/admin-dashboard/${event.userId}`}>
-                    <li>
-                      Image:
-                      <img
-                        src={event.secureUrl}
-                        alt="no image yet"
-                        width={400}
-                        height={350}
-                      />
-                    </li>
-                  </Link>
-                  <li>
-                    Latidude: <p>{event.latitude}</p>
-                  </li>
-                  <li>
-                    Longitude: <p>{event.longitude}</p>
-                  </li>
-                  {event.adminComment ? (
-                    <li>
-                      Comment: <p>{event.adminComment}</p>
-                    </li>
-                  ) : null}
-                  {event.offer ? (
-                    <li>
-                      Comment: <p>{event.offer}</p>
-                    </li>
-                  ) : null}
-                </ul>
-              </div>
-            ))}
+            {allEvents.length > 0 ? (
+              <ListForAllEvents allEventData={allEvents} />
+            ) : (
+              <h2> No events created yet</h2>
+            )}
           </div>
-        ) : (
-          <h2> No events created yet</h2>
-        )}
+        </div>
       </div>
     </>
   );
