@@ -117,12 +117,7 @@ export default function ListForAllEventsFromOneUser(props: Props) {
                   </h2>
                 </div>
               ) : null}
-              <AdminEventsForm
-                eventId={event.eventId}
-                // positions={props.positions}
-                // mapCoords={props.mapCoords}
-                // allEventsFromOneUser={props.allEventsFromOneUser}
-              />
+              <AdminEventsForm eventId={event.eventId} />
             </div>
           ))}
         </div>

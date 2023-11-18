@@ -1,4 +1,5 @@
 'use client';
+
 import './styles.css';
 import 'leaflet/dist/leaflet.css';
 import { Icon, LatLngExpression } from 'leaflet';
@@ -26,7 +27,6 @@ const customIcon = new Icon({
 export default function MapViewSingleUser(props: Props) {
   return (
     <MapContainer center={props.mapCoords} zoom={7}>
-      OPEN STREET MAPS TILES
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

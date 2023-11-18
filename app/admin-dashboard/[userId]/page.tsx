@@ -32,20 +32,30 @@ export default async function EventsFromOneUserPage(props: Props) {
 
   return (
     <>
-      {allEventsFromOneUser.map((event: ViewAllEventsFromOneUser) => (
-        <h1>View all events from: {event.firstName}</h1>
-      ))}
-      <MapViewSingleUser
-        positions={positions}
-        mapCoords={mapCoords}
-        allEventsFromOneUser={allEventsFromOneUser}
-      />
-      <ListForAllEventsFromOneUser
-        positions={positions}
-        userId={userId}
-        mapCoords={mapCoords}
-        allEventsFromOneUser={allEventsFromOneUser}
-      />
+      <h1>
+        {allEventsFromOneUser.map((event: ViewAllEventsFromOneUser) => (
+          <h1>View all events from: {event.firstName}</h1>
+        ))}
+      </h1>
+      <div>
+        <MapViewSingleUser
+          positions={positions}
+          mapCoords={mapCoords}
+          allEventsFromOneUser={allEventsFromOneUser}
+        />
+        <div className="absolute bottom-0 z-10 w-full p-4">
+          {allEventsFromOneUser.length > 0 ? (
+            <ListForAllEventsFromOneUser
+              positions={positions}
+              userId={userId}
+              mapCoords={mapCoords}
+              allEventsFromOneUser={allEventsFromOneUser}
+            />
+          ) : (
+            <h2> The user has no events created yet</h2>
+          )}
+        </div>
+      </div>
     </>
   );
 }

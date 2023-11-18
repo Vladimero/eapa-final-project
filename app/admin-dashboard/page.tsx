@@ -1,5 +1,4 @@
 import { LatLngExpression } from 'leaflet';
-import Link from 'next/link';
 import { EventsForAdmin, getAllEventsForAdmin } from '../../database/events';
 import ListForAllEvents from './ListForAllEvents';
 import MapView from './MapView';
@@ -24,20 +23,18 @@ export default async function DashboardAdminPage() {
     <>
       <h1>Admin Dashboard</h1>
       <div>
-        <div>
-          <MapView
-            positions={positions}
-            userId={userId}
-            mapCoords={mapCoords}
-            allEventData={allEvents}
-          />
-          <div>
-            {allEvents.length > 0 ? (
-              <ListForAllEvents allEventData={allEvents} />
-            ) : (
-              <h2> No events created yet</h2>
-            )}
-          </div>
+        <MapView
+          positions={positions}
+          userId={userId}
+          mapCoords={mapCoords}
+          allEventData={allEvents}
+        />
+        <div className="absolute bottom-0 z-10 w-full p-4">
+          {allEvents.length > 0 ? (
+            <ListForAllEvents allEventData={allEvents} />
+          ) : (
+            <h2> No events created yet</h2>
+          )}
         </div>
       </div>
     </>

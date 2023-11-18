@@ -1,26 +1,9 @@
 'use client';
 
-import { LatLngExpression } from 'leaflet';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import { ViewAllEventsFromOneUser } from '../../../database/events';
 
-type Position = {
-  lat: number;
-  lng: number;
-};
-
-export default function AdminEventsForm({
-  eventId,
-}: // positions,
-// mapCoords,
-// allEventsFromOneUser,
-{
-  eventId: number;
-  // positions: Position[];
-  // mapCoords: LatLngExpression;
-  // allEventsFromOneUser: ViewAllEventsFromOneUser[];
-}) {
+export default function AdminEventsForm({ eventId }: { eventId: number }) {
   const [adminComment, setAdminComment] = useState('');
   const [offer, setOffer] = useState('');
   const [otherOffer, setOtherOffer] = useState('');
