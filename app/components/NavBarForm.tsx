@@ -6,7 +6,7 @@ import LogoutButton from '../(auth)/logout/LogoutButton';
 import { getUserBySessionToken } from '../../database/users';
 import Logo from '../../public/images/logo.png';
 
-export default async function NavbarForm() {
+export default async function NavBarForm() {
   // 1. Check if a session token from the cookie of the browser exists
   const cookieFromBrowser = cookies();
 

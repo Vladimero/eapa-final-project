@@ -3,6 +3,7 @@ import {
   getAllEventsFromOneUserForAdminByUserId,
   ViewAllEventsFromOneUser,
 } from '../../../database/events';
+import AdminEventsForm from './AdminEventsForm';
 import ListForAllEventsFromOneUser from './ListForEventsFromOneUser';
 import MapViewSingleUser from './MapViewSingleUser';
 
@@ -26,8 +27,8 @@ export default async function EventsFromOneUserPage(props: Props) {
   }));
   console.log(positions);
 
-  const userId = allEventsFromOneUser.map((user) => {
-    return user.userId;
+  const eventId = allEventsFromOneUser.map((event) => {
+    return event.eventId;
   });
 
   const displayHeadline = allEventsFromOneUser.length > 0;
@@ -42,6 +43,11 @@ export default async function EventsFromOneUserPage(props: Props) {
                 View all events from: {allEventsFromOneUser[0].firstName}
               </h1>
             )}
+            {allEventsFromOneUser.map((event: ViewAllEventsFromOneUser) => (
+              <div key={`eventId-${event.eventId}`}>
+                <AdminEventsForm eventId={event.eventId} />
+              </div>
+            ))}
           </div>
         </div>
         <div className="w-2/3 relative">

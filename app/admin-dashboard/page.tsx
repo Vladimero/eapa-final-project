@@ -17,7 +17,6 @@ export default async function DashboardAdminPage() {
   const userId = allEvents.map((user) => {
     return user.userId;
   });
-  console.log(userId);
 
   return (
     <>
