@@ -30,13 +30,14 @@ export default async function EventsFromOneUserPage(props: Props) {
     return user.userId;
   });
 
+  const displayHeadline = allEventsFromOneUser.length > 0;
+
   return (
     <>
-      <h1>
-        {allEventsFromOneUser.map((event: ViewAllEventsFromOneUser) => (
-          <h1>View all events from: {event.firstName}</h1>
-        ))}
-      </h1>
+      {displayHeadline && allEventsFromOneUser[0] && (
+        <h1>View all events from: {allEventsFromOneUser[0].firstName}</h1>
+      )}
+
       <div>
         <MapViewSingleUser
           positions={positions}
@@ -46,9 +47,6 @@ export default async function EventsFromOneUserPage(props: Props) {
         <div className="absolute bottom-0 z-10 w-full p-4">
           {allEventsFromOneUser.length > 0 ? (
             <ListForAllEventsFromOneUser
-              positions={positions}
-              userId={userId}
-              mapCoords={mapCoords}
               allEventsFromOneUser={allEventsFromOneUser}
             />
           ) : (

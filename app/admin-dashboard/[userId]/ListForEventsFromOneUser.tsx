@@ -6,15 +6,7 @@ import React, { useRef } from 'react';
 import { ViewAllEventsFromOneUser } from '../../../database/events';
 import AdminEventsForm from './AdminEventsForm';
 
-type Position = {
-  lat: number;
-  lng: number;
-};
-
 type Props = {
-  positions: Position[];
-  userId: number[];
-  mapCoords: LatLngExpression;
   allEventsFromOneUser: ViewAllEventsFromOneUser[];
 };
 
@@ -67,7 +59,7 @@ export default function ListForAllEventsFromOneUser(props: Props) {
                   alt="no image yet"
                   width={180}
                   height={80}
-                  className="rounded-lg object-cover h-[90px] "
+                  className="rounded-lg object-cover h-[90px]"
                 />
               </Link>
 
