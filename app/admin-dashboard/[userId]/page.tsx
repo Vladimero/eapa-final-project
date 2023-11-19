@@ -34,24 +34,31 @@ export default async function EventsFromOneUserPage(props: Props) {
 
   return (
     <>
-      {displayHeadline && allEventsFromOneUser[0] && (
-        <h1>View all events from: {allEventsFromOneUser[0].firstName}</h1>
-      )}
-
-      <div>
-        <MapViewSingleUser
-          positions={positions}
-          mapCoords={mapCoords}
-          allEventsFromOneUser={allEventsFromOneUser}
-        />
-        <div className="absolute bottom-0 z-10 w-full p-4">
-          {allEventsFromOneUser.length > 0 ? (
-            <ListForAllEventsFromOneUser
-              allEventsFromOneUser={allEventsFromOneUser}
-            />
-          ) : (
-            <h2> The user has no events created yet</h2>
-          )}
+      <div className="flex mx-10 pt-10 overflow-hidden">
+        <div className="w-1/3 overflow-y-auto rounded-xl mr-4 border-2 border-gray-100">
+          <div className="mb-4">
+            {displayHeadline && allEventsFromOneUser[0] && (
+              <h1 className="text-xl font-bold mb-2">
+                View all events from: {allEventsFromOneUser[0].firstName}
+              </h1>
+            )}
+          </div>
+        </div>
+        <div className="w-2/3 relative">
+          <MapViewSingleUser
+            positions={positions}
+            mapCoords={mapCoords}
+            allEventsFromOneUser={allEventsFromOneUser}
+          />
+          <div className="absolute bottom-0 left-0 z-10 w-full p-4">
+            {allEventsFromOneUser.length > 0 ? (
+              <ListForAllEventsFromOneUser
+                allEventsFromOneUser={allEventsFromOneUser}
+              />
+            ) : (
+              <h2> The user has no events created yet</h2>
+            )}
+          </div>
         </div>
       </div>
     </>

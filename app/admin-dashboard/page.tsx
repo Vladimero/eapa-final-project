@@ -21,20 +21,26 @@ export default async function DashboardAdminPage() {
 
   return (
     <>
-      <h1>Admin Dashboard</h1>
-      <div>
-        <MapView
-          positions={positions}
-          userId={userId}
-          mapCoords={mapCoords}
-          allEventData={allEvents}
-        />
-        <div className="absolute bottom-0 z-10 w-full p-4">
-          {allEvents.length > 0 ? (
-            <ListForAllEvents allEventData={allEvents} />
-          ) : (
-            <h2> No events created yet</h2>
-          )}
+      <div className="flex mx-10 pt-10 overflow-hidden">
+        <div className="w-1/3 overflow-y-auto rounded-xl mr-4 border-2 border-gray-100">
+          <div className="mb-4">
+            <h2 className="text-xl font-bold mb-2">Admin Dashboard</h2>
+          </div>
+        </div>
+        <div className="w-2/3 relative">
+          <MapView
+            positions={positions}
+            userId={userId}
+            mapCoords={mapCoords}
+            allEventData={allEvents}
+          />
+          <div className="absolute bottom-0 left-0 z-10 w-full p-4">
+            {allEvents.length > 0 ? (
+              <ListForAllEvents allEventData={allEvents} />
+            ) : (
+              <h2> No events created yet</h2>
+            )}
+          </div>
         </div>
       </div>
     </>
