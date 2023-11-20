@@ -24,7 +24,7 @@ export default function FooterForm() {
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
                   href="#"
-                  className="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   FAQ
                 </a>
@@ -32,7 +32,7 @@ export default function FooterForm() {
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
                   href="#"
-                  className="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Help
                 </a>
@@ -40,7 +40,7 @@ export default function FooterForm() {
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
                   href="#"
-                  className="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Support
                 </a>
@@ -53,7 +53,7 @@ export default function FooterForm() {
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
                   href="#"
-                  className="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Terms
                 </a>
@@ -61,7 +61,7 @@ export default function FooterForm() {
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
                   href="#"
-                  className="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Privacy
                 </a>
@@ -74,7 +74,7 @@ export default function FooterForm() {
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
                   href="#"
-                  className="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Facebook
                 </a>
@@ -82,7 +82,7 @@ export default function FooterForm() {
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
                   href="#"
-                  className="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Linkedin
                 </a>
@@ -90,7 +90,7 @@ export default function FooterForm() {
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
                   href="#"
-                  className="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Twitter
                 </a>
@@ -103,7 +103,7 @@ export default function FooterForm() {
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
                   href="#"
-                  className="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Official Blog
                 </a>
@@ -111,7 +111,7 @@ export default function FooterForm() {
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
                   href="#"
-                  className="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   About Us
                 </a>
@@ -119,7 +119,7 @@ export default function FooterForm() {
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
                   href="#"
-                  className="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Contact
                 </a>

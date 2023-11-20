@@ -48,7 +48,7 @@ export default function RegisterForm() {
 
   const bodyBgStyle = {
     backgroundColor: '#e86a21',
-    backgroundImage: 'linear-gradient(315deg, #e86a21 0%, #85b989 74%)',
+    backgroundImage: 'linear-gradient(315deg, #d78657 0%, #dae6db 74%)',
   };
 
   return (
@@ -80,7 +80,7 @@ export default function RegisterForm() {
                   <input
                     type="text"
                     id="firstName"
-                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3"
+                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-customOrange transition duration-500 px-3 pb-3"
                     onChange={(event) =>
                       setFirstName(event.currentTarget.value)
                     }
@@ -93,7 +93,7 @@ export default function RegisterForm() {
                   <input
                     type="text"
                     id="lastName"
-                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3"
+                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-customOrange transition duration-500 px-3 pb-3"
                     onChange={(event) => setLastName(event.currentTarget.value)}
                   />
                 </label>
@@ -104,7 +104,7 @@ export default function RegisterForm() {
                   <input
                     type="text"
                     id="email"
-                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3"
+                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-customOrange transition duration-500 px-3 pb-3"
                     onChange={(event) => setEmail(event.currentTarget.value)}
                   />
                 </label>
@@ -115,7 +115,7 @@ export default function RegisterForm() {
                   <input
                     type="password"
                     id="password"
-                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3"
+                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-customOrange transition duration-500 px-3 pb-3"
                     onChange={(event) => setPassword(event.currentTarget.value)}
                   />
                 </label>
@@ -136,7 +136,7 @@ export default function RegisterForm() {
               </div>
               <button
                 type="submit"
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"
+                className="hover:bg-customOrange text-black font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 border border-gray-300"
               >
                 Register
               </button>

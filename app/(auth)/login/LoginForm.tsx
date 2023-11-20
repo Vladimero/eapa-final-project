@@ -42,7 +42,7 @@ export default function LoginForm(props: Props) {
 
   const bodyBgStyle = {
     backgroundColor: '#e86a21',
-    backgroundImage: 'linear-gradient(315deg, #e86a21 0%, #85b989 74%)',
+    backgroundImage: 'linear-gradient(315deg, #d78657 0%, #dae6db 74%)',
   };
 
   return (
@@ -73,7 +73,7 @@ export default function LoginForm(props: Props) {
                   <input
                     type="text"
                     id="email"
-                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3"
+                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-customOrange  transition duration-500 px-3 pb-3"
                     onChange={(event) => setEmail(event.currentTarget.value)}
                   />
                 </label>
@@ -84,7 +84,7 @@ export default function LoginForm(props: Props) {
                   <input
                     type="password"
                     id="password"
-                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3"
+                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-customOrange transition duration-500 px-3 pb-3"
                     onChange={(event) => setPassword(event.currentTarget.value)}
                   />
                 </label>
@@ -92,14 +92,14 @@ export default function LoginForm(props: Props) {
               <div className="flex justify-end">
                 <Link
                   href="#"
-                  className="text-sm text-purple-600 hover:text-purple-700 hover:underline mb-6"
+                  className="text-sm text-black hover:text-customOrange hover:underline mb-6"
                 >
                   Forgot your password?
                 </Link>
               </div>
               <button
                 type="submit"
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"
+                className="hover:bg-customOrange text-black font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 border border-gray-300"
               >
                 Login
               </button>

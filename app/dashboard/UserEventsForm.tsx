@@ -126,7 +126,7 @@ export default function UserEventsForm({
     <div className="border-b py-8">
       <div className="flex mt-36 mx-10 overflow-hidden">
         <form
-          className="w-1/3 overflow-y-auto rounded-xl mr-4 border-2 border-gray-100"
+          className="w-1/3 overflow-y-auto rounded-xl mr-4 border-2 border-gray-200 flex flex-col gap-4 items-center"
           onSubmit={(event) => {
             event.preventDefault();
             if (
@@ -141,15 +141,16 @@ export default function UserEventsForm({
         >
           <div className="mb-4">
             {displayHeadline && userEvents[0] && (
-              <h2 className="text-xl font-bold mb-2">
-                {userEvents[0].firstName}, this is your dashboard!
-              </h2>
+              <h1 className="text-xl font-bold mb-2 mt-4 text-grey">
+                {userEvents[0].firstName.toUpperCase()}`s Dashboard
+              </h1>
             )}
           </div>
-          <div>
-            <label>
-              Region:
+
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-4">
               <select
+                className="select select-bordered select-xs max-w-xs w-36 focus:border-customOrange"
                 value={region}
                 onChange={(event) => setRegion(event.currentTarget.value)}
                 required
@@ -164,13 +165,8 @@ export default function UserEventsForm({
                   </option>
                 ))}
               </select>
-            </label>
-          </div>
-
-          <div>
-            <label>
-              Pollution:
               <select
+                className="select select-bordered select-xs max-w-xs w-36 focus:border-customOrange"
                 value={pollution}
                 onChange={(event) => setPollution(event.currentTarget.value)}
                 required
@@ -185,62 +181,62 @@ export default function UserEventsForm({
                   </option>
                 ))}
               </select>
-            </label>
-          </div>
+            </div>
 
-          <label>
-            Report:
-            <textarea
-              maxLength={250}
-              value={report}
-              onChange={(event) => setReport(event.currentTarget.value)}
-              required
-            />
-          </label>
-          <label>
-            Damage Estimation:
+            <div>
+              <textarea
+                placeholder="Type your report here"
+                className="input input-bordered input-md w-full max-w-xs text-gray-700 focus:outline-none border-b-4 focus:border-customOrange transition duration-500 px-3 pb-3"
+                maxLength={250}
+                value={report}
+                onChange={(event) => setReport(event.currentTarget.value)}
+                required
+              />
+            </div>
+
             <input
+              placeholder="Estimate the damage"
+              className="input input-bordered input-sm w-full max-w-xs text-gray-700 focus:outline-none border-b-4 focus:border-customOrange transition duration-500 px-3 pb-3"
               value={damageEstimation}
               onChange={(event) =>
                 setDamageEstimation(event.currentTarget.value)
               }
               required
             />
-          </label>
-          <label>
-            Date:
+
             <input
+              className="input input-bordered input-sm w-full max-w-xs text-gray-700 focus:outline-none border-b-4 focus:border-customOrange transition duration-500 px-3 pb-3"
               type="date"
               value={date}
               onChange={(event) => setDate(event.currentTarget.value)}
               required
             />
-          </label>
-          <br />
+          </div>
 
-          <p>Upload images!</p>
-          <div>
-            <p>
-              <input
-                type="file"
-                name="file"
-                accept=".jpg, .png, .jpeg"
-                onChange={handleImagePreview}
-                required
-              />
-            </p>
-            <img
-              src={uploadImage ? URL.createObjectURL(uploadImage) : ''}
-              alt="Your uploaded image"
-              width={400}
-              height={350}
+          <div className="flex flex-col items-center">
+            <input
+              type="file"
+              className="file-input file-input-bordered file-input-accent w-full max-w-xs"
+              name="file"
+              accept=".jpg, .png, .jpeg"
+              onChange={handleImagePreview}
+              required
             />
+            <div className="preview-container p-6">
+              <img
+                src={uploadImage ? URL.createObjectURL(uploadImage) : ''}
+                width={300}
+                height={250}
+              />
+            </div>
 
             {uploadImage &&
               selectedLocation.lat !== null &&
               selectedLocation.lng !== null && (
                 <p>
-                  <button>Add event!</button>
+                  <button className="bg-white hover:bg-customOrange text-black font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200">
+                    Add event!
+                  </button>
                 </p>
               )}
           </div>
@@ -262,7 +258,22 @@ export default function UserEventsForm({
             {userEvents.length > 0 ? (
               <RecentCreatedEvent createdEvent={userEvents} />
             ) : (
-              <h2> No events created yet</h2>
+              <div role="alert" className="alert">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="stroke-info shrink-0 w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                <span> No events created yet</span>
+              </div>
             )}
           </div>
         </div>

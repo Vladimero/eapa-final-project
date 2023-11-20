@@ -84,7 +84,7 @@ export default function AutocompleteAndMapView({
 
   return (
     <>
-      <div>
+      <div className="absolute w-120 bg-grey rounded-md top-4 left-1/2 transform -translate-x-1/2 shadow-lg z-10">
         <PlacesAutocomplete
           value={address}
           onChange={handleChange}
@@ -98,6 +98,7 @@ export default function AutocompleteAndMapView({
           }) => (
             <div>
               <input
+                className="w-full rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-customOrange focus:border-transparent"
                 {...getInputProps({
                   placeholder: 'Search Places ...',
                 })}
@@ -128,66 +129,68 @@ export default function AutocompleteAndMapView({
           )}
         </PlacesAutocomplete>
       </div>
-      <div>
-        <MapContainer
-          center={
-            selectedLocation.lat !== null && selectedLocation.lng !== null
-              ? { lat: selectedLocation.lat, lng: selectedLocation.lng }
-              : { lat: 47.5162, lng: 14.5501 }
-          }
-          zoom={
-            selectedLocation.lat !== null && selectedLocation.lng !== null
-              ? 18
-              : 6
-          }
-        >
-          OPEN STREET MAPS TILES
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {/* Place autocomplete marker */}
-          {selectedLocation.lat !== null && selectedLocation.lng !== null && (
-            <Marker
-              position={{
-                lat: selectedLocation.lat,
-                lng: selectedLocation.lng,
-              }}
-              icon={customIcon}
+      <div className="relative">
+        <div className="h-96 w-full border-2 rounded-lg relative z-0">
+          <MapContainer
+            center={
+              selectedLocation.lat !== null && selectedLocation.lng !== null
+                ? { lat: selectedLocation.lat, lng: selectedLocation.lng }
+                : { lat: 47.5162, lng: 14.5501 }
+            }
+            zoom={
+              selectedLocation.lat !== null && selectedLocation.lng !== null
+                ? 18
+                : 6
+            }
+          >
+            OPEN STREET MAPS TILES
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-          )}
-          <MarkerClusterGroup chunkedLoading>
-            {positions.map((position, index) => {
-              const eventData = userEvents && userEvents[index]; // Access specific event data
+            {/* Place autocomplete marker */}
+            {selectedLocation.lat !== null && selectedLocation.lng !== null && (
+              <Marker
+                position={{
+                  lat: selectedLocation.lat,
+                  lng: selectedLocation.lng,
+                }}
+                icon={customIcon}
+              />
+            )}
+            <MarkerClusterGroup chunkedLoading>
+              {positions.map((position, index) => {
+                const eventData = userEvents && userEvents[index]; // Access specific event data
 
-              return (
-                <Marker
-                  key={`key-div-${index}`}
-                  position={position}
-                  icon={customIcon}
-                >
-                  {eventData && (
-                    <Popup>
-                      <div>
-                        <h2>{eventData.firstName}`s event:</h2>
-                        <p>Pollution: {eventData.pollutionKind}</p>
-                        <p>Region: {eventData.regionState}</p>
-                        <p>Damage Estimation: {eventData.damageEstimation}</p>
-                        <p>Noticed on: {eventData.date}</p>
-                        <img
-                          src={eventData.secureUrl}
-                          alt="no image uploaded yet"
-                          width={80}
-                          height={50}
-                        />
-                      </div>
-                    </Popup>
-                  )}
-                </Marker>
-              );
-            })}
-          </MarkerClusterGroup>
-        </MapContainer>
+                return (
+                  <Marker
+                    key={`key-div-${index}`}
+                    position={position}
+                    icon={customIcon}
+                  >
+                    {eventData && (
+                      <Popup>
+                        <div>
+                          <h2>{eventData.firstName}`s event:</h2>
+                          <p>Pollution: {eventData.pollutionKind}</p>
+                          <p>Region: {eventData.regionState}</p>
+                          <p>Damage Estimation: {eventData.damageEstimation}</p>
+                          <p>Noticed on: {eventData.date}</p>
+                          <img
+                            src={eventData.secureUrl}
+                            alt="no image uploaded yet"
+                            width={80}
+                            height={50}
+                          />
+                        </div>
+                      </Popup>
+                    )}
+                  </Marker>
+                );
+              })}
+            </MarkerClusterGroup>
+          </MapContainer>
+        </div>
       </div>
     </>
   );

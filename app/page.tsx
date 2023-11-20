@@ -130,7 +130,6 @@ export default async function Home() {
                   alt="hero Icon"
                   width={400}
                   height={300}
-                  // style={{ marginLeft: '20px', paddingLeft: '30px' }}
                 />
               </div>
             </div>
@@ -141,7 +140,6 @@ export default async function Home() {
                   alt="hero Icon"
                   width={400}
                   height={300}
-                  // style={{ marginLeft: '20px', paddingLeft: '30px' }}
                 />
               </div>
               <div className="w-full sm:w-1/2 p-6 mt-6">
@@ -189,10 +187,7 @@ export default async function Home() {
               </div>
               <div className="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
                 <div className="flex items-center justify-start">
-                  <button
-                    className="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-                    style={bodyBgStyle}
-                  >
+                  <button className="mx-auto lg:mx-0 gradient hover:bg-customOrange text-black font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out border border-gray-300">
                     View details
                   </button>
                 </div>
@@ -216,10 +211,7 @@ export default async function Home() {
               </div>
               <div className="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
                 <div className="flex items-center justify-center">
-                  <button
-                    className="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-                    style={bodyBgStyle}
-                  >
+                  <button className="mx-auto lg:mx-0 gradient hover:bg-customOrange text-black font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out border border-gray-300">
                     View details
                   </button>
                 </div>
@@ -243,10 +235,7 @@ export default async function Home() {
               </div>
               <div className="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
                 <div className="flex items-center justify-end">
-                  <button
-                    className="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-                    style={bodyBgStyle}
-                  >
+                  <button className="mx-auto lg:mx-0 gradient hover:bg-customOrange text-black font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out border border-gray-300">
                     View details
                   </button>
                 </div>
@@ -298,7 +287,7 @@ export default async function Home() {
           <br />
           <Link
             href="/register"
-            className="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+            className="mx-auto lg:mx-0  bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
           >
             Register
           </Link>
