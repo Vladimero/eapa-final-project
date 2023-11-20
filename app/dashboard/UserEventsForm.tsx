@@ -7,6 +7,7 @@ import { UserEvent } from '../../database/events';
 import { Pollution } from '../../migrations/00000-createPollution';
 import { Region } from '../../migrations/00002-createRegion';
 import AutocompleteAndMapView, { Position } from './AutocompleteAndMapView';
+import RecentCreatedEvent from './RecentCreatedEvent';
 
 export default function UserEventsForm({
   userId,
@@ -119,124 +120,153 @@ export default function UserEventsForm({
     });
   };
 
+  const displayHeadline = userEvents.length > 0;
+
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        if (selectedLocation.lat !== null && selectedLocation.lng !== null) {
-          handleImageUpload();
-        } else {
-          alert('Please select an existing address.');
-        }
-      }}
-    >
-      <div>
-        <label>
-          Region:
-          <select
-            value={region}
-            onChange={(event) => setRegion(event.currentTarget.value)}
-            required
-          >
-            <option value="">Select a region</option>
-            {regionState.map((region) => (
-              <option
-                key={`regionId-${region.stateOfAustria}`}
-                value={region.stateOfAustria}
+    <div className="border-b py-8">
+      <div className="flex mt-36 mx-10 overflow-hidden">
+        <form
+          className="w-1/3 overflow-y-auto rounded-xl mr-4 border-2 border-gray-100"
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (
+              selectedLocation.lat !== null &&
+              selectedLocation.lng !== null
+            ) {
+              handleImageUpload();
+            } else {
+              alert('Please select an existing address.');
+            }
+          }}
+        >
+          <div className="mb-4">
+            {displayHeadline && userEvents[0] && (
+              <h2 className="text-xl font-bold mb-2">
+                {userEvents[0].firstName}, this is your dashboard!
+              </h2>
+            )}
+          </div>
+          <div>
+            <label>
+              Region:
+              <select
+                value={region}
+                onChange={(event) => setRegion(event.currentTarget.value)}
+                required
               >
-                {region.stateOfAustria}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+                <option value="">Select a region</option>
+                {regionState.map((region) => (
+                  <option
+                    key={`regionId-${region.stateOfAustria}`}
+                    value={region.stateOfAustria}
+                  >
+                    {region.stateOfAustria}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
 
-      <div>
-        <label>
-          Pollution:
-          <select
-            value={pollution}
-            onChange={(event) => setPollution(event.currentTarget.value)}
-            required
-          >
-            <option value="">Select a pollution</option>
-            {pollutionKind.map((pollution) => (
-              <option
-                key={`pollutionId-${pollution.kind}`}
-                value={pollution.kind}
+          <div>
+            <label>
+              Pollution:
+              <select
+                value={pollution}
+                onChange={(event) => setPollution(event.currentTarget.value)}
+                required
               >
-                {pollution.kind}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+                <option value="">Select a pollution</option>
+                {pollutionKind.map((pollution) => (
+                  <option
+                    key={`pollutionId-${pollution.kind}`}
+                    value={pollution.kind}
+                  >
+                    {pollution.kind}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
 
-      <label>
-        Report:
-        <textarea
-          maxLength={250}
-          value={report}
-          onChange={(event) => setReport(event.currentTarget.value)}
-          required
-        />
-      </label>
-      <label>
-        Damage Estimation:
-        <input
-          value={damageEstimation}
-          onChange={(event) => setDamageEstimation(event.currentTarget.value)}
-          required
-        />
-      </label>
-      <label>
-        Date:
-        <input
-          value={date}
-          onChange={(event) => setDate(event.currentTarget.value)}
-          required
-        />
-      </label>
-      <br />
+          <label>
+            Report:
+            <textarea
+              maxLength={250}
+              value={report}
+              onChange={(event) => setReport(event.currentTarget.value)}
+              required
+            />
+          </label>
+          <label>
+            Damage Estimation:
+            <input
+              value={damageEstimation}
+              onChange={(event) =>
+                setDamageEstimation(event.currentTarget.value)
+              }
+              required
+            />
+          </label>
+          <label>
+            Date:
+            <input
+              type="date"
+              value={date}
+              onChange={(event) => setDate(event.currentTarget.value)}
+              required
+            />
+          </label>
+          <br />
 
-      <p>Upload images!</p>
-      <div>
-        <p>
-          <input
-            type="file"
-            name="file"
-            accept=".jpg, .png, .jpeg"
-            onChange={handleImagePreview}
-            required
-          />
-        </p>
-        <img
-          src={uploadImage ? URL.createObjectURL(uploadImage) : ''}
-          alt="Your uploaded image"
-          width={400}
-          height={350}
-        />
-
-        {uploadImage &&
-          selectedLocation.lat !== null &&
-          selectedLocation.lng !== null && (
+          <p>Upload images!</p>
+          <div>
             <p>
-              <button>Add event!</button>
+              <input
+                type="file"
+                name="file"
+                accept=".jpg, .png, .jpeg"
+                onChange={handleImagePreview}
+                required
+              />
             </p>
-          )}
+            <img
+              src={uploadImage ? URL.createObjectURL(uploadImage) : ''}
+              alt="Your uploaded image"
+              width={400}
+              height={350}
+            />
+
+            {uploadImage &&
+              selectedLocation.lat !== null &&
+              selectedLocation.lng !== null && (
+                <p>
+                  <button>Add event!</button>
+                </p>
+              )}
+          </div>
+        </form>
+
+        <div className="w-2/3 relative">
+          <AutocompleteAndMapView
+            onLocationChange={setSelectedLocation}
+            onSelect={(latLng) => {
+              console.log('Selected Lat:', latLng.lat);
+              console.log('Selected Lng:', latLng.lng);
+            }}
+            positions={positions}
+            eventId={eventId}
+            mapCoords={mapCoords}
+            userEvents={userEvents}
+          />
+          <div className="absolute bottom-0 left-0 z-10 w-full p-4">
+            {userEvents.length > 0 ? (
+              <RecentCreatedEvent createdEvent={userEvents} />
+            ) : (
+              <h2> No events created yet</h2>
+            )}
+          </div>
+        </div>
       </div>
-      <br />
-      <AutocompleteAndMapView
-        onLocationChange={setSelectedLocation}
-        onSelect={(latLng) => {
-          console.log('Selected Lat:', latLng.lat);
-          console.log('Selected Lng:', latLng.lng);
-        }}
-        positions={positions} // pass props down for child comp AutocompleteAndMapView
-        eventId={eventId} // pass props down for child comp AutocompleteAndMapView
-        mapCoords={mapCoords} // pass props down for child comp AutocompleteAndMapView
-        userEvents={userEvents} // pass props down for child comp AutocompleteAndMapView
-      />
-    </form>
+    </div>
   );
 }

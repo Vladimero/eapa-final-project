@@ -39,9 +39,9 @@ export default async function EventsFromOneUserPage(props: Props) {
         <div className="w-1/3 overflow-y-auto rounded-xl mr-4 border-2 border-gray-100">
           <div className="mb-4">
             {displayHeadline && allEventsFromOneUser[0] && (
-              <h1 className="text-xl font-bold mb-2">
+              <h2 className="text-xl font-bold mb-2">
                 View all events from: {allEventsFromOneUser[0].firstName}
-              </h1>
+              </h2>
             )}
             {allEventsFromOneUser.map((event: ViewAllEventsFromOneUser) => (
               <div key={`eventId-${event.eventId}`}>

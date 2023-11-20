@@ -8,7 +8,7 @@ import LandingPageIconTwo from '../public/images/LandingPageIconTwo.jpg';
 
 export const bodyBgStyle = {
   backgroundColor: '#e86a21',
-  backgroundImage: 'linear-gradient(315deg, #e86a21 0%, #dae6db 74%)',
+  backgroundImage: 'linear-gradient(315deg, #d78657 0%, #dae6db 74%)',
 };
 
 export default async function Home() {
@@ -20,6 +20,7 @@ export default async function Home() {
   // 2. Get the current logged-in user from the database using sessions token value
   const user =
     sessionToken && (await getUserBySessionToken(sessionToken.value));
+
   return (
     <>
       <div

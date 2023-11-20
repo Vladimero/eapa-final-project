@@ -9,7 +9,11 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        customOrange: '#e86a21',
+      },
+    },
   },
   plugins: [require('daisyui')],
   daisyui: {

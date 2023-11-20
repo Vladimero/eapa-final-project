@@ -1,12 +1,22 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import Logo from '../../public/images/Logo.png';
+
 export default function FooterForm() {
   return (
     <footer>
       <div className="container mx-auto px-8">
         <div className="w-full flex flex-col md:flex-row py-6">
-          <div className="flex-1 mb-6 text-black">
-            <div className="text-pink-600 no-underline hover:no-underline font-bold text-2xl lg:text-4xl">
-              EAPA
-            </div>
+          <div className="flex-1 mb-6 mr-24">
+            <Link href="/">
+              <Image
+                className="h-12 w-auto"
+                src={Logo}
+                alt="Logo"
+                width={200}
+                height={60}
+              />
+            </Link>
           </div>
           <div className="flex-1">
             <p className="uppercase text-gray-500 md:mb-6">Links</p>

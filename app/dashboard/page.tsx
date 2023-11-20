@@ -64,20 +64,21 @@ export default async function DashboardUserPage() {
 
   return (
     <>
-      <h1>User Dashboard</h1>
-      <br />
-      <div>
-        <UserEventsForm
-          userId={user.id}
-          pollutionKind={pollutionKind}
-          regionState={regionState}
-          positions={positions}
-          eventId={eventId}
-          mapCoords={mapCoords}
-          userEvents={userEvents}
-        />
-      </div>
-      <h2>{user.firstName}`s Events:</h2>
+      <UserEventsForm
+        userId={user.id}
+        pollutionKind={pollutionKind}
+        regionState={regionState}
+        positions={positions}
+        eventId={eventId}
+        mapCoords={mapCoords}
+        userEvents={userEvents}
+      />
+    </>
+  );
+}
+
+/*
+<h2>{user.firstName}`s Events:</h2>
       <br />
       {userEvents.length > 0 ? (
         <div>
@@ -129,6 +130,4 @@ export default async function DashboardUserPage() {
       ) : (
         <h2> No events yet</h2>
       )}
-    </>
-  );
-}
+      */

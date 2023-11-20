@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getValidSessionByToken } from '../../../database/sessions';
+import UserProfileForm from './UserProfileForm';
 
 type Props = {
   params: { firstName: string };
@@ -23,10 +24,13 @@ export default async function UserProfilePage({ params }: Props) {
 
   // 4. If session token is invalid redirect to the login form
   return (
-    <div>
-      <div>
-        <h1>{params.firstName.toUpperCase()}'s Profile</h1>
+    <>
+      <div className="mt-36 border-b py-8">
+        <h1 className="text-3xl pb-4">
+          {params.firstName.toUpperCase()}'s Profile
+        </h1>
+        <UserProfileForm />
       </div>
-    </div>
+    </>
   );
 }
