@@ -19,8 +19,8 @@ export default async function DashboardAdminPage() {
   });
 
   return (
-    <>
-      <div className="flex mx-10 pt-10 overflow-hidden">
+    <div className="border-b py-8">
+      <div className="flex mt-36 mx-10 overflow-hidden">
         <div className="w-1/3 overflow-y-auto rounded-xl mr-4 border-2 border-gray-100">
           <div className="mb-4">
             <h2 className="text-xl font-bold mb-2">Admin Dashboard</h2>
@@ -42,6 +42,6 @@ export default async function DashboardAdminPage() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -34,8 +34,8 @@ export default async function EventsFromOneUserPage(props: Props) {
   const displayHeadline = allEventsFromOneUser.length > 0;
 
   return (
-    <>
-      <div className="flex mx-10 pt-10 overflow-hidden">
+    <div className="border-b py-8">
+      <div className="flex mt-36 mx-10 overflow-hidden">
         <div className="w-1/3 overflow-y-auto rounded-xl mr-4 border-2 border-gray-100">
           <div className="mb-4">
             {displayHeadline && allEventsFromOneUser[0] && (
@@ -67,6 +67,6 @@ export default async function EventsFromOneUserPage(props: Props) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

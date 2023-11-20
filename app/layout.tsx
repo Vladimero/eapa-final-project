@@ -15,10 +15,10 @@ type Props = {
 
 export default async function RootLayout(props: Props) {
   return (
-    <html lang="en" data-theme="lemonade">
+    <html lang="en" data-theme="cupcake">
       <body>
         <NavBarForm />
-        <div className="mt-36 mb-24">{props.children}</div>
+        <div className="mb-24">{props.children}</div>
         <FooterForm />
       </body>
     </html>
