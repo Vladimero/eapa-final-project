@@ -1,6 +1,7 @@
 'use client';
 
 import { LatLngExpression } from 'leaflet';
+// import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { UserEvent } from '../../database/events';
@@ -239,6 +240,7 @@ export default function UserEventsForm({
             <div className="preview-container p-6 flex flex-col items-center">
               <img
                 src={uploadImage ? URL.createObjectURL(uploadImage) : ''}
+                // alt="Your uploaded image"
                 width={300}
                 height={250}
               />

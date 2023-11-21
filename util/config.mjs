@@ -11,7 +11,6 @@ export function setEnvironmentVariables() {
       process.env.PGUSERNAME = process.env.POSTGRES_USER;
       process.env.PGPASSWORD = process.env.POSTGRES_PASSWORD;
     }
-    return;
   }
 
   // Replacement for unmaintained dotenv-safe package
