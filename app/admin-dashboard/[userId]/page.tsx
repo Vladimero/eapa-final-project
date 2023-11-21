@@ -30,10 +30,6 @@ export default async function EventsFromOneUserPage(props: Props) {
   }));
   console.log(positions);
 
-  const eventId = allEventsFromOneUser.map((event) => {
-    return event.eventId;
-  });
-
   const displayHeadline = allEventsFromOneUser.length > 0;
 
   return (

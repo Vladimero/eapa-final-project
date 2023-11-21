@@ -157,6 +157,7 @@ export default function UserEventsForm({
           <div className="flex flex-col gap-2">
             <div className="flex gap-4">
               <select
+                id="region"
                 className="select select-bordered select-xs max-w-xs w-36 focus:border-customOrange"
                 value={region}
                 onChange={(event) => setRegion(event.currentTarget.value)}
@@ -173,6 +174,7 @@ export default function UserEventsForm({
                 ))}
               </select>
               <select
+                id="pollution"
                 className="select select-bordered select-xs max-w-xs w-36 focus:border-customOrange"
                 value={pollution}
                 onChange={(event) => setPollution(event.currentTarget.value)}
@@ -192,6 +194,7 @@ export default function UserEventsForm({
 
             <div>
               <textarea
+                id="report"
                 placeholder="Type your report here"
                 className="input input-bordered input-md w-full max-w-xs text-gray-700 focus:outline-none border-b-4 focus:border-customOrange transition duration-500 px-3 pb-3"
                 maxLength={250}
@@ -202,6 +205,7 @@ export default function UserEventsForm({
             </div>
 
             <select
+              id="damage"
               className="select select-bordered select-xs max-w-xs w-full focus:border-customOrange"
               value={damageEstimation}
               onChange={(event) =>
@@ -220,6 +224,7 @@ export default function UserEventsForm({
             </select>
 
             <input
+              id="date"
               className="input input-bordered input-sm w-full max-w-xs text-gray-700  focus:border-customOrange transition duration-500 px-3 pb-3"
               type="date"
               value={date}
@@ -231,6 +236,7 @@ export default function UserEventsForm({
           <div className="flex flex-col items-center">
             <input
               type="file"
+              id="fileInput"
               className="file-input file-input-bordered file-input-accent w-full max-w-xs"
               name="file"
               accept=".jpg, .png, .jpeg"

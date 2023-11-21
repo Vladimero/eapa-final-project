@@ -24,16 +24,14 @@ export default async function UserProfilePage({ params }: Props) {
 
   // 4. If session token is invalid redirect to the login form
   return (
-    <>
-      <div className="mt-32 border-b py-8">
-        <h1 className="text-3xl font-bold pb-16 text-center">
-          <span className="border-[1px] p-1 rounded border-customOrange hover:text-white hover:bg-customOrange">
-            {params.firstName.toUpperCase()}'s Profile
-          </span>
-        </h1>
+    <div className="mt-32 border-b py-8">
+      <h1 className="text-3xl font-bold pb-16 text-center">
+        <span className="border-[1px] p-1 rounded border-customOrange hover:text-white hover:bg-customOrange">
+          {params.firstName.toUpperCase()}'s Profile
+        </span>
+      </h1>
 
-        <UserProfileForm />
-      </div>
-    </>
+      <UserProfileForm />
+    </div>
   );
 }

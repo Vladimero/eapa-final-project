@@ -99,6 +99,7 @@ export default function AutocompleteAndMapView({
           }) => (
             <div>
               <input
+                id="placeSuggestion"
                 className="w-full rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-customOrange focus:border-transparent"
                 {...getInputProps({
                   placeholder: 'Search Places ...',

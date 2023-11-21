@@ -46,92 +46,81 @@ export default function LoginForm(props: Props) {
   };
 
   return (
-    <>
-      <body
-        className="body-bg min-h-screen pt-4 md:pt-12 pb-6 px-2 md:px-0"
-        style={bodyBgStyle}
-      >
-        <div className="max-w-lg mx-auto">
-          <Link href="/">
-            <div className="flex items-center justify-center">
-              <Image src={Logo} alt="Logo" width={300} height={80} />
+    <body
+      className="body-bg min-h-screen pt-4 md:pt-12 pb-6 px-2 md:px-0"
+      style={bodyBgStyle}
+    >
+      <div className="max-w-lg mx-auto">
+        <Link href="/">
+          <div className="flex items-center justify-center">
+            <Image src={Logo} alt="Logo" width={300} height={80} />
+          </div>
+        </Link>
+      </div>
+      <main className="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
+        <section>
+          <h3 className="font-bold text-2xl">Sign In</h3>
+        </section>
+        <section className="mt-10">
+          <form
+            className="flex flex-col"
+            onSubmit={async (event) => await handleRegister(event)}
+          >
+            <div className="mb-6 pt-3 rounded bg-gray-200">
+              <label className="block text-gray-700 text-sm font-bold mb-2 ml-3">
+                Email:
+                <input
+                  className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-customOrange  transition duration-500 px-3 pb-3"
+                  onChange={(event) => setEmail(event.currentTarget.value)}
+                />
+              </label>
             </div>
-          </Link>
-        </div>
-        <main className="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
-          <section>
-            <h3 className="font-bold text-2xl">Sign In</h3>
-          </section>
-          <section className="mt-10">
-            <form
-              className="flex flex-col"
-              onSubmit={async (event) => await handleRegister(event)}
-            >
-              <div className="mb-6 pt-3 rounded bg-gray-200">
-                <label className="block text-gray-700 text-sm font-bold mb-2 ml-3">
-                  Email:
-                  <input
-                    type="text"
-                    id="email"
-                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-customOrange  transition duration-500 px-3 pb-3"
-                    onChange={(event) => setEmail(event.currentTarget.value)}
-                  />
-                </label>
-              </div>
-              <div className="mb-6 pt-3 rounded bg-gray-200">
-                <label className="block text-gray-700 text-sm font-bold mb-2 ml-3">
-                  Password:
-                  <input
-                    type="password"
-                    id="password"
-                    className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-customOrange transition duration-500 px-3 pb-3"
-                    onChange={(event) => setPassword(event.currentTarget.value)}
-                  />
-                </label>
-              </div>
-              <div className="flex justify-end">
-                <Link
-                  href="#"
-                  className="text-sm text-black hover:text-customOrange hover:underline mb-6"
-                >
-                  Forgot your password?
-                </Link>
-              </div>
-              <button
-                type="submit"
-                className="hover:bg-customOrange text-black font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 border border-gray-300"
+            <div className="mb-6 pt-3 rounded bg-gray-200">
+              <label className="block text-gray-700 text-sm font-bold mb-2 ml-3">
+                Password:
+                <input
+                  type="password"
+                  className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-customOrange transition duration-500 px-3 pb-3"
+                  onChange={(event) => setPassword(event.currentTarget.value)}
+                />
+              </label>
+            </div>
+            <div className="flex justify-end">
+              <Link
+                href="#"
+                className="text-sm text-black hover:text-customOrange hover:underline mb-6"
               >
-                Login
-              </button>
+                Forgot your password?
+              </Link>
+            </div>
+            <button className="hover:bg-customOrange text-black font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 border border-gray-300">
+              Login
+            </button>
 
-              {errors.map((error) => (
-                <div key={`error-${error.message}`}>
-                  {' '}
-                  Error: {error.message}{' '}
-                </div>
-              ))}
-            </form>
-          </section>
-        </main>
-        <div className="max-w-lg mx-auto text-center mt-12 mb-6">
-          <p className="text-black">
-            Haven't registered yet?{' '}
-            <Link href="/register" className="font-bold hover:underline">
-              Sign Up
-            </Link>
-            .
-          </p>
-        </div>
-        <div className="max-w-lg mx-auto flex justify-center text-black">
-          <Link href="/contact" className="hover:underline">
-            Contact
+            {errors.map((error) => (
+              <div key={`error-${error.message}`}> Error: {error.message} </div>
+            ))}
+          </form>
+        </section>
+      </main>
+      <div className="max-w-lg mx-auto text-center mt-12 mb-6">
+        <p className="text-black">
+          Haven't registered yet?{' '}
+          <Link href="/register" className="font-bold hover:underline">
+            Sign Up
           </Link>
-          <span className="mx-3">•</span>
-          <a href="#" className="hover:underline">
-            Privacy
-          </a>
-        </div>
-      </body>
-    </>
+          .
+        </p>
+      </div>
+      <div className="max-w-lg mx-auto flex justify-center text-black">
+        <Link href="#" className="hover:underline">
+          Contact
+        </Link>
+        <span className="mx-3">•</span>
+        <Link href="#" className="hover:underline">
+          Privacy
+        </Link>
+      </div>
+    </body>
   );
 }

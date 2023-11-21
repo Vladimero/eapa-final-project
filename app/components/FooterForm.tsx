@@ -22,28 +22,28 @@ export default function FooterForm() {
             <p className="uppercase text-gray-500 md:mb-6">Links</p>
             <ul className="list-reset mb-6">
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a
+                <Link
                   href="#"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   FAQ
-                </a>
+                </Link>
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a
+                <Link
                   href="#"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Help
-                </a>
+                </Link>
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a
+                <Link
                   href="#"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Support
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -51,20 +51,20 @@ export default function FooterForm() {
             <p className="uppercase text-gray-500 md:mb-6">Legal</p>
             <ul className="list-reset mb-6">
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a
+                <Link
                   href="#"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Terms
-                </a>
+                </Link>
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a
+                <Link
                   href="#"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Privacy
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -72,28 +72,28 @@ export default function FooterForm() {
             <p className="uppercase text-gray-500 md:mb-6">Social</p>
             <ul className="list-reset mb-6">
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a
+                <Link
                   href="#"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Facebook
-                </a>
+                </Link>
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a
+                <Link
                   href="#"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Linkedin
-                </a>
+                </Link>
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a
+                <Link
                   href="#"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Twitter
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -101,28 +101,28 @@ export default function FooterForm() {
             <p className="uppercase text-gray-500 md:mb-6">Company</p>
             <ul className="list-reset mb-6">
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a
+                <Link
                   href="#"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Official Blog
-                </a>
+                </Link>
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a
-                  href="#"
+                <Link
+                  href="/about"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   About Us
-                </a>
+                </Link>
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a
+                <Link
                   href="#"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

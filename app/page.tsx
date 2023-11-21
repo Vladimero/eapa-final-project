@@ -285,12 +285,24 @@ export default async function Home() {
             Build a sustainably future for Austria now!
           </h3>
           <br />
-          <Link
-            href="/register"
-            className="mx-auto lg:mx-0  bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-          >
-            Register
-          </Link>
+          <div>
+            {user ? (
+              <Link
+                href="/dashboard"
+                className="mx-auto lg:mx-0  bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+              >
+                Register
+              </Link>
+            ) : (
+              <Link
+                href="/register"
+                className="mx-auto lg:mx-0  bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+              >
+                Register
+              </Link>
+            )}
+          </div>
+
           <br />
           <br />
           <br />
