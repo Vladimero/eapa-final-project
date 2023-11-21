@@ -72,6 +72,7 @@ export default async function DashboardUserPage() {
         eventId={eventId}
         mapCoords={mapCoords}
         userEvents={userEvents}
+        firstName={user.firstName}
       />
     </>
   );

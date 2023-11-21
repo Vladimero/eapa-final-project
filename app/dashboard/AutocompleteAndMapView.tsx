@@ -4,6 +4,7 @@ import './styles.css';
 import 'leaflet/dist/leaflet.css';
 import { useLoadScript } from '@react-google-maps/api';
 import { Icon, LatLngExpression } from 'leaflet';
+import Image from 'next/image';
 import React, { useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
@@ -143,7 +144,6 @@ export default function AutocompleteAndMapView({
                 : 6
             }
           >
-            OPEN STREET MAPS TILES
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -171,17 +171,22 @@ export default function AutocompleteAndMapView({
                     {eventData && (
                       <Popup>
                         <div>
-                          <h2>{eventData.firstName}`s event:</h2>
+                          <h2 className="font-bold">
+                            Noticed on: {eventData.date}
+                          </h2>
                           <p>Pollution: {eventData.pollutionKind}</p>
                           <p>Region: {eventData.regionState}</p>
                           <p>Damage Estimation: {eventData.damageEstimation}</p>
-                          <p>Noticed on: {eventData.date}</p>
-                          <img
-                            src={eventData.secureUrl}
-                            alt="no image uploaded yet"
-                            width={80}
-                            height={50}
-                          />
+                          <p>Report: {eventData.report}</p>
+                          <div className="flex justify-center">
+                            <Image
+                              src={eventData.secureUrl}
+                              alt="no image uploaded yet"
+                              width={80}
+                              height={50}
+                              className="rounded w-full"
+                            />
+                          </div>
                         </div>
                       </Popup>
                     )}

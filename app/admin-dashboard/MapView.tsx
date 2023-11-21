@@ -2,6 +2,7 @@
 import './styles.css';
 import 'leaflet/dist/leaflet.css';
 import { Icon, LatLngExpression } from 'leaflet';
+import Image from 'next/image';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { EventsForAdmin } from '../../database/events';
@@ -44,17 +45,22 @@ export default function MapView(props: Props) {
               {eventData && (
                 <Popup>
                   <div>
-                    <h2>{eventData.firstName}`s event:</h2>
+                    <h2 className="font-bold">
+                      {eventData.firstName.toUpperCase()}`s report
+                    </h2>
+                    <p>Noticed on: {eventData.date}</p>
                     <p>Pollution: {eventData.pollutionKind}</p>
                     <p>Region: {eventData.regionState}</p>
                     <p>Damage Estimation: {eventData.damageEstimation}</p>
-                    <p>Noticed on: {eventData.date}</p>
-                    <img
-                      src={eventData.secureUrl}
-                      alt="no image uploaded yet"
-                      width={80}
-                      height={50}
-                    />
+                    <div className="flex justify-center">
+                      <Image
+                        src={eventData.secureUrl}
+                        alt="no image uploaded yet"
+                        width={80}
+                        height={50}
+                        className="rounded w-full"
+                      />
+                    </div>
                   </div>
                 </Popup>
               )}

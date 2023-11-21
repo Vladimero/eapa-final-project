@@ -36,11 +36,12 @@ export default async function EventsFromOneUserPage(props: Props) {
   return (
     <div className="border-b py-8">
       <div className="flex mt-36 mx-10 overflow-hidden">
-        <div className="w-1/3 overflow-y-auto rounded-xl mr-4 border-2 border-gray-100">
+        <div className="w-1/3 overflow-y-auto rounded-xl mr-4 border-2 border-gray-200 flex flex-col gap-4 items-center">
           <div className="mb-4">
             {displayHeadline && allEventsFromOneUser[0] && (
               <h2 className="text-xl font-bold mb-2">
-                View all events from: {allEventsFromOneUser[0].firstName}
+                All reports of:{' '}
+                {allEventsFromOneUser[0].firstName.toUpperCase()}
               </h2>
             )}
             {allEventsFromOneUser.map((event: ViewAllEventsFromOneUser) => (

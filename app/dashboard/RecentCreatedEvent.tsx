@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Image from 'next/image';
 import React, { useRef } from 'react';
 import { UserEvent } from '../../database/events';
 
@@ -50,18 +50,16 @@ export default function RecentCreatedEvent(props: Props) {
             key={`event-${event.eventId}`}
             className="w-[195px] flex-shrink-0 p-2 rounded-lg shadow-md mb-1 bg-white hover:scale-110 transition-all mt-[20px] cursor-pointer"
           >
-            <Link href={`/admin-dashboard/${event.eventId}`}>
-              <img
-                src={event.secureUrl}
-                alt="no image yet"
-                width={180}
-                height={80}
-                className="rounded-lg object-cover h-[90px]"
-              />
-            </Link>
+            <Image
+              src={event.secureUrl}
+              alt="no image yet"
+              width={180}
+              height={80}
+              className="rounded-lg object-cover h-[90px]"
+            />
 
             <h2 className="text-[13px] font-bold mt-1 line-clamp-1">
-              {event.firstName}`s event from: {event.date}
+              Report from: {event.date}
             </h2>
 
             <h2 className="text-[10px] text-gray-400 line-clamp-2">

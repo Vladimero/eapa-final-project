@@ -17,6 +17,7 @@ export default function UserEventsForm({
   eventId, // props for AutocompleteAndMapView
   mapCoords, // props for AutocompleteAndMapView
   userEvents, // props for AutocompleteAndMapView
+  firstName,
 }: {
   userId: number;
   pollutionKind: Pollution[];
@@ -25,6 +26,7 @@ export default function UserEventsForm({
   eventId: number[];
   mapCoords: LatLngExpression;
   userEvents: UserEvent[];
+  firstName: string;
 }) {
   const [report, setReport] = useState('');
   const [damageEstimation, setDamageEstimation] = useState('');
@@ -120,7 +122,9 @@ export default function UserEventsForm({
     });
   };
 
-  const displayHeadline = userEvents.length > 0;
+  const displayHeadline = userEvents.length > 0 || userEvents.length === 0;
+
+  const displayFirstName = firstName;
 
   return (
     <div className="border-b py-8">
@@ -140,11 +144,13 @@ export default function UserEventsForm({
           }}
         >
           <div className="mb-4">
-            {displayHeadline && userEvents[0] && (
+            {displayHeadline ? (
               <h1 className="text-xl font-bold mb-2 mt-4 text-grey">
-                {userEvents[0].firstName.toUpperCase()}`s Dashboard
+                {userEvents.length > 0
+                  ? `${userEvents[0]?.firstName?.toUpperCase()}'s Dashboard`
+                  : `${displayFirstName.toUpperCase()}'s Dashboard`}
               </h1>
-            )}
+            ) : null}
           </div>
 
           <div className="flex flex-col gap-2">
@@ -194,15 +200,23 @@ export default function UserEventsForm({
               />
             </div>
 
-            <input
-              placeholder="Estimate the damage"
-              className="input input-bordered input-sm w-full max-w-xs text-gray-700 focus:outline-none border-b-4 focus:border-customOrange transition duration-500 px-3 pb-3"
+            <select
+              className="select select-bordered select-xs max-w-xs w-full focus:border-customOrange"
               value={damageEstimation}
               onChange={(event) =>
                 setDamageEstimation(event.currentTarget.value)
               }
               required
-            />
+            >
+              <option value="">Estimate the damage</option>
+              <option>not at all</option>
+              <option>neutral</option>
+              <option>small</option>
+              <option>medium</option>
+              <option>high</option>
+              <option>huge</option>
+              <option>can not be assessed</option>
+            </select>
 
             <input
               className="input input-bordered input-sm w-full max-w-xs text-gray-700 focus:outline-none border-b-4 focus:border-customOrange transition duration-500 px-3 pb-3"
@@ -222,23 +236,23 @@ export default function UserEventsForm({
               onChange={handleImagePreview}
               required
             />
-            <div className="preview-container p-6">
+            <div className="preview-container p-6 flex flex-col items-center">
               <img
                 src={uploadImage ? URL.createObjectURL(uploadImage) : ''}
                 width={300}
                 height={250}
               />
-            </div>
 
-            {uploadImage &&
-              selectedLocation.lat !== null &&
-              selectedLocation.lng !== null && (
-                <p>
-                  <button className="bg-white hover:bg-customOrange text-black font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200">
-                    Add event!
-                  </button>
-                </p>
-              )}
+              {uploadImage &&
+                selectedLocation.lat !== null &&
+                selectedLocation.lng !== null && (
+                  <div className="mt-2 flex justify-center">
+                    <button className="bg-white hover:bg-customOrange text-grey-500 font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 border border-gray-400 w-24">
+                      Create
+                    </button>
+                  </div>
+                )}
+            </div>
           </div>
         </form>
 
