@@ -100,7 +100,7 @@ export default async function EventsFromOneUserPage(props: Props) {
               <div className=" w-full flex justify-center">
                 <Link
                   href="/admin-dashboard"
-                  className="block bg-white hover:bg-customOrange text-grey-500 font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 border border-gray-400 w-full mt-10 text-center"
+                  className="block bg-white hover:bg-customOrange text-grey-500 font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 border border-gray-400 w-56 mt-10 text-center"
                 >
                   Go back to all reports
                 </Link>

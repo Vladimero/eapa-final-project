@@ -26,9 +26,12 @@ export default async function UserProfilePage({ params }: Props) {
   return (
     <>
       <div className="mt-32 border-b py-8">
-        <h1 className="text-3xl pb-16 text-center">
-          {params.firstName.toUpperCase()}'s Profile
+        <h1 className="text-3xl font-bold pb-16 text-center">
+          <span className="border-[1px] p-1 rounded border-customOrange hover:text-white hover:bg-customOrange">
+            {params.firstName.toUpperCase()}'s Profile
+          </span>
         </h1>
+
         <UserProfileForm />
       </div>
     </>
