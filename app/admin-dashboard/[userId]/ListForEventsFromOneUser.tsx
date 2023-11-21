@@ -3,8 +3,7 @@
 import Image from 'next/image';
 import React, { useRef } from 'react';
 import { ViewAllEventsFromOneUser } from '../../../database/events';
-
-// import AdminEventsForm from './AdminEventsForm';
+import AdminEventsForm from './AdminEventsForm';
 
 type Props = {
   allEventsFromOneUser: ViewAllEventsFromOneUser[];
@@ -89,15 +88,15 @@ export default function ListForAllEventsFromOneUser(props: Props) {
             ) : null}
 
             {event.offer ? (
-              <div className="border-t-[1px] p-1 mt-1">
-                <h2 className="text-[#0075ff] flex justify-between items-center">
-                  <span className="border-[1px] p-1 rounded-full border-blue-500 hover:text-white hover:bg-blue-500">
+              <div className="border-t-[1px] p-2 mt-1">
+                <h2 className="text-[10px] text-[#0075ff] flex items-center justify-center">
+                  <span className="border-[1px] p-1 rounded border-blue-500 hover:text-white hover:bg-blue-500">
                     Offered: {event.offer}
                   </span>
                 </h2>
               </div>
             ) : null}
-            {/*  <AdminEventsForm eventId={event.eventId} /> */}
+            <AdminEventsForm eventId={event.eventId} />
           </div>
         ))}
       </div>

@@ -39,6 +39,7 @@ export default function AdminEventsForm({ eventId }: { eventId: number }) {
         <div>
           {offer === 'Other' ? (
             <input
+              className="input input-bordered input-xs w-full max-w-xs"
               type="text"
               placeholder="Enter your offering"
               value={otherOffer}
@@ -50,6 +51,7 @@ export default function AdminEventsForm({ eventId }: { eventId: number }) {
             />
           ) : (
             <select
+              className="select select-bordered select-xs max-w-xs w-full focus:border-customOrange"
               value={offer}
               onChange={(event) => setOffer(event.currentTarget.value)}
               required
@@ -65,20 +67,22 @@ export default function AdminEventsForm({ eventId }: { eventId: number }) {
             </select>
           )}
         </div>
-        <div>
-          <label>
-            Admin Comment:
-            <textarea
-              maxLength={250}
-              value={adminComment}
-              onChange={(event) => setAdminComment(event.currentTarget.value)}
-              required
-            />
-          </label>
+        <div className="pt-2">
+          <textarea
+            className="textarea textarea-bordered textarea-xs w-full max-w-xs focus:border-customOrange"
+            placeholder="Comment"
+            maxLength={250}
+            value={adminComment}
+            onChange={(event) => setAdminComment(event.currentTarget.value)}
+            required
+          />
+
           {adminComment && (
-            <p>
-              <button>Add event!</button>
-            </p>
+            <div className="mt-2 flex justify-center">
+              <button className="bg-white hover:bg-customOrange text-grey-500 font-bold py-1 px-4 rounded border border-gray-400 w-full text-sm">
+                Send
+              </button>
+            </div>
           )}
         </div>
       </form>

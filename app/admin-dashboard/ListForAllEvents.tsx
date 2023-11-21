@@ -90,14 +90,22 @@ export default function ListForAllEvents(props: Props) {
             ) : null}
 
             {event.offer ? (
-              <div className="border-t-[1px] p-1 mt-1">
-                <h2 className="text-[#0075ff] flex justify-between items-center">
-                  <span className="border-[1px] p-1 rounded-full border-blue-500 hover:text-white hover:bg-blue-500">
+              <div className="border-t-[1px] p-2 mt-1">
+                <h2 className="text-[10px] text-[#0075ff] flex items-center justify-center">
+                  <span className="border-[1px] p-1 rounded border-blue-500 hover:text-white hover:bg-blue-500">
                     Offered: {event.offer}
                   </span>
                 </h2>
               </div>
             ) : null}
+            <div className="flex items-center justify-center">
+              <Link
+                className="text-[10px] text-gray-600  font-bold mt-1 line-clamp-1 hover:text-customOrange"
+                href={`/admin-dashboard/${event.userId}`}
+              >
+                View all reports from {event.firstName.toUpperCase()}
+              </Link>
+            </div>
           </div>
         ))}
       </div>

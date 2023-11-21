@@ -23,7 +23,7 @@ export default async function DashboardAdminPage() {
       <div className="flex mt-36 mx-10 overflow-hidden">
         <div className="w-1/3 overflow-y-auto rounded-xl mr-4 border-2 border-gray-200 flex flex-col gap-4 items-center">
           <div className="mb-4">
-            <h2 className="text-xl font-bold mb-2">Admin Dashboard</h2>
+            <h1 className="text-xl font-bold mb-2 mt-4">Admin Dashboard</h1>
           </div>
         </div>
 

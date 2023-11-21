@@ -219,7 +219,7 @@ export default function UserEventsForm({
             </select>
 
             <input
-              className="input input-bordered input-sm w-full max-w-xs text-gray-700 focus:outline-none border-b-4 focus:border-customOrange transition duration-500 px-3 pb-3"
+              className="input input-bordered input-sm w-full max-w-xs text-gray-700  focus:border-customOrange transition duration-500 px-3 pb-3"
               type="date"
               value={date}
               onChange={(event) => setDate(event.currentTarget.value)}
