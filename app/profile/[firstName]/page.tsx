@@ -25,8 +25,8 @@ export default async function UserProfilePage({ params }: Props) {
   // 4. If session token is invalid redirect to the login form
   return (
     <>
-      <div className="mt-36 border-b py-8">
-        <h1 className="text-3xl pb-4">
+      <div className="mt-32 border-b py-8">
+        <h1 className="text-3xl pb-16 text-center">
           {params.firstName.toUpperCase()}'s Profile
         </h1>
         <UserProfileForm />
