@@ -16,7 +16,7 @@ export default function LoginForm(props: Props) {
   const [errors, setErrors] = useState<{ message: string }[]>([]);
   const router = useRouter();
 
-  async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
+  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const response = await fetch('/api/login', {
@@ -64,7 +64,7 @@ export default function LoginForm(props: Props) {
         <section className="mt-10">
           <form
             className="flex flex-col"
-            onSubmit={async (event) => await handleRegister(event)}
+            onSubmit={async (event) => await handleLogin(event)}
           >
             <div className="mb-6 pt-3 rounded bg-gray-200">
               <label className="block text-gray-700 text-sm font-bold mb-2 ml-3">
