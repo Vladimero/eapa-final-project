@@ -5,7 +5,7 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
-    domains: ['res.cloudinary.com'], // Add Cloudinary's hostname here
+    domains: ['res.cloudinary.com'], // Add Cloudinary's hostname
   },
   eslint: {
     ignoreDuringBuilds: true,
