@@ -49,7 +49,7 @@ export default function ListForAllEventsFromOneUser(props: Props) {
         {props.allEventsFromOneUser.map((event: ViewAllEventsFromOneUser) => (
           <div
             key={`event-${event.eventId}`}
-            className="w-[195px] flex-shrink-0 p-2 rounded-lg shadow-md mb-1 bg-white hover:scale-110 transition-all mt-[20px] cursor-pointer"
+            className="w-[195px] flex-shrink-0 p-2 rounded-lg shadow-md mb-1 bg-white hover:scale-110 transition-all mt-[20px] cursor-pointer flex flex-col"
           >
             <Image
               src={event.secureUrl}
@@ -85,7 +85,9 @@ export default function ListForAllEventsFromOneUser(props: Props) {
                   Comment: {event.adminComment}
                 </h2>
               </div>
-            ) : null}
+            ) : (
+              <div className="flex-grow" />
+            )}
 
             {event.offer ? (
               <div className="border-t-[1px] p-2 mt-1">
@@ -95,7 +97,9 @@ export default function ListForAllEventsFromOneUser(props: Props) {
                   </span>
                 </h2>
               </div>
-            ) : null}
+            ) : (
+              <div className="flex-grow" />
+            )}
             <AdminEventsForm eventId={event.eventId} />
           </div>
         ))}

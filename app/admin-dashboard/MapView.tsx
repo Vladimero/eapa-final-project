@@ -14,7 +14,7 @@ type Position = {
 
 type Props = {
   positions: Position[];
-  userId: number[];
+  // userId: number[];
   mapCoords: LatLngExpression;
   allEventData: EventsForAdmin[];
 };
@@ -34,11 +34,15 @@ export default function MapView(props: Props) {
       />
       <MarkerClusterGroup chunkedLoading>
         {props.positions.map((position, index) => {
-          const eventData = props.allEventData && props.allEventData[index]; // Access specific event data
+          const eventData = props.allEventData[index];
+
+          const key = eventData
+            ? `key-div-${eventData.date}`
+            : `key-div-${index}`;
 
           return (
             <Marker
-              key={`key-div-${index}`}
+              key={`key-div-${key}`}
               position={position}
               icon={customIcon}
             >

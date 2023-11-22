@@ -39,10 +39,6 @@ export default async function DashboardUserPage() {
     sessionTokenCookie.value,
   );
 
-  if (userEvents) {
-    console.log('Checking: ', userEvents);
-  }
-
   // Map over the array of objects all userEvents in order to display the lat & lng
   const positions = userEvents.map((coordinates) => ({
     lat: coordinates.latitude,
@@ -51,29 +47,27 @@ export default async function DashboardUserPage() {
   console.log(positions);
 
   // Map over the array of objects "all" userEvents in order to receive single eventId
-  const eventId = userEvents.map((user) => {
-    return user.eventId;
+  const eventId = userEvents.map((userId) => {
+    return userId.eventId;
   });
 
   // Set the default lat & lng to center of Austria
-  let mapCoords: LatLngExpression = [47.5162, 14.5501];
+  const mapCoords: LatLngExpression = [47.5162, 14.5501];
 
   // Query the data of Pollution & Region tables
   const pollutionKind = await getPollution();
   const regionState = await getRegion();
 
   return (
-    <>
-      <UserEventsForm
-        userId={user.id}
-        pollutionKind={pollutionKind}
-        regionState={regionState}
-        positions={positions}
-        eventId={eventId}
-        mapCoords={mapCoords}
-        userEvents={userEvents}
-        firstName={user.firstName}
-      />
-    </>
+    <UserEventsForm
+      userId={user.id}
+      pollutionKind={pollutionKind}
+      regionState={regionState}
+      positions={positions}
+      eventId={eventId}
+      mapCoords={mapCoords}
+      userEvents={userEvents}
+      firstName={user.firstName}
+    />
   );
 }

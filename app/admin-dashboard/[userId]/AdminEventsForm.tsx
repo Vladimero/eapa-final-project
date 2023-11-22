@@ -26,10 +26,10 @@ export default function AdminEventsForm({ eventId }: { eventId: number }) {
 
   return (
     <form
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         event.preventDefault();
         if (adminComment !== '' && offer !== '') {
-          handleEventUpdate();
+          await handleEventUpdate();
         } else {
           alert('Please enter a valid comment or an offer!');
         }
@@ -78,7 +78,7 @@ export default function AdminEventsForm({ eventId }: { eventId: number }) {
           required
         />
 
-        {adminComment && (
+        {!!adminComment && (
           <div className="mt-2 flex justify-center">
             <button className="bg-white hover:bg-customOrange text-grey-500 font-bold py-1 px-4 rounded border border-gray-400 w-full text-sm">
               Send

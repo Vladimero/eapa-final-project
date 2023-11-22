@@ -23,7 +23,7 @@ export default function FooterForm() {
             <ul className="list-reset mb-6">
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <Link
-                  href="#"
+                  href="/"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   FAQ
@@ -31,7 +31,7 @@ export default function FooterForm() {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <Link
-                  href="#"
+                  href="/"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Help
@@ -39,7 +39,7 @@ export default function FooterForm() {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <Link
-                  href="#"
+                  href="/"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Support
@@ -52,7 +52,7 @@ export default function FooterForm() {
             <ul className="list-reset mb-6">
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <Link
-                  href="#"
+                  href="/"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Terms
@@ -60,7 +60,7 @@ export default function FooterForm() {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <Link
-                  href="#"
+                  href="/"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Privacy
@@ -73,7 +73,7 @@ export default function FooterForm() {
             <ul className="list-reset mb-6">
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <Link
-                  href="#"
+                  href="/"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Facebook
@@ -81,7 +81,7 @@ export default function FooterForm() {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <Link
-                  href="#"
+                  href="/"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Linkedin
@@ -89,7 +89,7 @@ export default function FooterForm() {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <Link
-                  href="#"
+                  href="/"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Twitter
@@ -102,7 +102,7 @@ export default function FooterForm() {
             <ul className="list-reset mb-6">
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <Link
-                  href="#"
+                  href="/"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Official Blog
@@ -118,7 +118,7 @@ export default function FooterForm() {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <Link
-                  href="#"
+                  href="/"
                   className="no-underline hover:underline text-gray-800 hover:text-customOrange"
                 >
                   Contact

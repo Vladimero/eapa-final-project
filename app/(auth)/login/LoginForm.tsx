@@ -87,7 +87,7 @@ export default function LoginForm(props: Props) {
             </div>
             <div className="flex justify-end">
               <Link
-                href="#"
+                href="/"
                 className="text-sm text-black hover:text-customOrange hover:underline mb-6"
               >
                 Forgot your password?
@@ -113,11 +113,11 @@ export default function LoginForm(props: Props) {
         </p>
       </div>
       <div className="max-w-lg mx-auto flex justify-center text-black">
-        <Link href="#" className="hover:underline">
+        <Link href="/" className="hover:underline">
           Contact
         </Link>
         <span className="mx-3">•</span>
-        <Link href="#" className="hover:underline">
+        <Link href="/" className="hover:underline">
           Privacy
         </Link>
       </div>

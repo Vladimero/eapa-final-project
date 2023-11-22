@@ -7,22 +7,12 @@ import { Region } from '../migrations/00002-createRegion';
 
 export const getRegion = cache(async () => {
   const selectedRegion = await sql<Region[]>`
-    SELECT * FROM region
-  `;
-  return selectedRegion;
-});
-
-// For dynamic rendering
-export const getRegionById = cache(async (id: number) => {
-  const [region] = await sql<Region[]>`
     SELECT
       *
     FROM
       region
-    WHERE
-      id = ${id}
   `;
-  return region;
+  return selectedRegion;
 });
 
 // For displaying the states of region --> History of events
@@ -33,7 +23,7 @@ export const getRegionByState = cache(async (stateOfAustria: string) => {
     FROM
       region
     WHERE
-      stateOfAustria = ${stateOfAustria}
+      state_of_austria = ${stateOfAustria}
   `;
   return regionState;
 });

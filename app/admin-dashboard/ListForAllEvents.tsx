@@ -49,7 +49,7 @@ export default function ListForAllEvents(props: Props) {
         {props.allEventData.map((event: EventsForAdmin) => (
           <div
             key={`event-${event.userId}`}
-            className="w-[195px] flex-shrink-0 p-2 rounded-lg shadow-md mb-1 bg-white hover:scale-110 transition-all mt-[20px] cursor-pointer"
+            className="w-[195px] flex-shrink-0 p-2 rounded-lg shadow-md mb-1 bg-white hover:scale-110 transition-all mt-[20px] cursor-pointer flex flex-col"
           >
             <Link href={`/admin-dashboard/${event.userId}`}>
               <Image
@@ -87,7 +87,9 @@ export default function ListForAllEvents(props: Props) {
                   Comment: {event.adminComment}
                 </h2>
               </div>
-            ) : null}
+            ) : (
+              <div className="flex-grow" />
+            )}
 
             {event.offer ? (
               <div className="border-t-[1px] p-2 mt-1">
@@ -97,7 +99,10 @@ export default function ListForAllEvents(props: Props) {
                   </span>
                 </h2>
               </div>
-            ) : null}
+            ) : (
+              <div className="flex-grow" />
+            )}
+
             <div className="flex items-center justify-center">
               <Link
                 className="text-[10px] text-gray-600  font-bold mt-1 line-clamp-1 hover:text-customOrange"

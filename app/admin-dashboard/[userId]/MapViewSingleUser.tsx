@@ -34,12 +34,15 @@ export default function MapViewSingleUser(props: Props) {
       />
       <MarkerClusterGroup chunkedLoading>
         {props.positions.map((position, index) => {
-          const eventData =
-            props.allEventsFromOneUser && props.allEventsFromOneUser[index]; // Access specific event data
+          const eventData = props.allEventsFromOneUser[index];
+
+          const key = eventData
+            ? `key-div-${eventData.date}`
+            : `key-div-${index}`;
 
           return (
             <Marker
-              key={`key-div-${index}`}
+              key={`key-div-${key}`}
               position={position}
               icon={customIcon}
             >

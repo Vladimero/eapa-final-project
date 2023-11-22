@@ -50,7 +50,7 @@ export default function AutocompleteAndMapView({
 
   // Load script for react place autocomplete
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || '',
     libraries: ['places'],
     language: 'en',
   });
@@ -116,6 +116,7 @@ export default function AutocompleteAndMapView({
                     ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                     : { backgroundColor: '#ffffff', cursor: 'pointer' };
                   return (
+                    // eslint-disable-next-line react/jsx-key
                     <div
                       {...getSuggestionItemProps(suggestion, {
                         className,
@@ -161,11 +162,14 @@ export default function AutocompleteAndMapView({
             )}
             <MarkerClusterGroup chunkedLoading>
               {positions.map((position, index) => {
-                const eventData = userEvents && userEvents[index]; // Access specific event data
+                const eventData = userEvents[index];
+                const key = eventData
+                  ? `key-div-${eventData.date}`
+                  : `key-div-${index}`;
 
                 return (
                   <Marker
-                    key={`key-div-${index}`}
+                    key={`key-div-${key}`}
                     position={position}
                     icon={customIcon}
                   >

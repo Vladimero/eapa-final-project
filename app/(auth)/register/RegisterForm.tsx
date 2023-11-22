@@ -143,11 +143,11 @@ export default function RegisterForm() {
         </p>
       </div>
       <div className="max-w-lg mx-auto flex justify-center text-black">
-        <Link href="#" className="hover:underline">
+        <Link href="/" className="hover:underline">
           Contact
         </Link>
         <span className="mx-3">•</span>
-        <Link href="#" className="hover:underline">
+        <Link href="/" className="hover:underline">
           Privacy
         </Link>
       </div>

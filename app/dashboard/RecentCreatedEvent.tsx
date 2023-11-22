@@ -78,7 +78,7 @@ export default function RecentCreatedEvent(props: Props) {
             {event.adminComment ? (
               <div className="flex gap-1 items-center">
                 <h2 className="text-[10px] font-bold">
-                  Comment: {event.adminComment}
+                  Response: {event.adminComment}
                 </h2>
               </div>
             ) : null}

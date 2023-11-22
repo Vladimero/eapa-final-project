@@ -17,7 +17,7 @@ type Props = {
 };
 
 export default async function EventsFromOneUserPage(props: Props) {
-  let mapCoords: LatLngExpression = [47.5162, 14.5501];
+  const mapCoords: LatLngExpression = [47.5162, 14.5501];
 
   const id = Number(props.params.userId);
 
@@ -134,7 +134,7 @@ export default async function EventsFromOneUserPage(props: Props) {
                     strokeLinejoin="round"
                     strokeWidth="2"
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
+                  />
                 </svg>
                 <span> The user has no events created yet</span>
               </div>

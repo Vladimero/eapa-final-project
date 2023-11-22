@@ -1,9 +1,9 @@
 'use client';
 
 import { LatLngExpression } from 'leaflet';
-// import Image from 'next/image';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { UserEvent } from '../../database/events';
 import { Pollution } from '../../migrations/00000-createPollution';
 import { Region } from '../../migrations/00002-createRegion';
@@ -48,42 +48,10 @@ export default function UserEventsForm({
   });
 
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
-
-  // Preview the uploaded image on page
-  const handleImagePreview = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] || null;
-    setUploadImage(file);
-  };
-
-  // Upload image to Cloudinary API
-  const handleImageUpload = () => {
-    if (uploadImage) {
-      const formData = new FormData();
-      formData.append('file', uploadImage);
-      formData.append('upload_preset', `${uploadPreset}`);
-
-      fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-        method: 'POST',
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data && data.secure_url) {
-            const url = data.secure_url;
-            setImageSrc(url);
-            console.log('Secure URL: ', url);
-
-            handleEventCreation(url);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else {
-      console.error('No file selected for upload');
-    }
-  };
+  const uploadPreset = process.env
+    .NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET as string;
+  const displayHeadline = userEvents.length > 0 || userEvents.length === 0;
+  const displayFirstName = firstName;
 
   // Create an event and send data to events table
   const handleEventCreation = (url?: string) => {
@@ -109,23 +77,59 @@ export default function UserEventsForm({
         latitude: selectedLocation.lat,
         longitude: selectedLocation.lng,
       }),
-    }).then(() => {
-      router.refresh();
-      setReport('');
-      setDamageEstimation('');
-      setDate('');
-      setAdminComment('');
-      setOffer('');
-      setRegion('');
-      setPollution('');
-      setImageSrc('');
-      setUploadImage(null);
-    });
+    })
+      .then((response) => {
+        console.log('Image details saved:', response);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    router.refresh();
+    setReport('');
+    setDamageEstimation('');
+    setDate('');
+    setAdminComment('');
+    setOffer('');
+    setRegion('');
+    setPollution('');
+    setImageSrc('');
+    setUploadImage(null);
   };
 
-  const displayHeadline = userEvents.length > 0 || userEvents.length === 0;
+  // Preview the uploaded image on page
+  const handleImagePreview = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+    setUploadImage(file);
+  };
 
-  const displayFirstName = firstName;
+  // Upload image to Cloudinary API
+  const handleImageUpload = () => {
+    if (uploadImage) {
+      const formData = new FormData();
+      formData.append('file', uploadImage);
+      formData.append('upload_preset', uploadPreset);
+
+      fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.secure_url) {
+            const url = data.secure_url;
+            setImageSrc(url);
+            console.log('Secure URL: ', url);
+
+            return handleEventCreation(url);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      console.error('No file selected for upload');
+    }
+  };
 
   return (
     <div className="border-b py-8">
@@ -164,12 +168,12 @@ export default function UserEventsForm({
                 required
               >
                 <option value="">Select a region</option>
-                {regionState.map((region) => (
+                {regionState.map((states) => (
                   <option
-                    key={`regionId-${region.stateOfAustria}`}
-                    value={region.stateOfAustria}
+                    key={`regionId-${states.stateOfAustria}`}
+                    value={states.stateOfAustria}
                   >
-                    {region.stateOfAustria}
+                    {states.stateOfAustria}
                   </option>
                 ))}
               </select>
@@ -181,12 +185,9 @@ export default function UserEventsForm({
                 required
               >
                 <option value="">Select a pollution</option>
-                {pollutionKind.map((pollution) => (
-                  <option
-                    key={`pollutionId-${pollution.kind}`}
-                    value={pollution.kind}
-                  >
-                    {pollution.kind}
+                {pollutionKind.map((kinds) => (
+                  <option key={`pollutionId-${kinds.kind}`} value={kinds.kind}>
+                    {kinds.kind}
                   </option>
                 ))}
               </select>
@@ -244,9 +245,9 @@ export default function UserEventsForm({
               required
             />
             <div className="preview-container p-6 flex flex-col items-center">
-              <img
+              <Image
                 src={uploadImage ? URL.createObjectURL(uploadImage) : ''}
-                // alt="Your uploaded image"
+                alt="Your uploaded picture"
                 width={300}
                 height={250}
               />
@@ -292,7 +293,7 @@ export default function UserEventsForm({
                     strokeLinejoin="round"
                     strokeWidth="2"
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
+                  />
                 </svg>
                 <span> No events created yet</span>
               </div>

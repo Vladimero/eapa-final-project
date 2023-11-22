@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import LogoutButton from '../(auth)/logout/LogoutButton';
 import { getUserBySessionToken } from '../../database/users';
-import Logo from '../../public/images/logo.png';
+import Logo from '../../public/images/Logo.png';
 
 export default async function NavBarForm() {
   // 1. Check if a session token from the cookie of the browser exists

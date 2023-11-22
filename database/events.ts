@@ -11,7 +11,7 @@ export type UserEvent = {
   date: string;
   secureUrl: string;
   adminComment: string | null;
-  offer: string | null; // new
+  offer: string | null;
   latitude: number;
   longitude: number;
   firstName: string;
@@ -19,15 +19,15 @@ export type UserEvent = {
 
 export type EventsForAdmin = {
   id: number;
-  userId: number;
-  pollutionKind: string;
-  regionState: string;
+  userId: number | null;
+  pollutionKind: string | null;
+  regionState: string | null;
   report: string;
   damageEstimation: string;
   date: string;
   secureUrl: string;
   adminComment: string | null;
-  offer: string | null; // new
+  offer: string | null;
   latitude: number;
   longitude: number;
   firstName: string;
@@ -43,7 +43,7 @@ export type ViewAllEventsFromOneUser = {
   date: string;
   secureUrl: string;
   adminComment: string | null;
-  offer: string | null; // new
+  offer: string | null;
   latitude: number;
   longitude: number;
   firstName: string;
@@ -52,7 +52,7 @@ export type ViewAllEventsFromOneUser = {
 export type UpdateAdminComment = {
   eventId: number;
   adminComment: string;
-  offer: string; // new
+  offer: string;
 };
 
 export const createEvent = cache(
@@ -70,11 +70,34 @@ export const createEvent = cache(
     longitude: number,
   ) => {
     const [event] = await sql<Events[]>`
-      INSERT INTO events
-        (user_id, pollution_kind, region_state, report, damage_estimation, date, secure_url, admin_comment, offer, latitude, longitude)
+      INSERT INTO
+        events (
+          user_id,
+          pollution_kind,
+          region_state,
+          report,
+          damage_estimation,
+          DATE,
+          secure_url,
+          admin_comment,
+          offer,
+          latitude,
+          longitude
+        )
       VALUES
-        (${userId},${pollutionKind},${regionState},${report},${damageEstimation},${date},${secureUrl},${adminComment},${offer},${latitude},${longitude})
-      RETURNING *
+        (
+          ${userId},
+          ${pollutionKind},
+          ${regionState},
+          ${report},
+          ${damageEstimation},
+          ${date},
+          ${secureUrl},
+          ${adminComment},
+          ${offer},
+          ${latitude},
+          ${longitude}
+        ) RETURNING *
     `;
 
     return event;
@@ -91,7 +114,7 @@ export const getAllEventsFromUserBySessionToken = cache(
         region.state_of_austria AS region_state,
         events.report AS report,
         events.damage_estimation AS damage_estimation,
-        events.date AS date,
+        events.date AS DATE,
         events.secure_url AS secure_url,
         events.admin_comment AS admin_comment,
         events.offer AS offer, -- new
@@ -100,19 +123,15 @@ export const getAllEventsFromUserBySessionToken = cache(
         users.first_name AS first_name
       FROM
         events
-      INNER JOIN
-        users ON events.user_id = users.id
-      INNER JOIN
-        pollution ON events.pollution_kind = pollution.kind
-      INNER JOIN
-        region ON events.region_state = region.state_of_austria
-      INNER JOIN
-        sessions ON (
-          sessions.token = ${token} AND
-          sessions.user_id = users.id AND
-          sessions.expiry_timestamp > now()
+        INNER JOIN users ON events.user_id = users.id
+        INNER JOIN pollution ON events.pollution_kind = pollution.kind
+        INNER JOIN region ON events.region_state = region.state_of_austria
+        INNER JOIN sessions ON (
+          sessions.token = ${token}
+          AND sessions.user_id = users.id
+          AND sessions.expiry_timestamp > now ()
         )
-  `;
+    `;
     return events;
   },
 );
@@ -125,8 +144,7 @@ export const getAllEventsForAdmin = cache(async () => {
       users.first_name
     FROM
       events
-    INNER JOIN
-      users ON events.user_id = users.id
+      INNER JOIN users ON events.user_id = users.id
   `;
   return allEventsForAdmin;
 });
@@ -135,15 +153,13 @@ export const getAllEventsForAdmin = cache(async () => {
 export const updateAdminCommentAndOffering = cache(
   async (eventId: number, adminComment: string, offer: string) => {
     const [updatedEvent] = await sql<UpdateAdminComment[]>`
-    UPDATE
-      events
-    SET
-      admin_comment = ${adminComment},
-      offer = ${offer} --new
-    WHERE
-      id = ${eventId}
-    RETURNING *
-  `;
+      UPDATE events
+      SET
+        admin_comment = ${adminComment},
+        offer = ${offer}
+      WHERE
+        id = ${eventId} RETURNING *
+    `;
     return updatedEvent;
   },
 );
@@ -152,30 +168,27 @@ export const updateAdminCommentAndOffering = cache(
 export const getAllEventsFromOneUserForAdminByUserId = cache(
   async (userId: number) => {
     const allEventsForAdminFromOneUser = await sql<ViewAllEventsFromOneUser[]>`
-  SELECT
-    events.id AS event_id,
-    pollution.kind AS pollution_kind,
-    region.state_of_austria AS region_state,
-    events.report AS report,
-    events.damage_estimation AS damage_estimation,
-    events.date AS date,
-    events.secure_url AS secure_url,
-    events.admin_comment AS admin_comment,
-    events.offer AS offer, -- new
-    events.latitude AS latitude,
-    events.longitude AS longitude,
-    users.first_name AS first_name
-  FROM
-    events
-  INNER JOIN
-    users ON events.user_id = users.id
-  INNER JOIN
-    pollution ON events.pollution_kind = pollution.kind
-  INNER JOIN
-    region ON events.region_state = region.state_of_austria
-  WHERE
-    events.user_id = ${userId}
-  `;
+      SELECT
+        events.id AS event_id,
+        pollution.kind AS pollution_kind,
+        region.state_of_austria AS region_state,
+        events.report AS report,
+        events.damage_estimation AS damage_estimation,
+        events.date AS DATE,
+        events.secure_url AS secure_url,
+        events.admin_comment AS admin_comment,
+        events.offer AS offer, -- new
+        events.latitude AS latitude,
+        events.longitude AS longitude,
+        users.first_name AS first_name
+      FROM
+        events
+        INNER JOIN users ON events.user_id = users.id
+        INNER JOIN pollution ON events.pollution_kind = pollution.kind
+        INNER JOIN region ON events.region_state = region.state_of_austria
+      WHERE
+        events.user_id = ${userId}
+    `;
     return allEventsForAdminFromOneUser;
   },
 );
