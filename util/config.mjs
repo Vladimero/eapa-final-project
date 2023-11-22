@@ -2,7 +2,6 @@ import { readFileSync } from 'node:fs';
 import dotenv from 'dotenv';
 
 export function setEnvironmentVariables() {
-  //  FOR DEPLOYMENT:
   if (process.env.NODE_ENV === 'production' || process.env.CI) {
     // Set standard environment variables for Postgres.js from Vercel environment variables
     if (process.env.POSTGRES_URL) {
@@ -11,6 +10,7 @@ export function setEnvironmentVariables() {
       process.env.PGUSERNAME = process.env.POSTGRES_USER;
       process.env.PGPASSWORD = process.env.POSTGRES_PASSWORD;
     }
+    return;
   }
 
   // Replacement for unmaintained dotenv-safe package

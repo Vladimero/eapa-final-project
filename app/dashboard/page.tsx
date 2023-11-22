@@ -54,6 +54,11 @@ export default async function DashboardUserPage() {
   // Set the default lat & lng to center of Austria
   const mapCoords: LatLngExpression = [47.5162, 14.5501];
 
+  // Call the environmental variables inside server side page and pass it down to client child with props
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+  const mapsKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
   // Query the data of Pollution & Region tables
   const pollutionKind = await getPollution();
   const regionState = await getRegion();
@@ -68,6 +73,9 @@ export default async function DashboardUserPage() {
       mapCoords={mapCoords}
       userEvents={userEvents}
       firstName={user.firstName}
+      cloudName={cloudName}
+      uploadPreset={uploadPreset}
+      mapsKey={mapsKey}
     />
   );
 }

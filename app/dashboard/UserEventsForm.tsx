@@ -19,6 +19,9 @@ export default function UserEventsForm({
   mapCoords, // props for AutocompleteAndMapView
   userEvents, // props for AutocompleteAndMapView
   firstName,
+  cloudName,
+  uploadPreset,
+  mapsKey,
 }: {
   userId: number;
   pollutionKind: Pollution[];
@@ -28,6 +31,9 @@ export default function UserEventsForm({
   mapCoords: LatLngExpression;
   userEvents: UserEvent[];
   firstName: string;
+  cloudName: string | undefined;
+  uploadPreset: string | undefined;
+  mapsKey: string | undefined;
 }) {
   const [report, setReport] = useState('');
   const [damageEstimation, setDamageEstimation] = useState('');
@@ -47,9 +53,6 @@ export default function UserEventsForm({
     lng: null,
   });
 
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = process.env
-    .NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET as string;
   const displayHeadline = userEvents.length > 0 || userEvents.length === 0;
   const displayFirstName = firstName;
 
@@ -107,7 +110,7 @@ export default function UserEventsForm({
     if (uploadImage) {
       const formData = new FormData();
       formData.append('file', uploadImage);
-      formData.append('upload_preset', uploadPreset);
+      formData.append('upload_preset', `${uploadPreset}`);
 
       fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: 'POST',
@@ -276,6 +279,7 @@ export default function UserEventsForm({
             eventId={eventId}
             mapCoords={mapCoords}
             userEvents={userEvents}
+            mapsKey={mapsKey}
           />
           <div className="absolute bottom-0 left-0 z-10 w-full p-4">
             {userEvents.length > 0 ? (

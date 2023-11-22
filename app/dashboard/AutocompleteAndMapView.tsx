@@ -26,6 +26,7 @@ export default function AutocompleteAndMapView({
   eventId, // props from parent component
   mapCoords, // props from parent component
   userEvents, // props from parent component
+  mapsKey,
 }: {
   onLocationChange: (location: {
     lat: number | null;
@@ -36,6 +37,7 @@ export default function AutocompleteAndMapView({
   eventId: number[];
   mapCoords: LatLngExpression;
   userEvents: UserEvent[];
+  mapsKey: string | undefined;
 }) {
   const [address, setAddress] = useState('');
   const [lat, setLat] = useState<number | null>(null);
@@ -48,13 +50,12 @@ export default function AutocompleteAndMapView({
     lng: null,
   });
 
-  // Load script for react place autocomplete
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
-    libraries: ['places'],
-    language: 'en',
-  });
-
+ // Load script for react place autocomplete
+ const { isLoaded } = useLoadScript({
+  googleMapsApiKey: mapsKey || '',
+  libraries: ['places'],
+  language: 'en',
+});
   if (!isLoaded) return <div>Loading....</div>;
 
   const handleChange = (value: string) => {
