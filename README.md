@@ -29,22 +29,14 @@ EAPA empowers users to report various pollution issues prevalent in Austria, fro
 
 <img width="811" alt="Bildschirmfoto 2023-11-23 um 15 18 03" src="https://github.com/Vladimero/eapa-final-project/assets/138519316/c0fea208-0342-4768-a95e-2631a3d73637">
 
-## Get Started on Your Environmental Journey 🌿 🌟
+## Get Started on Your Environmental Journey NOW! 🌿 🌟
 
 #### Follow these steps to join the movement:
 
-Clone this repository to your local machine.
-Install PostgreSQL and configure the required databases.
-Customize your environment variables for a tailored experience.
-Launch the application: npm start or yarn start.
-Access the platform via your browser at http://localhost:3000 and start reporting pollution issues today!
-
-## Deployment for a Cleaner Tomorrow 🚀 🌅
-
-#### Ready to take your EAPA live and expand its impact? Follow these deployment steps:
-
-Sign up on your preferred hosting platform.
-Set up a new app or environment for EAPA.
-Configure environment variables securely.
-Deploy the application and witness your platform live, contributing to a pollution-free Austria!
-Let's create a cleaner and healthier environment together! 🌟🌿
+- Open the <a href="https://eapa.fly.dev/ ">web application</a>.
+- Register with a valid email and your name.
+- You will be directly redirected to your profile page.
+- Add there some more information like your phonenumber or a profile picture.
+- Visit the dashboard page and create a report.
+- An admin (governmental user) will review and response you soon.
+- Watch how your reported pollution is cleaned up!
