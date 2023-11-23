@@ -4,7 +4,7 @@
 
 ## Reporting and Resolution 📢 ✅
 
-#### EAPA empowers users to report various pollution issues prevalent in Austria, from air and water quality to waste management problems. Expect timely responses with actionable solutions, contributing to a cleaner and healthier environment for everyone.
+EAPA empowers users to report various pollution issues prevalent in Austria, from air and water quality to waste management problems. Expect timely responses with actionable solutions, contributing to a cleaner and healthier environment for everyone.
 
 ## Technologies Empowering Change 🛠️ 🌱
 
