@@ -1,4 +1,4 @@
-# EAPA - Environmental Assessment Platform of Austria 🌍 🚯
+# EAPA | Environmental Assessment Platform Austria 🌍🚯
 
 ### Welcome to EAPA – your digital platform dedicated to tracking and resolving pollution concerns across Austria!
 
