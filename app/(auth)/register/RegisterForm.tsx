@@ -1,10 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import Logo from '../../../public/images/Logo.png';
 import { RegisterResponseBodyPost } from '../../api/(auth)/register/route';
 
 export default function RegisterForm() {
@@ -52,18 +50,11 @@ export default function RegisterForm() {
   };
 
   return (
-    <body
+    <div
       className="body-bg min-h-screen pt-4 md:pt-12 pb-6 px-2 md:px-0"
       style={bodyBgStyle}
     >
-      <div className="max-w-lg mx-auto">
-        <Link href="/">
-          <div className="flex items-center justify-center">
-            <Image src={Logo} alt="Logo" width={300} height={80} />
-          </div>
-        </Link>
-      </div>
-      <main className="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
+      <main className="bg-white max-w-lg mx-auto p-8 mt-28 md:p-12 my-10 rounded-lg shadow-2xl">
         <section>
           <h3 className="font-bold text-2xl">Sign Up</h3>
           <p className="text-gray-600 pt-2">Create your account</p>
@@ -151,6 +142,6 @@ export default function RegisterForm() {
           Privacy
         </Link>
       </div>
-    </body>
+    </div>
   );
 }

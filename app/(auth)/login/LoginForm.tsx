@@ -1,10 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import Logo from '../../../public/images/Logo.png';
 import { getSafeReturnToPath } from '../../../util/validation';
 import { LoginResponseBodyPost } from '../../api/(auth)/login/route';
 
@@ -37,6 +35,7 @@ export default function LoginForm(props: Props) {
     router.push(
       getSafeReturnToPath(props.returnTo) || `/profile/${data.user.firstName}`,
     );
+
     router.refresh();
   }
 
@@ -46,18 +45,11 @@ export default function LoginForm(props: Props) {
   };
 
   return (
-    <body
+    <div
       className="body-bg min-h-screen pt-4 md:pt-12 pb-6 px-2 md:px-0"
       style={bodyBgStyle}
     >
-      <div className="max-w-lg mx-auto">
-        <Link href="/">
-          <div className="flex items-center justify-center">
-            <Image src={Logo} alt="Logo" width={300} height={80} />
-          </div>
-        </Link>
-      </div>
-      <main className="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
+      <main className="bg-white max-w-lg mx-auto p-8 mt-32 md:p-12 my-10 rounded-lg shadow-2xl">
         <section>
           <h3 className="font-bold text-2xl">Sign In</h3>
         </section>
@@ -121,6 +113,6 @@ export default function LoginForm(props: Props) {
           Privacy
         </Link>
       </div>
-    </body>
+    </div>
   );
 }
